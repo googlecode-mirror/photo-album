@@ -1,0 +1,9 @@
+#summary How to use and integrate the Flickr Photo Album plugin into your WordPress blog.
+#labels Featured
+
+= Introduction =
+
+Coming soon...
+
+= Details =
+
