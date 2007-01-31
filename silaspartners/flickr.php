@@ -33,6 +33,7 @@ changelog:
 
 0.86:
 - compatibility with WordPress 2.1
+- bunch of random bug fixes
 
 */
 
