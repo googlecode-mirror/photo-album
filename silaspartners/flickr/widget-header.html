@@ -1,0 +1,69 @@
+<style>
+/*
+You may need to adjust these styles to match your blog
+*/
+div#flickr-widget {
+}
+div.flickr-widget-photo {
+    width:75px; /* default flickr width & height for square thumbs */
+    height:75px;
+    margin:0 2px 2px 0;
+    float:left;
+    position:relative;
+}
+div.flickr-widget-photo a {
+    position:absolute;
+}
+</style>
+<script type="text/javascript">
+var SilasFlickrWidget = {
+    widget: null,
+    imgs: null,
+    imgsAlt: null,
+    timer: null,
+    randOld : 0,
+    randNew: 0,
+    delay: 2000,
+    
+    initialize: function() {
+        this.widget = document.getElementById('flickr-widget-photos');
+        this.imgs = this.widget.getElementsByTagName('div');
+
+        this.widgetAlt = document.getElementById('flickr-widget-photos-alt');
+        this.imgsAlt = this.widgetAlt.getElementsByTagName('div');
+        for (var i=0; i<this.imgs.length; i++) {
+            new Effect.Appear('photo-'+this.imgs[i].id, {
+                delay: 0.2*i,
+                afterFinish: function() {
+                    if (SilasFlickrWidget.timer) clearTimeout(SilasFlickrWidget.timer)
+                    SilasFlickrWidget.timer = setTimeout("SilasFlickrWidget.animate()", SilasFlickrWidget.delay*2);
+                }
+            });
+        }
+        
+    },
+    animate: function() {
+        this.randOld = Math.floor(Math.random()*this.imgs.length);
+        this.randNew = Math.floor(Math.random()*this.imgsAlt.length);
+        var imgOld = document.getElementById('photo-'+this.imgs[this.randOld].id);
+        var imgNew = this.imgsAlt[this.randNew].removeChild(document.getElementById('photo-'+this.imgsAlt[this.randNew].id));
+        this.imgs[this.randOld].appendChild(imgNew);
+        new Effect.Fade(imgOld, {
+            afterFinish: function(obj) {
+                var tmp = SilasFlickrWidget.imgs[SilasFlickrWidget.randOld].removeChild(obj.element)
+                SilasFlickrWidget.imgsAlt[SilasFlickrWidget.randNew].appendChild(tmp)
+            }
+        });
+        new Effect.Appear(imgNew, {
+            afterFinish: function() {
+                var tmp = SilasFlickrWidget.imgs[SilasFlickrWidget.randOld].id
+                SilasFlickrWidget.imgs[SilasFlickrWidget.randOld].id = SilasFlickrWidget.imgsAlt[SilasFlickrWidget.randNew].id
+                SilasFlickrWidget.imgsAlt[SilasFlickrWidget.randNew].id = tmp
+                if (SilasFlickrWidget.timer) clearTimeout(SilasFlickrWidget.timer);
+                SilasFlickrWidget.timer = setTimeout("SilasFlickrWidget.animate()", SilasFlickrWidget.delay);
+            }
+        });
+    }
+    
+}
+</script>

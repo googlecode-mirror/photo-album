@@ -1,0 +1,26 @@
+<?php
+//
+// Lightbox settings
+//
+// If you already use prototype.js, scriptaculous.js or lightbox.js elsewhere on your site, 
+// then you probably don't need to include these javascript libraries again.
+//
+
+global $SilasFlickrPlugin;
+$SilasFlickrPlugin->config['useLightbox'] = true;
+?>
+
+<style type="text/css">
+/* <![CDATA[ */
+/* lightbox css  */
+@import url(<?php bloginfo('home');?>/wp-content/plugins/silaspartners/flickr/lightbox/css/lightbox.css);
+/* ]]> */
+</style>
+
+<script src="<?php bloginfo('home');?>/wp-content/plugins/silaspartners/flickr/lightbox/js/prototype.js" type="text/javascript" language="JavaScript"></script>
+<script src="<?php bloginfo('home');?>/wp-content/plugins/silaspartners/flickr/lightbox/js/scriptaculous.js?load=effects" type="text/javascript" language="JavaScript"></script>
+<script src="<?php bloginfo('home');?>/wp-content/plugins/silaspartners/flickr/lightbox/js/lightbox.js" type="text/javascript" language="JavaScript"></script>
+<script type="text/javascript">
+fileLoadingImage = "<?php bloginfo('home');?>/wp-content/plugins/silaspartners/flickr/lightbox/images/loading.gif";		
+fileBottomNavCloseImage = "<?php bloginfo('home');?>/wp-content/plugins/silaspartners/flickr/lightbox/images/closelabel.gif";
+</script>

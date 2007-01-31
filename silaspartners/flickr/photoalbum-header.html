@@ -1,0 +1,42 @@
+<?php
+global $SilasFlickrPlugin;
+// **** Lightbox ****
+// Set this variable to true to enable Lightbox effects. Note that if you enable Lightbox,
+// Flickr notes and comments will not be supported. 
+//
+// For more information on Lightbox, see here: http://www.huddletogether.com/projects/lightbox2/
+//
+$useLightbox = false;
+
+?>
+<style type="text/css">
+/* <![CDATA[ */
+@import url(<?php bloginfo('home');?>/wp-content/plugins/silaspartners/flickr/photoalbum-styles.css);
+
+/* use this line instead if you customized the stylesheet
+@import url(<?php bloginfo('home');?>/wp-content/themes/YOURTHEMEDIRECTORY/photoalbum-styles.css);
+*/
+
+
+/* ]]> */
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+function openSlideShow(id, gid) {
+    var url = "http://flickr.com/slideShow/index.gne?set_id="+id
+    if (gid) url = url + "&group_id="+gid
+    var w = window.open(url, '_blank', 'width=500,height=500');
+    if (w) w.focus()
+    return false;
+}
+/* ]]> */
+</script>
+
+
+
+<?php 
+if ($useLightbox) include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-lightbox-header.html')); 
+?>
+<style type="text/css">
+#imageData #caption{ font-weight: normal;	}
+</style>
