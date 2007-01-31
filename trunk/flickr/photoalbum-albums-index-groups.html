@@ -1,0 +1,15 @@
+<?php if (count($groups) > 0):?>
+<div class="tt-older-posts albums groups">
+<h4>Group Photos</h4>
+<?php foreach ($groups as $group): ?>
+    <div class="album group">
+    <a href="group/<?php echo $group['id']?>/<?php echo $group['pagename']?>"><img class="highlight" src="<?php echo $group['iconurl']?>" width="48" height="48" /></a>
+    <h2><a href="group/<?php echo $group['id']?>/<?php echo $group['pagename']?>"><?php echo $group['name']?></a></h2>
+    <p><?php echo html_entity_decode($group['description'])?></p>
+    <p class="meta"><?php echo $group['photos']?> Photos
+    | <a href="group/<?php echo $group['id']?>/<?php echo $group['pagename']?>" onclick="return openSlideShow('', '<?php echo $group['id']?>')">View as slideshow &gt;</a>
+    </p>
+    </div>
+<?php endforeach; ?>
+</div>
+<?php endif; /*groups*/ ?>
