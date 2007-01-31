@@ -1,9 +1,0 @@
-<?php if (count($tags) > 0): ?>
-<div class="tt-older-posts tags">
-<h4>Popular Tags</h4>
-<?php foreach ($tags as $tag => $count): ?>
-    <a href="tags/<?php echo $tag?>/" title="<?php echo $count ?> photos"><?php echo $tag?></a>,
-<?php endforeach?>
-<a href="tags/">more tags &raquo;</a>
-</div>
-<?php endif; /*tags*/ ?>
