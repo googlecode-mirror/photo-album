@@ -320,7 +320,7 @@ class SilasFlickr extends silas_phpFlickr {
     function getPhotoSizes($photo_id) {
         $photo_id = $photo_id . '';
         $sizes = $this->photos_getSizes($photo_id);
-        foreach ($sizes as $k => $size) {
+        if (is_array($sizes)) foreach ($sizes as $k => $size) {
             unset($sizes[$k]['_name']);
             unset($sizes[$k]['_attributes']);
             unset($sizes[$k]['_value']);
