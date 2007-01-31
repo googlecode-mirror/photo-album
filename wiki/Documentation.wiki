@@ -3,6 +3,17 @@
 
 = Installation =
 
-Coming soon...
+  # Unpack / unzip the archive
+  # Copy the entire “silaspartners” directory to your Wordpress plugins directory. Your wordpress plugins directory should be something like [WORDPRESS DIR]/wp-content/plugins. *Note*: If you already have a silaspartners directory from a previous plugins, you can safely overwrite any existing files from the previous plugin. Make sure you backup your existing silaspartners directory just in case something goes wrong!
+  # Go into your Wordpress admin, click on the “Plugins” tab, and then activate “Flickr Photo Gallery”.
+  # Click on the “Options” tab, and click the “Photo Album” subtab to bring up the options screen.
+  # Just follow the onscreen prompts to link your photo album to your Flickr account.
+  # Once your photo album is linked to your Flickr account, enter a URL where you want your photo album to appear.
+  # You’re done! To view your photo album, just go to the URL you entered in the previous step. To insert a photo, just click on the “Write” tab, and you should a new “Photos” tab to load your Flickr photos. Click on a photo, select a size, and a HTML snippet for that photo will appear in the post’s textarea. Cool!
 
 = Customizing Templates =
+
+
+
+
+
