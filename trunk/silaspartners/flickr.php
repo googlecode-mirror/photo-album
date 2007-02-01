@@ -262,6 +262,31 @@ class SilasFlickrPlugin {
             return array();
         }
     }
+    function getRecentAlbums($offsetpage=0, $max=15, $usecache=true) {
+        $auth_token = get_option('silas_flickr_token');
+        $baseurl = get_option('silas_flickr_baseurl');
+        $linkoptions = get_option('silas_flickr_linkoptions');
+        if ($auth_token) {
+            require_once(dirname(__FILE__).'/flickr/lib.flickr.php');
+            $flickr = new SilasFlickr();
+            $flickr->setToken($auth_token);
+            $user = $flickr->auth_checkToken();
+            $nsid = $user['user']['nsid'];
+            //$usecache = false;
+            if (!$usecache) $flickr->startClearCache(); // blah, buggy as hell
+            $flickr->_silas_cacheExpire = 300; // cache just 5 mins
+            //$flickr->_silas_cacheExpire = 3600; // cache one hour
+            $albums = $flickr->manualSort($flickr->getAlbums(), get_option('silas_flickr_albumorder'));
+            foreach ($albums as $key => $album) {
+                $albums[$key]['sizes'] = $flickr->getPhotoSizes($album['primary']);
+            }
+            if (!$usecache) $flickr->doneClearCache();
+            $this->_silas_cacheExpire = -1;
+            return $albums;
+        } else {
+            return array();
+        }
+    }
 
     
     // redirect template to photos template
@@ -363,15 +388,10 @@ class SilasFlickrPlugin {
                 } else {
                     $title = $photoAlbumTitle;
                     $albums = $flickr->manualSort($flickr->getAlbums(), get_option('silas_flickr_albumorder'));
-                    $groups = $flickr->manualSort($flickr->getGroups(), get_option('silas_flickr_grouporder'));
                     $hideAlbums = get_option('silas_flickr_hidealbums');
-                    $hideGroups = get_option('silas_flickr_hidegroups');
                     // remove albums marked as hidden
                     if (is_array($hideAlbums)) foreach ($albums as $k=>$a) if (in_array($a['id'], $hideAlbums)) unset($albums[$k]);
-                    if (is_array($hideGroups)) foreach ($groups as $k=>$g) if (in_array($g['id'], $hideGroups)) unset($groups[$k]);
-                    
 
-                    $tags = $flickr->getTags(25);
                     $photoTemplate = 'photoalbum-albums-index.html';
                 }
                 add_action('wp_head', array(&$this, 'header'));
@@ -478,7 +498,8 @@ class SilasFlickrPlugin {
         if ($_REQUEST['tags']) $args['tags'] = $_REQUEST['tags'];
         if ($_REQUEST['everyone']) $args['everyone'] = 1;
         $tab = array(
-            'silas_flickr' => array('Photos', 'upload_files', array(&$this, 'photosTab'), array(100, 10), $args)
+            'silas_flickr' => array('Photos', 'upload_files', array(&$this, 'photosTab'), array(100, 10), $args),
+            'silas_flickr_album' => array('Albums', 'upload_files', array(&$this, 'albumsTab'), array(100, 10), $args)
             );
         return array_merge($array, $tab);
     }
@@ -498,6 +519,13 @@ class SilasFlickrPlugin {
 
         
         include(dirname(__FILE__).'/flickr/admin-photos-tab.html');
+    }
+    function albumsTab() {
+        $perpage = 20;
+        $offsetpage = (int) $_GET['paged'];
+        $usecache = ! (isset($_REQUEST['refresh']) && $_REQUEST['refresh']);
+        $albums = $this->getRecentAlbums($offsetpage, $perpage, $usercache);
+        include(dirname(__FILE__).'/flickr/admin-albums-tab.html');
     }
     
     

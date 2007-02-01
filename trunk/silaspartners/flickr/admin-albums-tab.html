@@ -86,37 +86,35 @@ function silas_addPhoto(photoUrl, sourceUrl, width, height, title) {
 <input type="hidden" name="_wpnonce" value="<?php echo $_GET['_wpnonce'];?>" />
 <input type="hidden" name="ID" value="<?php echo $_GET['ID'];?>" />
 
-Tags: <input type="text" name="tags" value="<?php echo $tags?>" size="30" />
-<input type="radio" name="everyone" value="" <?php echo (!$everyone ? 'checked="checked"' : '')?> id="showmine" /><label for="showmine"> My Photos </label> &nbsp;
-<input type="radio" name="everyone" value="1" <?php echo ($everyone ? 'checked="checked"' : '')?> id="showeveryone" /><label for="showeveryone"> Everyone </label>
-&nbsp; &nbsp; 
 <input type="submit" name="refresh" value="refresh" />
 <input type="button" value="upload" onclick="window.open('http://flickr.com/photos/upload/')"/>
 <!-- prolly should add a license field -->
 </form>
-<?php if (count($photos) == 0):?>
-Sorry, no photos found!
-<?php elseif (is_array($photos)):
+
+
+<?php if (count($albums) == 0):?>
+Sorry, no albums found!
+<?php elseif (is_array($albums)):
 $baseurl = get_option('silas_flickr_baseurl');
 $linkoptions = get_option('silas_flickr_linkoptions');
 $parts = parse_url(get_bloginfo('home'));
 $home = 'http://'.$parts['host'];
 ?>
 <ul id='upload-files'>
-<?php
+<?php 
 $id = 0;
-foreach ($photos as $photo):
+foreach ($albums as $album):
 if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
-    $photoURL = $home.$baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
+    $photoURL = $home.$baseurl.'album/'.$album['id'].'/'.$album['pagename'];
 } else {
     $photoURL = $photo['info']['urls']['url'][0]['_value'];
 }
 ?>
 <li id='flickr-photo-<?php echo $id?>' class='alignleft'>
-<a id='file-link-3' href='<?php echo $photoURL?>' title='<?php echo htmlentities($photo['title']);?>' class='file-link image' onclick="return silas_showOptions(<?php echo $id?>);"><img 
-    id="image<?php echo $photo['id']?>" src="<?php echo $photo['sizes']['Square']['source']?>" alt="<?php echo htmlentities($photo['title']);?>" height="<?php echo $photo['sizes']['Square']['height']?>" width="<?php echo $photo['sizes']['Square']['width']?>" border="0" /></a>
+<a id='file-link-3' href='<?php echo $photoURL?>' title='<?php echo htmlentities($album['title']);?>' class='file-link image' onclick="return silas_showOptions(<?php echo $id?>);"><img 
+    id="image<?php echo $id?>" src="<?php echo $album['sizes']['Square']['source']?>" alt="<?php echo htmlentities($album['title']);?>" height="<?php echo $album['sizes']['Square']['height']?>" width="<?php echo $album['sizes']['Square']['width']?>" border="0" /></a>
     <div class="photo-options" id="options-<?php echo $id?>">
-    <?php foreach ($photo['sizes'] as $k => $size):?>
+    <?php foreach ($album['sizes'] as $k => $size):?>
         <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', this, '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>')"><?php echo $k?><span class="props"> (<?php echo $size['width']?>x<?php echo $size['height']?>)</span></a><br />
     <?php endforeach;?>
     <div class="close"><a href="#" onclick="return silas_hideOptions(<?php echo $id?>);">close</a></div>

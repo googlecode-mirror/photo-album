@@ -1,4 +1,7 @@
-<?php if (count($tags) > 0): ?>
+<?php
+$tags = $flickr->getTags(25);
+
+if (count($tags) > 0): ?>
 <div class="tt-older-posts tags">
 <h4>Popular Tags</h4>
 <?php foreach ($tags as $tag => $count): ?>
