@@ -510,8 +510,10 @@ class SilasFlickr extends silas_phpFlickr {
                 mkdir($this->cache_dir . '/' . $pre, 0770);
             }
             $fstream = fopen($file, "w");
-            $result = fwrite($fstream,$response);
-            fclose($fstream);
+            if ($fstream) {
+                $result = fwrite($fstream,$response);
+                fclose($fstream);
+            }
             return $result;
         }
     }
