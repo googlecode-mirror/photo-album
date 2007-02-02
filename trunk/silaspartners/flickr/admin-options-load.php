@@ -1,7 +1,7 @@
 <?php
-$tmpPath = '/../../../../..';
+$tmpPath = '/../../../..';
 if (!file_exists(dirname(__FILE__).$tmpPath.'/wp-config.php')) {
-    $tmpPath = '/../../../..';
+$tmpPath = '/../../../../..';
     if (!file_exists(dirname(__FILE__).$tmpPath.'/wp-config.php')) {
         echo "Error: wp-config.php not found";
         exit;
@@ -10,6 +10,7 @@ if (!file_exists(dirname(__FILE__).$tmpPath.'/wp-config.php')) {
 if (!isset($_GET['view']) ) {
     exit;
 }
+echo dirname(__FILE__).$tmpPath.'/wp-config.php';
 require_once(dirname(__FILE__).$tmpPath.'/wp-config.php');
 require_once(dirname(__FILE__).$tmpPath.'/wp-admin/admin-functions.php');
 require_once(dirname(__FILE__).$tmpPath.'/wp-admin/admin-db.php');
