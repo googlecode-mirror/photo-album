@@ -4,7 +4,7 @@ Plugin Name: Flickr Photo Gallery
 Plugin URI: http://www.tantannoodles.com/toolkit/photo-album/
 Description: This plugin will retrieve your Flickr photos and allow you to easily add your photos to your posts. <a href="options-general.php?page=silaspartners/flickr.php">Configure...</a>
 Author: Silas Partners (Joe Tan)
-Version: 0.86
+Version: 0.87
 Author URI: http://www.silaspartners.com/
 
 Copyright (C) 2006  Silas Partners
@@ -154,9 +154,7 @@ class SilasFlickrPlugin {
         }
         
         } // apikey check
-        /*
-            
-        */
+        
         if ($flickrAuth) { // passed authentication
         
         if ($_POST['action'] == 'clearcache') {
@@ -215,12 +213,14 @@ class SilasFlickrPlugin {
             }
         } 
         
-        } // flickrAuth
-        
-        if (!is_array($hideAlbums)) $hideAlbums = array();
-        if (!is_array($hideGroups)) $hideGroups = array();
+                
+                include(dirname(__FILE__).'/flickr/admin-options.html');
 
-        include(dirname(__FILE__).'/flickr/admin-options.html');
+        
+        } else { // did not pass authentication
+            include(dirname(__FILE__).'/flickr/admin-options.html');
+        }
+        
     }
     function uploading_iframe($src) {
         return '../wp-content/plugins/silaspartners/flickr/'.$src;
@@ -442,7 +442,7 @@ class SilasFlickrPlugin {
         $this->config['title'] = $title;
     }
     function wp_title($title) {
-        return $this->config['title'] ? $this->config['title'] : $title;
+        return ' '.($this->config['title'] ? $this->config['title'] : $title).' ';
     }
     
     function header() {
@@ -469,11 +469,17 @@ class SilasFlickrPlugin {
         if ($baseurl && (strpos($_SERVER['REQUEST_URI'], $baseurl) === 0)) {
             $_SERVER['_SILAS_FLICKR_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
             $_SERVER['REQUEST_URI'] = $baseurl;
-
+            
             status_header(200); // ugly, just force a 200 status code
+            add_filter('request', array(&$this, 'request'));
             add_action('template_redirect', array(&$this, 'template'));
         }
     }
+    function request($query_vars) {
+        $query_vars['error'] = false;
+        return $query_vars;
+    }
+    
     
     function addhooks() {
         add_options_page('Photo Album', 'Photo Album', 10, __FILE__, array(&$this, 'admin'));
