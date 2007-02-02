@@ -103,7 +103,14 @@ class SilasCurl {
         }
     }
     function getResponseCookies() {
-        $hdrCookies = explode("\n", $this->response['header']['Set-Cookie']);
+        $hdrCookies = array();
+        foreach ($this->response['header'] as $key => $value) {
+            if (strtolower($key) == 'set-cookie') {
+                $hdrCookies = array_merge($hdrCookies, explode("\n", $value));
+            }
+        }
+        
+        //$hdrCookies = explode("\n", $this->response['header']['Set-Cookie']);
         $cookies = array();
         
         foreach ($hdrCookies as $cookie) {
