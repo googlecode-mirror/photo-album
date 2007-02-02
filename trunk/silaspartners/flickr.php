@@ -257,10 +257,9 @@ class SilasFlickrPlugin {
             return array();
         }
     }
-    function getRecentAlbums($offsetpage=0, $max=15, $usecache=true) {
+    function getRecentAlbums($usecache=true) {
         $auth_token = get_option('silas_flickr_token');
         $baseurl = get_option('silas_flickr_baseurl');
-        $linkoptions = get_option('silas_flickr_linkoptions');
         if ($auth_token) {
             require_once(dirname(__FILE__).'/flickr/lib.flickr.php');
             $flickr = new SilasFlickr();
@@ -500,7 +499,7 @@ class SilasFlickrPlugin {
         if ($_REQUEST['everyone']) $args['everyone'] = 1;
         $tab = array(
             'silas_flickr' => array('Photos', 'upload_files', array(&$this, 'photosTab'), array(100, 10), $args),
-            'silas_flickr_album' => array('Albums', 'upload_files', array(&$this, 'albumsTab'), array(100, 10), $args)
+            'silas_flickr_album' => array('Albums', 'upload_files', array(&$this, 'albumsTab'), 0, $args)
             );
         return array_merge($array, $tab);
     }
@@ -522,10 +521,8 @@ class SilasFlickrPlugin {
         include(dirname(__FILE__).'/flickr/admin-photos-tab.html');
     }
     function albumsTab() {
-        $perpage = 20;
-        $offsetpage = (int) $_GET['paged'];
         $usecache = ! (isset($_REQUEST['refresh']) && $_REQUEST['refresh']);
-        $albums = $this->getRecentAlbums($offsetpage, $perpage, $usercache);
+        $albums = $this->getRecentAlbums($usecache);
         include(dirname(__FILE__).'/flickr/admin-albums-tab.html');
     }
     
