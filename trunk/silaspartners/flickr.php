@@ -213,13 +213,8 @@ class SilasFlickrPlugin {
             }
         } 
         
-                
-                include(dirname(__FILE__).'/flickr/admin-options.html');
-
-        
-        } else { // did not pass authentication
-            include(dirname(__FILE__).'/flickr/admin-options.html');
         }
+        include(dirname(__FILE__).'/flickr/admin-options.html');
         
     }
     function uploading_iframe($src) {
