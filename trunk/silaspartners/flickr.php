@@ -35,6 +35,9 @@ changelog:
 - compatibility with WordPress 2.1
 - bunch of random bug fixes
 
+0.87
+- added albums tab
+
 */
 
 class SilasFlickrPlugin {
