@@ -1,0 +1,10 @@
+#summary Known issues and workarounds
+
+= Details =
+
+    * Your PHP setup will need to have the libcurl and XML libraries installed in order for this plugin to work.
+    * This plugin may not work well if your WordPress blog is installed on a Microsoft IIS web server.
+    * WordPress permalinks need to be enabled and set to something other than “Default”.
+    * The plugin’s directory needs to be writable by Apache (or whatever webserver you are using), this is to store cache data from Flickr
+    * You will need approx 25 MB of free space on your server for the cache.
+    * Please check the Flickr group if you are having problems with this plugin. Chances are somebody else encountered it before and a solution was posted to the forum.
