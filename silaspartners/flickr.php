@@ -7,7 +7,7 @@ Author: Silas Partners (Joe Tan)
 Version: 0.88
 Author URI: http://www.silaspartners.com/
 
-Copyright (C) 2006  Silas Partners
+Copyright (C) 2007  Silas Partners
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,20 +23,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
-changelog:
-- sidebar widget photos respect lightbox setting
-- updated templates
+Change Log: http://code.google.com/p/photo-album/wiki/ChangeLog
 
-0.85:
-- users must now use their own API key. added supporting screens
-- template handling is much more intelligent (don't need to copy all photoalbum-*.html templates to the same directory for customizations
-
-0.86:
-- compatibility with WordPress 2.1
-- bunch of random bug fixes
-
-0.87
-- added albums tab
 
 */
 
