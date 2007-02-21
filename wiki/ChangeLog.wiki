@@ -1,5 +1,5 @@
 #summary Plugin release history.
-* 0.88 - Feb 21 2007 - Hopefully, this fixes 404 issues once and for all
+ * 0.88 - Feb 21 2007 - Hopefully, this fixes 404 issues once and for all
     * 0.87 - Feb 6 2007 — Addressed performance issues
     * 0.86 - Jan 30 2007 — Compatibility updated for WordPress 2.1
     * 0.85 - Oct 2 2006 — Maintenance release to deal with Flickr API key issue
