@@ -4,7 +4,7 @@ Plugin Name: Flickr Photo Gallery
 Plugin URI: http://www.tantannoodles.com/toolkit/photo-album/
 Description: This plugin will retrieve your Flickr photos and allow you to easily add your photos to your posts. <a href="options-general.php?page=silaspartners/flickr.php">Configure...</a>
 Author: Silas Partners (Joe Tan)
-Version: 0.88
+Version: 0.89
 Author URI: http://www.silaspartners.com/
 
 Copyright (C) 2007  Silas Partners
@@ -492,9 +492,10 @@ class SilasFlickrPlugin {
 	    $args = array();
         if ($_REQUEST['tags']) $args['tags'] = $_REQUEST['tags'];
         if ($_REQUEST['everyone']) $args['everyone'] = 1;
+        $spanStyle = "padding:0 20px 0 0;background:url(../wp-content/plugins/silaspartners/flickr/icon.gif) no-repeat right;";
         $tab = array(
-            'silas_flickr' => array('Photos', 'upload_files', array(&$this, 'photosTab'), array(100, 10), $args),
-            'silas_flickr_album' => array('Albums', 'upload_files', array(&$this, 'albumsTab'), 0, $args)
+            'silas_flickr' => array('<span style="'.$spanStyle.'">Photos</span>', 'upload_files', array(&$this, 'photosTab'), array(100, 10), $args),
+            'silas_flickr_album' => array('<span style="'.$spanStyle.'">Albums</span>', 'upload_files', array(&$this, 'albumsTab'), 0, $args)
             );
         return array_merge($array, $tab);
     }
