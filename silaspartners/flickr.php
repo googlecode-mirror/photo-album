@@ -322,8 +322,12 @@ class SilasFlickrPlugin {
                         $context = $flickr->getContext($request['photo']);
                     }
                     $photo = $flickr->getPhoto($request['photo']);
-                    $sizes = $flickr->getPhotoSizes($request['photo']);
-                    $comments = $flickr->getComments($request['photo']);
+                    if($flickr->getOption('hidePrivatePhotos') && ($photo['visibility']['ispublic'] <= 0)) {
+                        $photo = array();
+                    } else {
+                        $sizes = $flickr->getPhotoSizes($request['photo']);
+                        $comments = $flickr->getComments($request['photo']);
+                    }
                     
                     $user = $flickr->auth_checkToken();
                     $nsid = $user['user']['nsid'];

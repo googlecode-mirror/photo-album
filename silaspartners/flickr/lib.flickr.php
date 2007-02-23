@@ -270,14 +270,6 @@ class SilasFlickr extends silas_phpFlickr {
     function getPhotos($album_id) {
         $album_id = $album_id . '';
         $photos = $this->photosets_getPhotos($album_id);
-        if (is_array($photos) && $this->getOption('hidePrivatePhotos')) {
-            foreach ($photos['photo'] as $k => $photo) {
-                $perms = $this->photos_getPerms($photo['id']);
-                if ($perms['ispublic'] != '1') {
-                    unset($photos['photo'][$k]);
-                }
-            }
-        }
         $return = array();
         if (is_array($photos)) foreach ($photos['photo'] as $photo) {
             $row = array();
@@ -445,6 +437,9 @@ class SilasFlickr extends silas_phpFlickr {
         $nocache = (($this->_silas_cacheExpire > 0) ? true : false);
         $nocache = ($nocache ? true : 
             ($this->_silas_useCache ? false : true));
+        if ($this->getOption('hidePrivatePhotos')) {
+            $args['privacy_filter'] = 1;
+        }
         parent::request($command, $args, $nocache);
     }
 
