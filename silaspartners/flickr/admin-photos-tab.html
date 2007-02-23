@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
 var lastPhoto = false;
 function silas_showOptions(id) {
     if (lastPhoto) silas_hideOptions(lastPhoto)
@@ -34,19 +34,9 @@ function silas_addPhoto(photoUrl, sourceUrl, width, height, title) {
 	} else win.edInsertContent(win.edCanvas, h);
 
 	return false;
-
-/*			  
-    if ( richedit ) {
-        win.tinyMCE.execCommand('mceInsertContent', false, html);
-    } else {
-        win.edInsertContent(win.edCanvas, html);
-    }
-    return false;
-    */
 }
 </script>
-
-<style>
+<style type="text/css">
 #upload-files a.file-link {
     width:75px;
     height:75px;
