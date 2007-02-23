@@ -479,7 +479,8 @@ class SilasFlickrPlugin {
     
     function addPhotosTab() {
         add_filter('wp_upload_tabs', array(&$this, 'wp_upload_tabs'));
-        add_action('upload_files_silas_flickr', array(&$this, 'upload_files_silas_flickr'));
+        add_action('admin_print_scripts', array(&$this, 'upload_tabs_scripts'));
+        //add_action('upload_files_silas_flickr', array(&$this, 'upload_files_silas_flickr'));
     }
     function wp_upload_tabs ($array) {
         /*
@@ -492,12 +493,14 @@ class SilasFlickrPlugin {
 	    $args = array();
         if ($_REQUEST['tags']) $args['tags'] = $_REQUEST['tags'];
         if ($_REQUEST['everyone']) $args['everyone'] = 1;
-        $spanStyle = "padding:0 20px 0 0;background:url(../wp-content/plugins/silaspartners/flickr/icon.gif) no-repeat right;";
         $tab = array(
-            'silas_flickr' => array('<span style="'.$spanStyle.'">Photos</span>', 'upload_files', array(&$this, 'photosTab'), array(100, 10), $args),
-            'silas_flickr_album' => array('<span style="'.$spanStyle.'">Albums</span>', 'upload_files', array(&$this, 'albumsTab'), 0, $args)
+            'silas_flickr' => array('Photos (Flickr)', 'upload_files', array(&$this, 'photosTab'), array(100, 10), $args),
+            'silas_flickr_album' => array('Albums (Flickr)', 'upload_files', array(&$this, 'albumsTab'), 0, $args)
             );
         return array_merge($array, $tab);
+    }
+    function upload_tabs_scripts() {
+        include(dirname(__FILE__).'/flickr/admin-tab-head.html');
     }
     // gets called before tabs are rendered
     function upload_files_silas_flickr() {
