@@ -25,6 +25,9 @@ class SilasFlickrWidget {
         $flickr = new SilasFlickr();
         $auth_token  = get_option('silas_flickr_token');
         $flickr->setToken($auth_token);
+        $flickr->setOption(array(
+            'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
+        ));
         $user = $flickr->auth_checkToken();
 
         
