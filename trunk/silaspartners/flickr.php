@@ -4,7 +4,7 @@ Plugin Name: Flickr Photo Gallery
 Plugin URI: http://www.tantannoodles.com/toolkit/photo-album/
 Description: This plugin will retrieve your Flickr photos and allow you to easily add your photos to your posts. <a href="options-general.php?page=silaspartners/flickr.php">Configure...</a>
 Author: Silas Partners (Joe Tan)
-Version: 0.89
+Version: 0.90
 Author URI: http://www.silaspartners.com/
 
 Copyright (C) 2007  Silas Partners
@@ -220,6 +220,9 @@ class SilasFlickrPlugin {
             require_once(dirname(__FILE__).'/flickr/lib.flickr.php');
             $flickr = new SilasFlickr();
             $flickr->setToken($auth_token);
+            $flickr->setOption(array(
+                'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
+            ));
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
             //$usecache = false;
@@ -255,6 +258,9 @@ class SilasFlickrPlugin {
             require_once(dirname(__FILE__).'/flickr/lib.flickr.php');
             $flickr = new SilasFlickr();
             $flickr->setToken($auth_token);
+            $flickr->setOption(array(
+                'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
+            ));
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
             //$usecache = false;
