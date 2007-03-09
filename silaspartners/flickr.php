@@ -485,8 +485,15 @@ class SilasFlickrPlugin {
         if (!ereg('^2.1', get_bloginfo('version'))) {
             add_filter('uploading_iframe_src', array(&$this, 'uploading_iframe'));
         }
+        $this->version_check();
     }
-    
+    function version_check() {
+        global $TanTanVersionCheck;
+        if (is_object($TanTanVersionCheck)) {
+            $data = get_plugin_data(dirname(__FILE__).'/flickr.php');
+            $TanTanVersionCheck->versionCheck(200, $data['Version']);
+        }
+    }
     function addPhotosTab() {
         add_filter('wp_upload_tabs', array(&$this, 'wp_upload_tabs'));
         add_action('admin_print_scripts', array(&$this, 'upload_tabs_scripts'));
