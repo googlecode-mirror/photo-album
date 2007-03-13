@@ -297,13 +297,14 @@ class SilasFlickr extends silas_phpFlickr {
         $this->_silas_cacheExpire = -1;
         
         $return = array();
+        $comments = $comments['comment'];
         if (is_array($comments)) foreach ($comments as $comment) {
             $row = array();
             $row['id'] = $comment['id'];
             $row['author'] = $this->people_getInfo($comment['author']);
             $row['datecreate'] = $comment['datecreate'];
             $row['permalink'] = $comment['permalink'];
-            $row['comment'] = $comment['_value'];
+            $row['comment'] = $comment['_content'];
             $return[$comment['id']] = $row;
         }
         return $return;
@@ -312,12 +313,11 @@ class SilasFlickr extends silas_phpFlickr {
     function getPhotoSizes($photo_id) {
         $photo_id = $photo_id . '';
         $sizes = $this->photos_getSizes($photo_id);
+        $new = array();
         if (is_array($sizes)) foreach ($sizes as $k => $size) {
-            unset($sizes[$k]['_name']);
-            unset($sizes[$k]['_attributes']);
-            unset($sizes[$k]['_value']);
+            $new[$size['label']] = $size;
         }
-        return $sizes;
+        return $new;
     }
     function getContext($photo_id, $album_id='') {
         $photo_id = $photo_id . '';
