@@ -152,7 +152,7 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
     function getOptions(what) {
         var ajaxUpdate = new sack();
         ajaxUpdate._silas_what = what
-        ajaxUpdate.requestFile = "<?php echo $ajaxprocessor;?>"
+        ajaxUpdate.requestFile = "../wp-content/plugins/silaspartners/flickr/admin-options-load.php"
         ajaxUpdate.method = 'GET';
         ajaxUpdate.onLoading = function() {}
         ajaxUpdate.onLoaded = function() {}
