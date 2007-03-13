@@ -8,7 +8,7 @@
 <?php else: ?>
     <img class="buddy" width="48" height="48" src="http://www.flickr.com/images/buddyicon.jpg" align="left" />
 <?php endif; ?>
-<em><a href="<?php echo $comment['author']['photosurl']?>"><?php echo $comment['author']['realname']?></a> wrote...</em><br>
+<em><a href="<?php echo $comment['author']['photosurl']?>"><?php echo ($comment['author']['realname'] ? $comment['author']['realname'] : $comment['author']['username'] )?></a> wrote...</em><br>
 <?php echo $comment['comment']?></p>
 </div>
 <?php endforeach;?>
