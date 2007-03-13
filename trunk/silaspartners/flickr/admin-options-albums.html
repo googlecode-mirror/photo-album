@@ -8,6 +8,7 @@ if (count($albums) <= 0):?>
 <?php endif; ?>
 
 <?php
+$baseurl = get_option('silas_flickr_baseurl');
 $i=1;
 if (is_array($albums)) foreach ($albums as $id => $album) {
     if (false && $i == 1 ) { 
