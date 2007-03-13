@@ -83,9 +83,6 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
     include(dirname(__FILE__).'/admin-options-auth.html');
 } else { // general flickr settings
     include(dirname(__FILE__).'/admin-options-flickrsettings.html');
-    $home_path = get_home_path();
-    $ajaxprocessor = '../'.substr(dirname(__FILE__).'/admin-options-load.php', strlen( $home_path ));
-            
     ?>
     <fieldset class="options">
     <legend>Photo Albums</legend>
@@ -144,8 +141,6 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
     </form>
     
     </fieldset>
-    
-    
     
     <script type="text/javascript" src="../wp-includes/js/tw-sack.js"></script>
     <script>
