@@ -272,7 +272,7 @@ class SilasFlickr extends silas_phpFlickr {
         $album_id = $album_id . '';
         $photos = $this->photosets_getPhotos($album_id);
         $return = array();
-        if (is_array($photos)) foreach ($photos['photo'] as $photo) {
+        if (is_array($photos['photo'])) foreach ($photos['photo'] as $photo) {
             $row = array();
             $row['id'] = $photo['id'];
             $row['title'] = $photo['title'];
@@ -502,6 +502,7 @@ class SilasFlickr extends silas_phpFlickr {
     function auth_getToken ($frob) 
     {
         if ($_SESSION['phpFlickr_auth_token']) return $_SESSION['phpFlickr_auth_token'];
+
         /* http://www.flickr.com/services/api/flickr.auth.getToken.html */
         $this->request('flickr.auth.getToken', array('frob'=>$frob));
         $_SESSION['phpFlickr_auth_token'] = $this->parsed_response['auth']['token'];
