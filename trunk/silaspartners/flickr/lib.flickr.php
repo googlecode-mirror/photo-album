@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (C) 2005  Silas Partners
+Copyright (C) 2007  Silas Partners
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -208,7 +208,8 @@ class SilasFlickr extends silas_phpFlickr {
     function getGroups() {
         $groups = $this->groups_pools_getGroups();
         $return = array();
-        if (is_array($groups)) foreach ($groups as $group) {
+
+        if (is_array($groups['group'])) foreach ($groups['group'] as $group) {
             $row = array();
             $row['id'] = $group['id'];
             $row['name'] = $group['name'];
@@ -313,11 +314,11 @@ class SilasFlickr extends silas_phpFlickr {
     function getPhotoSizes($photo_id) {
         $photo_id = $photo_id . '';
         $sizes = $this->photos_getSizes($photo_id);
-        $new = array();
+        $return = array();
         if (is_array($sizes)) foreach ($sizes as $k => $size) {
-            $new[$size['label']] = $size;
+            $return[$size['label']] = $size;
         }
-        return $new;
+        return $return;
     }
     function getContext($photo_id, $album_id='') {
         $photo_id = $photo_id . '';
@@ -361,11 +362,7 @@ class SilasFlickr extends silas_phpFlickr {
                     }
                 }
             }
-            /*foreach ($array as $id => $elem) {
-                $new[$id] = $array[$id];
-            }*/
             return $pre + $array + $pos;
-            //return array_merge($pre, array_merge($array, $pos));
         } else {
             return $array;
         }
@@ -387,7 +384,6 @@ class SilasFlickr extends silas_phpFlickr {
     function _clearCache($dir) {
        if (substr($dir, strlen($dir)-1, 1) != '/')
            $dir .= '/';
-    
     
        if ($handle = opendir($dir)) {
            while ($obj = readdir($handle)) {
@@ -424,15 +420,6 @@ class SilasFlickr extends silas_phpFlickr {
     /*
         Reimplemented methods
     */
-    function parse_response ($xml = NULL) {
-        $ret = parent::parse_response($xml);
-        if (!$ret) {
-            $this->_silas_errorCode[] = $this->getErrorCode();
-            $this->_silas_errorMsg[]  = $this->getErrorMsg();
-        }
-        return $ret;
-    }
-    
     function request ($command, $args = array(), $nocache = false) {
         $nocache = (($this->_silas_cacheExpire > 0) ? true : false);
         $nocache = ($nocache ? true : 
@@ -514,12 +501,11 @@ class SilasFlickr extends silas_phpFlickr {
     }
     function auth_getToken ($frob) 
     {
+        if ($_SESSION['phpFlickr_auth_token']) return $_SESSION['phpFlickr_auth_token'];
         /* http://www.flickr.com/services/api/flickr.auth.getToken.html */
         $this->request('flickr.auth.getToken', array('frob'=>$frob));
-        $result = $this->parse_response();
-        //session_register('phpFlickr_auth_token');
-        $_SESSION['phpFlickr_auth_token'] = $result['auth']['token'];
-        return $result['auth']['token'];
+        $_SESSION['phpFlickr_auth_token'] = $this->parsed_response['auth']['token'];
+        return $_SESSION['phpFlickr_auth_token'];
     }    
 }
 ?>
