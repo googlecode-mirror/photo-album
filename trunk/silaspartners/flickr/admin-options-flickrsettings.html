@@ -24,7 +24,9 @@
 <tr><td></td>
     <td><small>Enter the path where you want your photo album to be shown. 
     <?php if ($baseurl):?>
-    View your album: <a href="<?php echo $baseurl?>"><?php echo $baseurl?></a>
+    <br />View your album: <a href="<?php echo $baseurl?>"><?php echo $baseurl?></a>
+    <?php else:?>
+    Leave field this blank and select "Flickr.com" below if you don't want a photo album on your blog.
     <?php endif;?>
     </small></td>
 </tr>
@@ -40,6 +42,14 @@
 </td>
 
 </tr>
+
+<tr>
+<th width="33%" scope="row">Photos tab:</th> 
+<td>
+<input type="checkbox" checked="checked" disabled /> Add a <em>Photos</em> and <em>Albums</em> tab in the <a href="post-new.php">write post</a> screen.
+</td>
+</tr>
+
 
 <tr>
 <th width="33%" scope="row">Flickr Sidebar Widget:</th> 
