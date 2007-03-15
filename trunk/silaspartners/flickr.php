@@ -25,8 +25,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 Change Log: http://code.google.com/p/photo-album/wiki/ChangeLog
 
-
+$Revision$
+$Date$
 */
+
 if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
     require_once(dirname(__FILE__).'/flickr/class-admin.php');
     $SilasFlickrPluginAdmin =& new SilasFlickrPluginAdmin();
@@ -46,5 +48,4 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
         add_action('template_redirect', array(&$SilasFlickrPlugin, 'template'));
     }
 }
-
 ?>
