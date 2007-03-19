@@ -6,7 +6,7 @@
 <form method="post">
 <input type="hidden" name="action" value="logout" />
 <tr valign="top">
-<th width="33%" scope="row">Retrieve Albums from this Flickr Account:</th> 
+<th width="33%" scope="row">Flickr Account:</th> 
 <td><a href="http://flickr.com/photos/<?php echo $user['user']['nsid']?>/"><strong><?php echo $user['user']['username']?></strong></a> &nbsp; <input type="submit" value="Remove Link &gt;" />
 <br><small>Your Photo Album has been granted <em>read only</em> permissions to this Flickr account</small>
 </td> 
@@ -16,32 +16,33 @@
 <form method="post">
 <input type="hidden" name="action" value="savebase" />
 <tr> 
-<th width="33%" scope="row">Photo Album URL:</th> 
-<td><?php bloginfo('siteurl')?>/<input type="text" name="baseurl" value="<?php echo substr($baseurl, strlen($baseurl_pre))?>" />
+<th width="33%" scope="row" valign="top">Photo Album Syndication:</th> 
+<td>
+<input type="radio" name="syndication" id="synidcate"> <strong>Yes</strong>, display my Flickr Albums on this blog, at this URL:<br>
+    <div style="margin:0 0 0 40px;">
+    <?php bloginfo('siteurl')?>/<input type="text" name="baseurl" value="<?php echo substr($baseurl, strlen($baseurl_pre))?>" /><br>
 
-</td> 
-</tr> 
-<tr><td></td>
-    <td><small>Enter the path where you want your photo album to be shown. 
+    <small>Enter the path where you want your photo album to be shown. 
     <?php if ($baseurl):?>
     <br />View your album: <a href="<?php echo $baseurl?>"><?php echo $baseurl?></a>
-    <?php else:?>
-    Leave field this blank and select "Flickr.com" below if you don't want a photo album on your blog.
-    <?php endif;?>
-    </small></td>
-</tr>
+    <?php endif; ?>
+    </small>
 
-
-<tr>
-<th width="33%" scope="row">Photos should link to:</th> 
-<td>
-<input type="radio" name="linkoptions" value="flickr" <?php echo ($linkoptions ? 'checked="checked"' : '')?> id="linkoptions1" /><label for="linkoptions1"> Flickr.com</label>
+    <br>
+<br>
+Photos should link to:<br>
+    <input type="radio" name="linkoptions" value="flickr" <?php echo ($linkoptions ? 'checked="checked"' : '')?> id="linkoptions1" /><label for="linkoptions1"> Flickr.com</label>
 &nbsp; 
 <input type="radio" name="linkoptions" value="" <?php echo (!$linkoptions ? 'checked="checked"' : '')?> id="linkoptions2" /><label for="linkoptions2"> The URL specified above</label>
 <br /><small>Where you want your photos to link to, when inserted into a blog post or from the sidebar</small>
-</td>
 
-</tr>
+    
+    </div>
+    
+<input type="radio" name="syndication" id="synidcate"> <strong>No</strong>, don't display my Flickr Albums on this blog<br>
+
+</td> 
+</tr> 
 
 <tr>
 <th width="33%" scope="row">Photos tab:</th> 
