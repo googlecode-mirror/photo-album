@@ -28,14 +28,8 @@
     <?php endif; ?>
     </small>
 
-    <br>
 <br>
-Photos should link to:<br>
-    <input type="radio" name="linkoptions" value="flickr" <?php echo ($linkoptions ? 'checked="checked"' : '')?> id="linkoptions1" /><label for="linkoptions1"> Flickr.com</label>
-&nbsp; 
-<input type="radio" name="linkoptions" value="" <?php echo (!$linkoptions ? 'checked="checked"' : '')?> id="linkoptions2" /><label for="linkoptions2"> The URL specified above</label>
-<br /><small>Where you want your photos to link to, when inserted into a blog post or from the sidebar</small>
-
+<br>
     
     </div>
     
@@ -44,12 +38,14 @@ Photos should link to:<br>
 </td> 
 </tr> 
 
-<tr>
-<th width="33%" scope="row">Photos tab:</th> 
-<td>
-<input type="checkbox" checked="checked" disabled /> Add a <em>Photos</em> and <em>Albums</em> tab in the <a href="post-new.php">write post</a> screen.
-</td>
-</tr>
+<tr><th width="33%" scope="row">Photos tab:</th> 
+    <td><input type="checkbox" checked="checked" disabled /> Add a <em>Photos</em> and <em>Albums</em> tab in the <a href="post-new.php">write post</a> screen.</td></tr>
+
+<tr><th width="33%" scope="row">Photos should link to:</th>
+    <td><input type="radio" name="linkoptions" value="flickr" <?php echo ($linkoptions ? 'checked="checked"' : '')?> id="linkoptions1" /><label for="linkoptions1"> Flickr.com</label> &nbsp;
+    <input type="radio" name="linkoptions" value="" <?php echo (!$linkoptions ? 'checked="checked"' : '')?> id="linkoptions2" /><label for="linkoptions2"> The URL specified above</label>
+    <br /><small>Where you want your photos to link to, when inserted into a blog post or from the sidebar</small></td></tr>
+
 
 
 <tr>
