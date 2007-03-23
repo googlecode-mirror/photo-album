@@ -35,17 +35,22 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
     
 } else {
     $baseurl = get_option('silas_flickr_baseurl');
-    if ($baseurl && (strpos($_SERVER['REQUEST_URI'], $baseurl) === 0)) {
-        $_SERVER['_SILAS_FLICKR_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
-        $_SERVER['REQUEST_URI'] = $baseurl;
+    if ($baseurl) {
+        if (strpos($_SERVER['REQUEST_URI'], $baseurl) === 0) {
+            $_SERVER['_SILAS_FLICKR_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
+            $_SERVER['REQUEST_URI'] = $baseurl;
         
-        require_once(dirname(__FILE__).'/flickr/class-public.php');
-        $SilasFlickrPlugin =& new SilasFlickrPlugin();
+            require_once(dirname(__FILE__).'/flickr/class-public.php');
+            $SilasFlickrPlugin =& new SilasFlickrPlugin();
         
-        status_header(200); // ugly, just force a 200 status code
-        add_filter('request', array(&$SilasFlickrPlugin, 'request'));
-        add_action('parse_query', array(&$SilasFlickrPlugin, 'parse_query'));
-        add_action('template_redirect', array(&$SilasFlickrPlugin, 'template'));
+            status_header(200); // ugly, just force a 200 status code
+            add_filter('request', array(&$SilasFlickrPlugin, 'request'));
+            add_action('parse_query', array(&$SilasFlickrPlugin, 'parse_query'));
+            add_action('template_redirect', array(&$SilasFlickrPlugin, 'template'));
+        } elseif (strpos($_SERVER['REQUEST_URI'].'/', $baseurl) === 0) {
+            header('location: http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].'/');
+            exit;
+        }
     }
 }
 ?>
