@@ -18,7 +18,7 @@
 <tr> 
 <th width="33%" scope="row" valign="top">Photo Album Syndication:</th> 
 <td>
-<input type="radio" name="synidcateoff" value="" <?php echo ($baseurl ? 'checked="checked"' : '')?> id="synidcate" onclick="document.getElementById('baseurldiv').style.display='block';"> <strong>Yes</strong>, display my Flickr Albums on this blog, at this URL:<br>
+<input type="radio" name="synidcateoff" value="" <?php echo ($baseurl ? 'checked="checked"' : '')?> id="synidcate" onclick="document.getElementById('baseurldiv').style.display='block';"> <strong>Yes</strong>, display my Flickr Albums on this blog<br>
     <div style="margin:0 0 0 40px;<?php echo (!$baseurl ? 'display:none;' : '')?>" id="baseurldiv" >
     <?php bloginfo('siteurl')?>/<input type="text" name="baseurl" id="baseurl" value="<?php echo substr($baseurl, strlen($baseurl_pre))?>" /><br>
 

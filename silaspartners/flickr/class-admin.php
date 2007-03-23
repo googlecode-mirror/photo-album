@@ -75,7 +75,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
             $baseurl = $url['path'] . '/' . $_POST['baseurl'];
             if (!ereg('.*/$', $baseurl)) $baseurl .= '/';
 
-            if (strlen($_POST['baseurl']) <= 0) {
+            if ($_POST['synidcateoff'] || strlen($_POST['baseurl']) <= 0) {
                 $baseurl = false;
             }
             update_option('silas_flickr_baseurl_pre', $url['path'] . '/');
