@@ -279,7 +279,7 @@ class SilasFlickr extends silas_phpFlickr {
             $row['sizes'] = $this->getPhotoSizes($photo['id']);
             $row['pagename2'] = $this->_sanitizeTitle($photo['title']);
             $row['pagename'] = $row['pagename2'] . '.html';
-            $row = array_merge($row, $this->getPhoto($photo['id']));
+            $row = array_merge($row, (array) $this->getPhoto($photo['id']));
             $return[$photo['id']] = $row;
         }
 
