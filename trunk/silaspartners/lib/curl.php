@@ -140,7 +140,9 @@ class SilasCurl {
         list($response_headers, $response_body) = explode("\r\n\r\n", $this_response, 2);
         $response_header_lines = explode("\r\n", $response_headers);
         $http_response_line = array_shift($response_header_lines);
-        if(preg_match('@^HTTP/[0-9]\.[0-9] ([0-9]{3})@',$http_response_line, $matches)) { $response_code = $matches[1]; }
+        if (preg_match('@^HTTP/[0-9]\.[0-9] 100@',$http_response_line, $matches)) { 
+            return $this->_parseResponse($response_body); 
+        } else if(preg_match('@^HTTP/[0-9]\.[0-9] ([0-9]{3})@',$http_response_line, $matches)) { $response_code = $matches[1]; }
         $response_header_array = array();
         foreach($response_header_lines as $header_line) {
             list($header,$value) = explode(': ', $header_line, 2);
