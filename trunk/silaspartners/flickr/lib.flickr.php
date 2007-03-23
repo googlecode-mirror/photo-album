@@ -406,11 +406,14 @@ class SilasFlickr extends silas_phpFlickr {
     }
     function _sanitizeTitle($title) {
         // try this WP function sanitize_title_with_dashes()
-        
-       // Replace spaces with underscores
-       $output = preg_replace("/\s/e" , '_' , $title);
+
+        // comment out these two lines, and use the next two if you like underscores instead
+        $output = preg_replace('/\s+/', '-', $title);
+        $output = preg_replace("/[^a-zA-Z0-9-]/" , "" , $output);
+        //$output = preg_replace("/\s/e" , "_" , $title);
+        //$output = preg_replace("/\W/e" , "" , $output);
+   	
        // Remove non-word characters
-       $output = preg_replace("/\W/e" , "" , $output);
        return $output;
     }
     function getErrorMsgs() {
