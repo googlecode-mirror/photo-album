@@ -1,5 +1,7 @@
 <?php
-global $SilasFlickrPlugin;
+require_once(dirname(__FILE__).'/class-admin.php');
+$SilasFlickrPluginAdmin =& new SilasFlickrPluginAdmin();
+
 $silas_perpage = 15;
 
 if (isset($_POST['refresh'])) $_GET['start'] = 0;
@@ -12,7 +14,7 @@ $usecache = ! (isset($_REQUEST['refresh']) && $_REQUEST['refresh']);
 
 $extraVars = "&amp;everyone=$everyone&amp;usecache=$usecache&amp;tags=".urlencode($tags);
 
-$photos = $SilasFlickrPlugin->getRecentPhotos($tags, $silas_offsetpage, $silas_perpage, $everyone, $usecache);
+$photos = $SilasFlickrPluginAdmin->getRecentPhotos($tags, $silas_offsetpage, $silas_perpage, $everyone, $usecache);
 
 $width = 0;
 foreach ($photos as $photo) {
