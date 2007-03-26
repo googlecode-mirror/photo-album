@@ -429,8 +429,13 @@ class SilasFlickr extends silas_phpFlickr {
             ($this->_silas_useCache ? false : true));
         if ($this->getOption('hidePrivatePhotos')) {
             $args['privacy_filter'] = 1;
+            if ($command != 'flickr.auth.checkToken')  {
+                $token = $this->token;
+                //$this->token = ''; // just make an unathenticated call
+            }
         }
         parent::request($command, $args, $nocache);
+        if ($token) $this->token = $token;
     }
 
     
@@ -510,6 +515,7 @@ class SilasFlickr extends silas_phpFlickr {
         $this->request('flickr.auth.getToken', array('frob'=>$frob));
         $_SESSION['phpFlickr_auth_token'] = $this->parsed_response['auth']['token'];
         return $_SESSION['phpFlickr_auth_token'];
-    }    
+    }
+    
 }
 ?>
