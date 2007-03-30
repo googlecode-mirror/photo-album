@@ -21,6 +21,7 @@ class SilasCurl {
         $this->cookies = array();
         $this->headers = array();
         $this->url = false;
+        $this->addHeader('Connection', 'close');
     }
     
     function addHeader($header, $value) {
