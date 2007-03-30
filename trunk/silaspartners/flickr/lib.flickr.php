@@ -456,6 +456,7 @@ class SilasFlickr extends silas_phpFlickr {
 
     function getCached ($request) // buggy, time based caching doesnt work
     {
+        $reqhash = md5(serialize($request));
         if ($this->cache == 'db') {
             $result = $this->cache_db->get_col("SELECT response FROM " . $this->cache_table . " WHERE request = '" . $reqhash . "'");
             if (!empty($result)) {
@@ -466,10 +467,10 @@ class SilasFlickr extends silas_phpFlickr {
             //Checks the database or filesystem for a cached result to the request.
             //If there is no cache result, it returns a value of false. If it finds one,
             //it returns the unparsed XML.
-            $reqhash = md5(serialize($request));
+            
             $pre = substr($reqhash, 0, 2);
             $file = $this->cache_dir . '/' . $pre . '/' . $reqhash . '.cache';
-    
+
             if (file_exists($file)) {
                 if ($this->_silas_cacheExpire > 0) {
                     if ((time() - filemtime($file)) > $this->_silas_cacheExpire) {
