@@ -231,6 +231,15 @@ class silas_phpFlickr {
             //Send Requests
             if ($this->req->sendRequest()) {
                 $this->response = $this->req->getResponseBody();
+
+                //
+                // BUG:
+                // Have no idea why these next two lines are necessary, but it appears that responses
+                // are getting clobbered together... possibly by CURL
+                //  
+                $lines = explode("\n", $this->response);
+                if (count($lines) > 0) $this->response = array_pop($lines); // just take the last line
+
                 $this->cache($args, $this->response);
             } else {
                 die("There has been a problem sending your command to the server.");
