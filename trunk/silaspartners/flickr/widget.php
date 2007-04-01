@@ -3,13 +3,13 @@
 Plugin Name: Flickr Sidebar widget
 Description: Adds a sidebar widget to display your recent Flickr photos
 Author: Silas Partners (Joe Tan)
-Version: 0.1
+Version: 0.2
 Author URI: http://www.silaspartners.com/
 */
 
 class SilasFlickrWidget {
     function SilasFlickrWidget () {
-        if (function_exists('register_sidebar_widget')) {
+        if (function_exists('register_sidebar_widget')) { 
             register_sidebar_widget('Flickr Sidebar', array(&$this, 'display'));
             register_widget_control('Flickr Sidebar', array(&$this, 'control'));
         }
@@ -50,17 +50,9 @@ class SilasFlickrWidget {
     function animationHeader() {
         global $SilasFlickrPlugin;
         if (!$SilasFlickrPlugin->config['useLightbox']) { // see if animation libraries are already loaded
-            if (file_exists(TEMPLATEPATH . '/photoalbum-lightbox-header.html')) {
-                include (TEMPLATEPATH . '/photoalbum-lightbox-header.html');
-            } else {
-                include(dirname(__FILE__).'/photoalbum-lightbox-header.html');
-            }
+            include ($this->getDisplayTemplate('photoalbum-lightbox-header.html'));
         }
-        if (file_exists(TEMPLATEPATH . '/widget-header.html')) {
-            include (TEMPLATEPATH . '/widget-header.html');
-        } else {
-            include(dirname(__FILE__).'/widget-header.html');
-        }
+        include ($this->getDisplayTemplate('widget-header.html'));
     }
     function animationFooter() {
         
@@ -68,7 +60,10 @@ class SilasFlickrWidget {
     
     function display($args) {
         global $SilasFlickrPlugin;
-		
+		if (!is_object($SilasFlickrPlugin)) {
+		    require_once(dirname(__FILE__).'/class-public.php');
+            $SilasFlickrPlugin =& new SilasFlickrPlugin();
+		}
         extract($args);
         $defaults = array('count' => 10);
         $options = (array) get_option('silas_flickr_widget');
@@ -93,13 +88,18 @@ class SilasFlickrWidget {
 		}
 		echo $before_widget;
 		if ($options['animate']) {
-		    include(dirname(__FILE__).'/widget-display-animate.html');
+		    include ($this->getDisplayTemplate('widget-display-animate.html'));
 		} else {
-            include(dirname(__FILE__).'/widget-display.html');
+		    include ($this->getDisplayTemplate('widget-display.html'));
 		}
         echo $after_widget;
     }
-    
+    function getDisplayTemplate($file) {
+        if (file_exists(TEMPLATEPATH . '/'.$file)) {
+            return TEMPLATEPATH . '/'.$file;
+        } else {
+            return dirname(__FILE__).'/'.$file;
+        }
+    }
 }
-$GLOBALS['SilasFlickrWidget'] =& new SilasFlickrWidget();
 ?>
