@@ -4,9 +4,6 @@ class SilasFlickrPlugin {
     var $config = array();
     
     function SilasFlickrPlugin() {
-        if (get_option('silas_flickr_showbadge')) {
-            add_action('plugins_loaded', array(&$this, 'load_widget'));
-        }
     }
 
     function getRecentPhotos($tags='', $offsetpage=0, $max=15, $everyone=false, $usecache=true) {
@@ -276,10 +273,6 @@ class SilasFlickrPlugin {
     function request($query_vars) {
         $query_vars['error'] = false;
         return $query_vars;
-    }
-    
-    function load_widget() {
-        require_once(dirname(__FILE__).'/widget.php');
     }
 }
 ?>
