@@ -7,10 +7,9 @@ $linkoptions = get_option('silas_flickr_linkoptions');
 //don't need to resolve absolutely, since we're not in a post
 //$parts = parse_url(get_bloginfo('home'));
 //$home = 'http://'.$parts['host'];
-
 if (is_array($photos)) foreach($photos as $photo):
-if ($linkoptions == 'flickr') {
-    $photoURL = $photo['info']['urls']['url'][0]['_value'];
+if (!$baseurl || ($linkoptions == 'flickr')) {
+    $photoURL = array_pop($photo['info']['urls']['url'][0]);
 } else {
     if ($SilasFlickrPlugin->config['useLightbox']) {
         $photoURL = $photo['sizes']['Medium']['source'];
