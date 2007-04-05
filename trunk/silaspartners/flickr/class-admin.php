@@ -8,9 +8,19 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
     function SilasFlickrPluginAdmin() {
         //parent::SilasFlickrPlugin();
         add_action('admin_menu', array(&$this, 'addhooks'));
-        //add_action('activate_silaspartners/flickr.php', array(&$this, 'activate'));
+        add_action('activate_silaspartners/flickr.php', array(&$this, 'activate'));
         add_action('deactivate_silaspartners/flickr.php', array(&$this, 'deactivate'));
         add_action('load-upload.php', array(&$this, 'addPhotosTab'));
+        if ($_GET['tantanActivate'] == 'photo-album') {
+            $this->showConfigNotice();
+        }
+    }
+    function activate() {
+        wp_redirect('plugins.php?tantanActivate=photo-album');
+        exit;
+    }
+    function showConfigNotice() {
+        add_action('admin_notices', create_function('', 'echo \'<div id="message" class="updated fade"><p>The Flickr Photo Album plugin has been <strong>activated</strong>. <a href="options-general.php?page=silaspartners/flickr/class-admin.php">Configure the plugin &gt;</a></p></div>\';'));
     }
 
     function admin() {
@@ -256,9 +266,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
     }
     
     
-    function activate() {
-    }
-    
+   
     // cleanup after yourself
     function deactivate() {
         require_once(dirname(__FILE__).'/lib.flickr.php');
