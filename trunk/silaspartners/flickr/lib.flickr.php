@@ -247,11 +247,11 @@ class SilasFlickr extends silas_phpFlickr {
         return $return;
     }
     
-    function getPhotosByGroup($group_id, $tags=NULL) {
+    function getPhotosByGroup($group_id, $tags=NULL, $user_id = NULL, $extras = NULL, $per_page = NULL, $page = NULL) {
         $group_id = $group_id . '';
         
         $this->_silas_cacheExpire = 3600;
-        $photos = $this->groups_pools_getPhotos($group_id, $tags);
+        $photos = $this->groups_pools_getPhotos($group_id, $tags, $user_id, $extras, $per_page, $page);
         $this->_silas_cacheExpire = -1;
         
         
