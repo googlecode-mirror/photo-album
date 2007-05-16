@@ -205,7 +205,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
     
     function addhooks() {
         add_options_page('Photo Album', 'Photo Album', 10, __FILE__, array(&$this, 'admin'));
-        if (!ereg('^2.1', get_bloginfo('version'))) {
+        if (version_compare(get_bloginfo('version'), '2.1', '<')) {
             add_filter('uploading_iframe_src', array(&$this, 'uploading_iframe'));
         }
         $this->version_check();
