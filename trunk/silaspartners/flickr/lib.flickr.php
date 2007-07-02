@@ -375,7 +375,10 @@ class SilasFlickr extends silas_phpFlickr {
         $this->_silas_useCache = true;
     }
     function clearCache() {
-        if ($this->_clearCache($this->cache_dir)) {
+        if (SILAS_FLICKR_CACHEMODE == 'db') {
+            $result = $this->cache_db->query("DELETE FROM silas_flickr_cache;");
+            return true;
+        } elseif ($this->_clearCache($this->cache_dir)) {
             return @mkdir($this->cache_dir, 0770);
         } else {
             return false;
