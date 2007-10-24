@@ -22,11 +22,25 @@ $useLightbox = false;
 </style>
 <script type="text/javascript">
 /* <![CDATA[ */
+<?php /* // Old Flickr slideshow code
 function openSlideShow(id, gid) {
     var url = "http://flickr.com/slideShow/index.gne?set_id="+id
     if (gid) url = url + "&group_id="+gid
     var w = window.open(url, '_blank', 'width=500,height=500');
     if (w) w.focus()
+    return false;
+}
+*/ ?>
+function openSlideShow(id, gid) {
+    username = "<?php echo $user['user']['nsid'];?>";
+    var url = "http://flickr.com/";
+    if(!isNaN(parseInt(gid,10))) { url += 'groups/pool/'+gid+'/show/?no_back=1'; }
+    else if(!isNaN(parseInt(id,10))) { url += 'photos/'+username+'/sets/'+id+'/show/?no_back=1'; }
+    else { return true; }
+    var w = Math.max(screen.width-140, 750);
+    var h = Math.max(screen.height-140, 400);
+    var show = window.open(url, "_blank", "width=" + w + ",height=" + h + ",top=10,left=70,scrollbars=no, status=no, resizable=yes");
+    try { show.focus(); } catch(err) {}
     return false;
 }
 /* ]]> */
