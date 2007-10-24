@@ -26,7 +26,7 @@ define("SILAS_FLICKR_SHAREDSECRET", get_option('silas_flickr_sharedsecret'));
 //
 // change "fs" to "db" to use database caching instead
 if (!defined("SILAS_FLICKR_CACHEMODE")) 
-define("SILAS_FLICKR_CACHEMODE", "fs");
+define("SILAS_FLICKR_CACHEMODE", "db");
 
 
 require_once(dirname(__FILE__)."/lib.phpFlickr.php");
