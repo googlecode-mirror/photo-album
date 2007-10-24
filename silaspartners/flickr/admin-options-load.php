@@ -11,8 +11,8 @@ if (!isset($_GET['view']) ) {
     exit;
 }
 require_once(dirname(__FILE__).$tmpPath.'/wp-config.php');
-require_once(dirname(__FILE__).$tmpPath.'/wp-admin/admin-functions.php');
-require_once(dirname(__FILE__).$tmpPath.'/wp-admin/admin-db.php');
+//require_once(dirname(__FILE__).$tmpPath.'/wp-admin/admin-functions.php');
+//require_once(dirname(__FILE__).$tmpPath.'/wp-admin/admin-db.php');
 
 get_currentuserinfo();
 //print_r(wp_get_current_user());
