@@ -237,6 +237,7 @@ class SilasFlickrPlugin {
     }
     
     function header() {
+        $user = get_option('silas_flickr_user');
         include($this->getDisplayTemplate('photoalbum-header.html'));
     }
     function footer() {
