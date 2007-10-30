@@ -65,6 +65,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
                 CREATE TABLE IF NOT EXISTS `$flickr->cache_table` (
                     `request` CHAR( 35 ) NOT NULL ,
                     `response` TEXT NOT NULL ,
+                    `created` DATETIME NOT NULL ,
                     `expiration` DATETIME NOT NULL ,
                     INDEX ( `request` )
                 ) TYPE = MYISAM");
