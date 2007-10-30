@@ -28,6 +28,9 @@ define("SILAS_FLICKR_SHAREDSECRET", get_option('silas_flickr_sharedsecret'));
 if (!defined("SILAS_FLICKR_CACHEMODE")) 
 define("SILAS_FLICKR_CACHEMODE", "db");
 
+if (!defined("SILAS_FLICKR_CACHE_TIMEOUT")) 
+define("SILAS_FLICKR_CACHE_TIMEOUT", 30*86400); // 30 days default cache
+
 
 require_once(dirname(__FILE__)."/lib.phpFlickr.php");
 
@@ -53,6 +56,8 @@ class SilasFlickr extends silas_phpFlickr {
         if (SILAS_FLICKR_CACHEMODE == 'db') {
             global $wpdb; // hmm, might need to think of a better way of doing this
             $this->enableCache('db', $wpdb);
+		} elseif (SILAS_FLICKR_CACHEMODE == 'false') {
+			// no cache
         } else {
             $cacheDir = dirname(__FILE__).'/flickr-cache';
             if (!file_exists($cacheDir)) {
@@ -126,8 +131,8 @@ class SilasFlickr extends silas_phpFlickr {
     function getTags($count=100) {
         $data = $this->tags_getListUserPopular(NULL, $count);
         $return = array();
-        if (is_array($data['tags']['tag'])) foreach ($data['tags']['tag'] as $tag) {
-            $return[$tag['_value']] = $tag['count'];
+        if (is_array($data)) foreach ($data as $tag) {
+            $return[$tag['_content']] = $tag['count'];
         }
         return $return;
     }
@@ -376,7 +381,7 @@ class SilasFlickr extends silas_phpFlickr {
     }
     function clearCache() {
         if (SILAS_FLICKR_CACHEMODE == 'db') {
-            $result = $this->cache_db->query("DELETE FROM silas_flickr_cache;");
+            $result = $this->cache_db->query("DELETE FROM " . $this->cache_table . ";");
             return true;
         } elseif ($this->_clearCache($this->cache_dir)) {
             return @mkdir($this->cache_dir, 0770);
@@ -443,11 +448,11 @@ class SilasFlickr extends silas_phpFlickr {
 
     
     function enableCache($type, $connection, $cache_expire = 600, $table = 'flickr_cache') {
-        
+        global $wpdb;
         if ($type == 'db') {
             $this->cache = 'db';
             $this->cache_db =& $connection;
-            $this->cache_table = 'silas_flickr_cache';
+            $this->cache_table = $wpdb->prefix.'silas_flickr_cache';
             
         } elseif ($type == 'fs') {
             $this->cache = 'fs';
@@ -487,12 +492,20 @@ class SilasFlickr extends silas_phpFlickr {
         }
     }
     
-    function cache ($request, $response) 
-    {
+    function cache ($request, $response, $expiration=false) {
+		if (!$expiration) {
+			$expiration = time() + SILAS_FLICKR_CACHE_TIMEOUT; // 30 days default cache
+		}
+		if (is_array($request)) {
+			unset($request['api_key']);
+			unset($request['auth_token']);
+			unset($request['format']);
+		}
+		
         $reqhash = md5(serialize($request));
         if ($this->cache == 'db') {
             $this->cache_db->query("DELETE FROM $this->cache_table WHERE request = '$reqhash'");
-            $sql = "INSERT INTO " . $this->cache_table . " (request, response, expiration) VALUES ('$reqhash', '" . addslashes($response) . "', '" . strftime("%Y-%m-%d %H:%M:%S") . "')";
+            $sql = "INSERT INTO " . $this->cache_table . " (request, response, created, expiration) VALUES ('$reqhash', '" . addslashes($response) . "', '" . strftime("%Y-%m-%d %H:%M:%S") . "', '" . strftime("%Y-%m-%d %H:%M:%S", $expiration) . "')";
             $this->cache_db->query($sql);
         } elseif ($this->cache == 'fs') {
             //Caches the unparsed XML of a request.
