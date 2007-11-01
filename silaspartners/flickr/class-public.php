@@ -20,8 +20,8 @@ class SilasFlickrPlugin {
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
             //$usecache = false;
-            if (!$usecache) $flickr->startClearCache(); // blah, buggy as hell
-            $flickr->_silas_cacheExpire = 300; // cache just 5 mins
+            //if (!$usecache) $flickr->startClearCache(); // blah, buggy as hell
+            //$flickr->_silas_cacheExpire = 300; // cache just 5 mins
             //$flickr->_silas_cacheExpire = 3600; // cache one hour
             if (!$tags && $everyone) {
                 $photos = $flickr->getRecent(NULL, $max, $offsetpage);
@@ -33,8 +33,8 @@ class SilasFlickrPlugin {
                     'page' => $offsetpage,
                 ));
             }
-            if (!$usecache) $flickr->doneClearCache();
-            $this->_silas_cacheExpire = -1;
+            //if (!$usecache) $flickr->doneClearCache();
+            //$this->_silas_cacheExpire = -1;
             if ($everyone || !$baseurl || $linkoptions) {
                 foreach ($photos as $k => $photo) {
                     $photos[$k]['info'] = $flickr->photos_getInfo($photo['id']);
