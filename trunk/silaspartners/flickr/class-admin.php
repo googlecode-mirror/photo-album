@@ -63,6 +63,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
             global $wpdb;
             $wpdb->query("
                 CREATE TABLE IF NOT EXISTS `$flickr->cache_table` (
+                    `command` CHAR( 255 ) NOT NULL ,
                     `request` CHAR( 35 ) NOT NULL ,
                     `response` TEXT NOT NULL ,
                     `created` DATETIME NOT NULL ,

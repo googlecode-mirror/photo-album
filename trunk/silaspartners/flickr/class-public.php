@@ -226,6 +226,8 @@ class SilasFlickrPlugin {
             echo "<!-- \n". $errorMessages . "\n-->\n";
         }
         
+
+		$flickr->clearCacheStale();
         exit;
         
     }

@@ -389,6 +389,20 @@ class SilasFlickr extends silas_phpFlickr {
             return false;
         }
     }
+	function clearCacheStale() {
+		if (SILAS_FLICKR_CACHEMODE == 'db') {
+			$commands = array(
+				'flickr.groups.pools.getGroups' => 432000,
+				'flickr.groups.pools.getPhotos' => 432000,
+				'flickr.photosets.getList' => 43200,
+				);
+			foreach ($commands as $command => $timeout) {
+				$time = time() - $timeout;
+            	$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$command."' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time)."' ;");
+			}
+            return true;
+        }
+	}
     function _clearCache($dir) {
        if (substr($dir, strlen($dir)-1, 1) != '/')
            $dir .= '/';
@@ -505,7 +519,7 @@ class SilasFlickr extends silas_phpFlickr {
         $reqhash = md5(serialize($request));
         if ($this->cache == 'db') {
             $this->cache_db->query("DELETE FROM $this->cache_table WHERE request = '$reqhash'");
-            $sql = "INSERT INTO " . $this->cache_table . " (request, response, created, expiration) VALUES ('$reqhash', '" . addslashes($response) . "', '" . strftime("%Y-%m-%d %H:%M:%S") . "', '" . strftime("%Y-%m-%d %H:%M:%S", $expiration) . "')";
+            $sql = "INSERT INTO " . $this->cache_table . " (command, request, response, created, expiration) VALUES ('".$request['method']."', '$reqhash', '" . addslashes($response) . "', '" . strftime("%Y-%m-%d %H:%M:%S") . "', '" . strftime("%Y-%m-%d %H:%M:%S", $expiration) . "')";
             $this->cache_db->query($sql);
         } elseif ($this->cache == 'fs') {
             //Caches the unparsed XML of a request.
