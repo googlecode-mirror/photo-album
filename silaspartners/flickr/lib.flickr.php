@@ -467,7 +467,7 @@ class SilasFlickr extends silas_phpFlickr {
             $this->cache = 'db';
             $this->cache_db =& $connection;
             $this->cache_table = $wpdb->prefix.'silas_flickr_cache';
-            
+            $this->_silas_useCache = true;
         } elseif ($type == 'fs') {
             $this->cache = 'fs';
             $this->cache_expire = $cache_expire;
@@ -478,11 +478,11 @@ class SilasFlickr extends silas_phpFlickr {
 
     function getCached ($request) // buggy, time based caching doesnt work
     {
-        $reqhash = md5(serialize($request));
+        $reqhash = $this->makeReqHash($request);
         if ($this->cache == 'db') {
             $result = $this->cache_db->get_col("SELECT response FROM " . $this->cache_table . " WHERE request = '" . $reqhash . "'");
             if (!empty($result)) {
-                return $result;
+                return array_pop($result);
             }
             return false;
         } elseif ($this->cache == 'fs') {
@@ -510,13 +510,7 @@ class SilasFlickr extends silas_phpFlickr {
 		if (!$expiration) {
 			$expiration = time() + SILAS_FLICKR_CACHE_TIMEOUT; // 30 days default cache
 		}
-		if (is_array($request)) {
-			unset($request['api_key']);
-			unset($request['auth_token']);
-			unset($request['format']);
-		}
-		
-        $reqhash = md5(serialize($request));
+        $reqhash = $this->makeReqHash($request);
         if ($this->cache == 'db') {
             $this->cache_db->query("DELETE FROM $this->cache_table WHERE request = '$reqhash'");
             $sql = "INSERT INTO " . $this->cache_table . " (command, request, response, created, expiration) VALUES ('".$request['method']."', '$reqhash', '" . addslashes($response) . "', '" . strftime("%Y-%m-%d %H:%M:%S") . "', '" . strftime("%Y-%m-%d %H:%M:%S", $expiration) . "')";
@@ -537,6 +531,14 @@ class SilasFlickr extends silas_phpFlickr {
             }
             return $result;
         }
+    }
+    function makeReqHash($request) {
+        if (is_array($request)) {
+			unset($request['api_key']);
+			unset($request['auth_token']);
+			unset($request['format']);
+		}
+        return md5(serialize($request));
     }
     function auth_getToken ($frob) 
     {
