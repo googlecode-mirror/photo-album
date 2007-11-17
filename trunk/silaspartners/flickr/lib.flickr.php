@@ -147,6 +147,9 @@ class SilasFlickr extends silas_phpFlickr {
     
     // no caching
     function search($args) {
+		if ($return = $this->getObjCache('search', $args)) {
+			return $return;
+		}
         $photos = $this->photos_search($args);
         $return = array();
         if (is_array($photos['photo'])) foreach ($photos['photo'] as $photo) {
@@ -159,7 +162,7 @@ class SilasFlickr extends silas_phpFlickr {
             //$row['total'] = $photos['total'];
             $return[$photo['id']] = $row;
         }
-
+		$this->setObjCache('search', $args, $return);
         return $return;
     }
     
@@ -274,6 +277,9 @@ class SilasFlickr extends silas_phpFlickr {
     }
         
     function getPhotos($album_id) {
+		if ($return = $this->getObjCache('getPhotos', $album_id)) {
+			return $return;
+		}
         $album_id = $album_id . '';
         $photos = $this->photosets_getPhotos($album_id);
         $return = array();
@@ -287,7 +293,7 @@ class SilasFlickr extends silas_phpFlickr {
             $row = array_merge($row, (array) $this->getPhoto($photo['id']));
             $return[$photo['id']] = $row;
         }
-
+		$this->setObjCache('getPhotos', $album_id, $return);
         return $return;
     }
     
@@ -540,6 +546,30 @@ class SilasFlickr extends silas_phpFlickr {
 		}
         return md5(serialize($request));
     }
+
+	function getObjCache($function, $params) {
+		if ($this->cache == 'db') {
+			$request = array(
+				'method' => $function,
+				'params' => $params,
+			);
+			$return = $this->getCached($request);
+			if ($return) {
+				return unserialize($return);
+			} else {
+				return false;
+			}
+		}
+	}
+	function setObjCache($function, $params, $obj) {
+		if ($this->cache == 'db') {
+			$request = array(
+				'method' => $function,
+				'params' => $params,
+			);
+            return $this->cache($request, serialize($obj));
+		}
+	}
     function auth_getToken ($frob) 
     {
         if ($_SESSION['phpFlickr_auth_token']) return $_SESSION['phpFlickr_auth_token'];

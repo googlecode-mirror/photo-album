@@ -61,6 +61,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
 
         if ($flickr->cache == 'db') {
             global $wpdb;
+			$wpdb->hide_errors();
             $wpdb->query("
                 CREATE TABLE IF NOT EXISTS `$flickr->cache_table` (
                     `command` CHAR( 255 ) NOT NULL ,
@@ -68,8 +69,12 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
                     `response` TEXT NOT NULL ,
                     `created` DATETIME NOT NULL ,
                     `expiration` DATETIME NOT NULL ,
-                    INDEX ( `request` )
+                    INDEX ( `request` ),
+					INDEX ( `command` )
                 ) TYPE = MYISAM");
+			$wpdb->query("CREATE INDEX command on wp_silas_flickr_cache(command)");
+			$wpdb->show_errors();
+			
         }
         
         if ($_POST['action'] == 'save') {
@@ -146,7 +151,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
                 if ($flickr->clearCache()) {
                     $message = "Successfully cleared the cache.";
                 } else {
-                    $error = "Cache clear failed. Try manually deleting the 'flickr-cache' directory.";
+                    $error = "Cache clear failed. Try manually deleting the 'flickr-cache' directory or the silas_flickr_cache database table.";
                 }
             } else {
                 $flickr->startClearCache();
