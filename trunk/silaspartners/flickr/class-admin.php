@@ -78,6 +78,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
         }
         
         if ($_POST['action'] == 'save') {
+            $flickr->clearCache();
             $token = $flickr->auth_getToken($_POST['frob']);
             if ($token) {
                 update_option('silas_flickr_token', $token);
