@@ -98,6 +98,9 @@ class SilasFlickr extends silas_phpFlickr {
     }
     
     function getRecent($extras = NULL, $per_page = NULL, $page = NULL) {
+		if ($return = $this->getObjCache('getRecent', array($extras, $per_page, $page))) {
+			return $return;
+		}
         $photos = $this->photos_getRecent($extras, $per_page, $page);
         $return = array();
         if (is_array($photos['photo'])) foreach ($photos['photo'] as $photo) {
@@ -110,7 +113,7 @@ class SilasFlickr extends silas_phpFlickr {
             //$row['total'] = $photos['total'];
             $return[$photo['id']] = $row;
         }
-
+		$this->setObjCache('getRecent', array($extras, $per_page, $page), $return);
         return $return;
     }
     
@@ -400,7 +403,11 @@ class SilasFlickr extends silas_phpFlickr {
 			$commands = array(
 				'flickr.groups.pools.getGroups' => 432000,
 				'flickr.groups.pools.getPhotos' => 432000,
+				'flickr.groups.pools.getContext' => 432000,
 				'flickr.photosets.getList' => 43200,
+				'getPhotos' => 43200,
+				'search' => 43200,
+				'getRecent' => 43200,
 				);
 			foreach ($commands as $command => $timeout) {
 				$time = time() - $timeout;

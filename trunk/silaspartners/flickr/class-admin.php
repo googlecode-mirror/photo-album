@@ -72,7 +72,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
                     INDEX ( `request` ),
 					INDEX ( `command` )
                 ) TYPE = MYISAM");
-			$wpdb->query("CREATE INDEX command on wp_silas_flickr_cache(command)");
+			$wpdb->query("CREATE INDEX commandCreated on wp_silas_flickr_cache(command, created)");
 			$wpdb->show_errors();
 			
         }
@@ -121,6 +121,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
         $flickrAuth = false;
     
         if (!$auth_token) {
+			$flickr->clearCache();
             $frob = $flickr->getFrob();
             $error = $flickr->getErrorMsg();
             

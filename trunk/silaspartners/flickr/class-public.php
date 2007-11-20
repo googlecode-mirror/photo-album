@@ -58,15 +58,15 @@ class SilasFlickrPlugin {
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
             //$usecache = false;
-            if (!$usecache) $flickr->startClearCache(); // blah, buggy as hell
-            $flickr->_silas_cacheExpire = 300; // cache just 5 mins
+            //if (!$usecache) $flickr->startClearCache(); // blah, buggy as hell
+            //$flickr->_silas_cacheExpire = 300; // cache just 5 mins
             //$flickr->_silas_cacheExpire = 3600; // cache one hour
             $albums = $flickr->manualSort($flickr->getAlbums(), get_option('silas_flickr_albumorder'));
             foreach ($albums as $key => $album) {
                 $albums[$key]['sizes'] = $flickr->getPhotoSizes($album['primary']);
             }
-            if (!$usecache) $flickr->doneClearCache();
-            $this->_silas_cacheExpire = -1;
+            //if (!$usecache) $flickr->doneClearCache();
+            //$this->_silas_cacheExpire = -1;
             return $albums;
         } else {
             return array();
