@@ -405,9 +405,12 @@ class SilasFlickr extends silas_phpFlickr {
 				'flickr.groups.pools.getPhotos' => 432000,
 				'flickr.groups.pools.getContext' => 432000,
 				'flickr.photosets.getList' => 43200,
+				'flickr.photosets.getPhotos' => 43200,
 				'getPhotos' => 43200,
 				'search' => 43200,
 				'getRecent' => 43200,
+				'flickr.photos.getRecent' => 43200,
+				'flickr.photos.search' => 43200,
 				);
 			foreach ($commands as $command => $timeout) {
 				$time = time() - $timeout;
