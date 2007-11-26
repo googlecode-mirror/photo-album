@@ -401,16 +401,26 @@ class SilasFlickr extends silas_phpFlickr {
 	function clearCacheStale() {
 		if (SILAS_FLICKR_CACHEMODE == 'db') {
 			$commands = array(
+			    //'flickr.groups.getInfo' => 4320000,
+				'flickr.groups.pools.getContext' => 432000,
 				'flickr.groups.pools.getGroups' => 432000,
 				'flickr.groups.pools.getPhotos' => 432000,
-				'flickr.groups.pools.getContext' => 432000,
+				//'flickr.people.getInfo' => 432000,
+				'flickr.photos.comments.getList' => 86400,
+				'flickr.photos.getContext' => 86400,
+				//'flickr.photos.getInfo' => 86400,
+				'flickr.photos.getRecent' => 43200,
+				//'flickr.photos.getSizes' => 86400,
+				'flickr.photos.search' => 43200,
+				//'flickr.photosets.getContext' => 43200,
+				//'flickr.photosets.getInfo' => 86400,
 				'flickr.photosets.getList' => 43200,
 				'flickr.photosets.getPhotos' => 43200,
+				'flickr.tags.getListUserPopular' => 86400,
+				//'flickr.urls.getGroup' => 86400,
 				'getPhotos' => 43200,
 				'search' => 43200,
 				'getRecent' => 43200,
-				'flickr.photos.getRecent' => 43200,
-				'flickr.photos.search' => 43200,
 				);
 			foreach ($commands as $command => $timeout) {
 				$time = time() - $timeout;
