@@ -4,6 +4,8 @@
 
 = Photo Stream =
 
+Sample code to retrieve your recent photos, and display them. This example retrieves 40 photos, randomizes the order of the photos, and then displays 20 photos. Note the link for each photo goes to "/photos/" and should be updated to reflect your own photo album setting.
+
 {{{
 <?php
 require_once(dirname(__FILE__).'/../../plugins/silaspartners/flickr/class-public.php');
@@ -12,6 +14,7 @@ $photos = $SilasFlickrPlugin->getRecentPhotos('', 0, 40);
 shuffle($photos);
 ?>
 <?php foreach (array_slice($photos, 0, 20) as $photo):?>
-<a href="/photos/photo/<?php echo $photo['id'];?>/<?php echo $photo['pagename'];?>" class="photo"><img src="<?php echo $photo['sizes']['Square']['source'];?>" width="38" height="38" /></a>
+<a href="/photos/photo/<?php echo $photo['id'];?>/<?php echo $photo['pagename'];?>" class="photo"><img 
+src="<?php echo $photo['sizes']['Square']['source'];?>" width="38" height="38" /></a>
 <?php endforeach;?>
 }}}
