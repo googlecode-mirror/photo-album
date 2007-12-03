@@ -1,4 +1,4 @@
-#summary Ways to customize and use the Flickr plugin
+#summary Quick tips to customize and use the Flickr Photo Album plugin
 
 = Code Snippets =
 
