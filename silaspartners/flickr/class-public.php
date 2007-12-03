@@ -120,6 +120,7 @@ class SilasFlickrPlugin {
                 } elseif ($request['group']) { // within context of group
                     $group = $flickr->getGroup($request['group']);
                     $context = $flickr->getContextByGroup($request['photo'], $request['group']);
+                    add_action('wp_head', array(&$this, 'meta_noindex'));
                 } else { // just an individual photo
                     $context = $flickr->getContext($request['photo']);
                 }
@@ -166,6 +167,7 @@ class SilasFlickrPlugin {
                     $photos = $flickr->getPhotosByGroup($request['group']);
                     $photoTemplate = 'photoalbum-group.html';
                 }
+                add_action('wp_head', array(&$this, 'meta_noindex'));
             } elseif (isset($request['tags'])) {
                 if ($request['tags']) {
                     $photos = $flickr->getPhotosByTags($request['tags']);
@@ -238,6 +240,9 @@ class SilasFlickrPlugin {
         return ' '.($this->config['title'] ? $this->config['title'] : $title).' ';
     }
     
+    function meta_noindex() {
+        echo '<meta name="robots" content="noindex" />';
+    }
     function header() {
         $user = get_option('silas_flickr_user');
         include($this->getDisplayTemplate('photoalbum-header.html'));
