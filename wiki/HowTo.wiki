@@ -2,7 +2,7 @@
 
 = Code Snippets =
 
-== Photo Stream ==
+== Get Recent Photos ==
 
 This code block retrieves your 40 most recent photos, randomizes the order, and then displays 20 photos. Note that each photo links to "/photos/", and will probably have to be updated to reflect your own settings.
 
