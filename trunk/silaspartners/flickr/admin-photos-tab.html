@@ -100,7 +100,7 @@ foreach ($photos as $photo):
 if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
     $photoURL = $home.$baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
 } else {
-    $photoURL = array_pop($photo['info']['urls']['url'][0]);
+    if (is_array($photo['info']['urls']['url'][0])) $photoURL = array_pop($photo['info']['urls']['url'][0]);
 }
 ?>
 <li id='flickr-photo-<?php echo $id?>' class='alignleft'>
