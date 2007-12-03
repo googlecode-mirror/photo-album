@@ -4,6 +4,8 @@
 
 == Photo Stream ==
 
+This code block retrieves your 40 most recent photos, randomizes the order, and then displays 20 photos. Note that each photo links to "/photos/", and will probably have to be updated to reflect your own settings.
+
 {{{
 <?php
 require_once(dirname(__FILE__).'/../../plugins/silaspartners/flickr/class-public.php');
