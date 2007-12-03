@@ -28,7 +28,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
         if (!is_writable(dirname(__FILE__).'/flickr-cache/')) {
             echo "<div class='wrap'>
             <h2>Permissions Error</h2>
-            <p>This plugin requires that the directory <strong>".dirname(__FILE__)."/flickr/flickr-cache/</strong> be writable by the web server.</p> 
+            <p>This plugin requires that the directory <strong>".dirname(__FILE__)."/flickr-cache/</strong> be writable by the web server.</p> 
             <p>Please contact your server administrator to ensure the proper permissions are set for this directory. </p>
             </div>
             ";
