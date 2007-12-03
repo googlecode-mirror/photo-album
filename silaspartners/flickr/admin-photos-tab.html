@@ -108,7 +108,7 @@ if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
     id="image<?php echo $photo['id']?>" src="<?php echo $photo['sizes']['Square']['source']?>" alt="<?php echo htmlentities($photo['title']);?>" height="<?php echo $photo['sizes']['Square']['height']?>" width="<?php echo $photo['sizes']['Square']['width']?>" border="0" /></a>
     <div class="photo-options" id="options-<?php echo $id?>">
     <?php foreach ($photo['sizes'] as $k => $size):?>
-        <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', '<?php echo $size['source']?>', '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>')"><?php echo $k?><span class="props"> (<?php echo $size['width']?>x<?php echo $size['height']?>)</span></a><br />
+        <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', '<?php echo $size['source']?>', '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>');return false;"><?php echo $k?><span class="props"> (<?php echo $size['width']?>x<?php echo $size['height']?>)</span></a><br />
     <?php endforeach;?>
     <div class="close"><a href="#" onclick="return silas_hideOptions(<?php echo $id?>);">close</a></div>
     </div>
