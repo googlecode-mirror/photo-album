@@ -7,9 +7,11 @@
 Retrieve recent photos. Could be used as a photo stream or just display your most recent photos uploaded. Default parameters are shown in the getRecentPhotos() function call.
 
 {{{
+<?php
 require_once(dirname(__FILE__).'/../../plugins/silaspartners/flickr/class-public.php');
 $SilasFlickrPlugin =& new SilasFlickrPlugin();
 $photos = $SilasFlickrPlugin->getRecentPhotos($tags='', $offsetpage=0, $max=15, $everyone=false);
+?>
 }}}
 
 
