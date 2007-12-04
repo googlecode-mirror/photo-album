@@ -2,7 +2,19 @@
 
 = Code Snippets =
 
-== Get Recent Photos ==
+== Retrieve Recent Photos ==
+
+Retrieve recent photos. Could be used as a photo stream or just display your most recent photos uploaded. Default parameters are shown in the getRecentPhotos() function call.
+
+{{{
+require_once(dirname(__FILE__).'/../../plugins/silaspartners/flickr/class-public.php');
+$SilasFlickrPlugin =& new SilasFlickrPlugin();
+$photos = $SilasFlickrPlugin->getRecentPhotos($tags='', $offsetpage=0, $max=15, $everyone=false);
+}}}
+
+
+
+== Get recent photos and randomly display some ==
 
 This code block retrieves your 40 most recent photos, randomizes the order, and then displays 20 photos. Note that each photo links to "/photos/", and will probably have to be updated to reflect your own settings.
 
