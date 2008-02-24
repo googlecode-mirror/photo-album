@@ -29,6 +29,7 @@ class SilasFlickrPlugin {
                 $photos = $flickr->search(array(
                     'tags' => ($tags ? $tags : ''),
                     'user_id' => ($everyone ? '' : $nsid),
+					'license' => ($everyone ? SILAS_FLICKR_PUBLIC_LICENSE : ''),
                     'per_page' => $max,
                     'page' => $offsetpage,
                 ));
@@ -135,10 +136,19 @@ class SilasFlickrPlugin {
                 $user = $flickr->auth_checkToken();
                 $nsid = $user['user']['nsid'];
                 if ($photo['owner']['nsid'] != $nsid) {
-                    $owner = $flickr->people_getInfo($photo['owner']['nsid']);
-                }
+ 					if ($photo['usage']['canblog']) {
+                    	$owner = $flickr->people_getInfo($photo['owner']['nsid']);
+		                $photoTemplate = 'photoalbum-photo.html';
+					} else {
+						$message = "This photo is not available. ";
+						if ($photo['urls']['url'][0]['_content']) $message .= '<a href="'.$photo['urls']['url'][0]['_content'].'">View this photo at Flickr</a>';
+						
+						$photoTemplate = 'error.html';
+					}
+                } else {
+	                $photoTemplate = 'photoalbum-photo.html';
+				}
                 
-                $photoTemplate = 'photoalbum-photo.html';
             } elseif ($request['album']) {
                 $album = $flickr->getAlbum($request['album']);
                 if (isset($request['tags'])) {
@@ -154,19 +164,24 @@ class SilasFlickrPlugin {
                     $photoTemplate = 'photoalbum-album.html';
                 }
             } elseif ($request['group']) {
-                $group = $flickr->getGroup($request['group']);
-                if (isset($request['tags'])) {
-                    if ($request['tags']) {
-                        $photos = $flickr->getPhotosByGroup($request['group'], $request['tags']);
-                        $photoTemplate = 'photoalbum-tags-group.html';
-                    } else { // return popular tags for a group
-                        $message = "Sorry, this feature is not supported";
-                        $photoTemplate = 'error.html';
-                    }
-                } else {
-                    $photos = $flickr->getPhotosByGroup($request['group']);
-                    $photoTemplate = 'photoalbum-group.html';
-                }
+				if (!SILAS_FLICKR_DISPLAYGROUPS) {
+                    $message = "Sorry, this feature is not enabled.";
+                    $photoTemplate = 'error.html';
+				} else {
+	                $group = $flickr->getGroup($request['group']);
+	                if (isset($request['tags'])) {
+	                    if ($request['tags']) {
+	                        $photos = $flickr->getPhotosByGroup($request['group'], $request['tags']);
+	                        $photoTemplate = 'photoalbum-tags-group.html';
+	                    } else { // return popular tags for a group
+	                        $message = "Sorry, this feature is not supported";
+	                        $photoTemplate = 'error.html';
+	                    }
+	                } else {
+	                    $photos = $flickr->getPhotosByGroup($request['group']);
+	                    $photoTemplate = 'photoalbum-group.html';
+	                }
+				}
                 add_action('wp_head', array(&$this, 'meta_noindex'));
             } elseif (isset($request['tags'])) {
                 if ($request['tags']) {

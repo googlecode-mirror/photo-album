@@ -21,17 +21,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 define("SILAS_FLICKR_APIKEY", get_option('silas_flickr_apikey'));
 define("SILAS_FLICKR_SHAREDSECRET", get_option('silas_flickr_sharedsecret'));
 
-//
-// **This caching method is experimental**
-//
-// change "fs" to "db" to use database caching instead
-if (!defined("SILAS_FLICKR_CACHEMODE")) 
-define("SILAS_FLICKR_CACHEMODE", "db");
-
-if (!defined("SILAS_FLICKR_CACHE_TIMEOUT")) 
-define("SILAS_FLICKR_CACHE_TIMEOUT", 30*86400); // 30 days default cache
-
-
 require_once(dirname(__FILE__)."/lib.phpFlickr.php");
 
 class SilasFlickr extends silas_phpFlickr {
@@ -211,12 +200,16 @@ class SilasFlickr extends silas_phpFlickr {
     }
     
     function getGroupsActual() {
+		if (!SILAS_FLICKR_DISPLAYGROUPS) return array();
+	
         $this->startClearCache();
         $groups = $this->getGroups();
         $this->doneClearCache();
         return $groups;
     }
     function getGroups() {
+		if (!SILAS_FLICKR_DISPLAYGROUPS) return array();
+		
         $groups = $this->groups_pools_getGroups();
         $return = array();
 
@@ -242,6 +235,8 @@ class SilasFlickr extends silas_phpFlickr {
         return $return;
     }
     function getGroup($group_id) {
+		if (!SILAS_FLICKR_DISPLAYGROUPS) return array();
+	
         $group_id = $group_id . '';
         $group = $this->groups_getInfo($group_id);
         $return = array();
@@ -259,6 +254,8 @@ class SilasFlickr extends silas_phpFlickr {
     }
     
     function getPhotosByGroup($group_id, $tags=NULL, $user_id = NULL, $extras = NULL, $per_page = NULL, $page = NULL) {
+		if (!SILAS_FLICKR_DISPLAYGROUPS) return array();
+	
         $group_id = $group_id . '';
         
         $this->_silas_cacheExpire = 3600;
@@ -348,6 +345,8 @@ class SilasFlickr extends silas_phpFlickr {
         return $context;
     }
     function getContextByGroup($photo_id, $group_id) {
+		if (!SILAS_FLICKR_DISPLAYGROUPS) return array();
+	
         $photo_id = $photo_id . '';
         $group_id = $group_id . '';
         $context = $this->groups_pools_getContext($photo_id, $group_id);

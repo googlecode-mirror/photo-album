@@ -4,7 +4,7 @@ Plugin Name: Flickr Photo Gallery
 Plugin URI: http://www.tantannoodles.com/toolkit/photo-album/
 Description: This plugin will retrieve your Flickr photos and allow you to easily add your photos to your posts. <a href="options-general.php?page=silaspartners/flickr/class-admin.php">Configure...</a>
 Author: Silas Partners (Joe Tan)
-Version: 0.93.2
+Version: 0.94
 Author URI: http://www.silaspartners.com/
 
 Copyright (C) 2007  Silas Partners
@@ -28,6 +28,12 @@ Change Log: http://code.google.com/p/photo-album/wiki/ChangeLog
 $Revision$
 $Date$
 */
+
+// IMPORTANT: Please make sure you only tell the plugin to only pull in groups for which you have permission to display photos from
+if (!defined("SILAS_FLICKR_DISPLAYGROUPS"))  define("SILAS_FLICKR_DISPLAYGROUPS", false);
+if (!defined("SILAS_FLICKR_CACHEMODE"))      define("SILAS_FLICKR_CACHEMODE", "db"); // use "fs" to use filesystem based caching instead
+if (!defined("SILAS_FLICKR_CACHE_TIMEOUT"))  define("SILAS_FLICKR_CACHE_TIMEOUT", 30*86400); // 30 days default cache
+if (!defined("SILAS_FLICKR_SEARCH_LICENSE")) define("SILAS_FLICKR_PUBLIC_LICENSE", '4'); // license to use when searching public photos. more info for possible values: http://www.flickr.com/services/api/flickr.photos.licenses.getInfo.html
 
 if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
     require_once(dirname(__FILE__).'/flickr/class-admin.php');
