@@ -135,7 +135,10 @@ class SilasFlickrPlugin {
                 
                 $user = $flickr->auth_checkToken();
                 $nsid = $user['user']['nsid'];
-                if ($photo['owner']['nsid'] != $nsid) {
+				if ($request['group'] && !SILAS_FLICKR_DISPLAYGROUPS) {
+					$message = "Sorry, this feature is not enabled.";
+                    $photoTemplate = 'error.html';
+				} elseif ($photo['owner']['nsid'] != $nsid) {
  					if ($photo['usage']['canblog']) {
                     	$owner = $flickr->people_getInfo($photo['owner']['nsid']);
 		                $photoTemplate = 'photoalbum-photo.html';
