@@ -1,0 +1,9 @@
+#summary Enable groups support in this plugin
+
+= Show Groups =
+
+Add the following to the end of your wp-config.php:
+
+{{{
+define('SILAS_FLICKR_DISPLAYGROUPS', true);
+}}}
