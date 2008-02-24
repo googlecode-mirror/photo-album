@@ -13,6 +13,6 @@ include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-tags.htm
 
 include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-other-albums.html'));
 
-include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-groups.html'));
 
+if (SILAS_FLICKR_DISPLAYGROUPS) include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-groups.html'));
 ?>

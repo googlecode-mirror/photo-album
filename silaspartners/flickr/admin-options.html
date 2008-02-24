@@ -108,6 +108,7 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
     <fieldset class="options">
     <legend>Group Photos</legend>
     <form method="post">
+<?php if (SILAS_FLICKR_DISPLAYGROUPS): ?>
     <input type="hidden" name="action" value="cleargroupcache" />
     <input type="hidden" name="group" value="all" />
     
@@ -138,6 +139,9 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
         return false
     }
     </script>
+<?php else:?>
+	Support for groups are not enabled. <a href="http://code.google.com/p/photo-album/wiki/GroupsSupport">Please see this page for instructions on how to configure the plugin to display photos from groups.</a>
+<?php endif; ?>
     </form>
     
     </fieldset>

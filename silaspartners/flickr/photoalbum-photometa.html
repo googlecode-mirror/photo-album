@@ -15,7 +15,9 @@
     <br />
 <?php endif;?>
 
-<strong>Uploaded:</strong> <?php echo date('F j, Y', (int) $photo['dates']['posted'])?>
+<strong>Uploaded:</strong> <?php echo date('F j, Y', (int) $photo['dates']['posted'])?><br />
+<a href="http://www.flickr.com/photos/<?php echo $photo['owner']['nsid'];?>/<?php echo $photo['id'];?>/" target="_blank">View this photo on Flickr</a>
+
 
 </div>
 <br style="clear:both;" />
