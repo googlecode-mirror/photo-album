@@ -1,4 +1,9 @@
 #summary Plugin release history.
+
+For the full changelog, [http://code.google.com/p/photo-album/source/list please see the SVN log results].
+
+ * 0.94 - Feb 24 2008 - Address photo licensing issues
+ * 0.93 - Nov 4 2007 - Update for WP 2.3, updates to caching logic
  * 0.89 - Feb 23 2007 - Addressed privacy options. The plugin should now properly respect the "Hide Private" photos option
  * 0.88 - Feb 21 2007 - Hopefully, this fixes 404 issues once and for all
  * 0.87 - Feb 6 2007 — Addressed performance issues
