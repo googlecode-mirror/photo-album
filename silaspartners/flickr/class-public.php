@@ -1,4 +1,9 @@
 <?php
+/*
+$Revision$
+$Date$
+$Author$
+*/
 class SilasFlickrPlugin {
 
     var $config = array();

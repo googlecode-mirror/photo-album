@@ -5,6 +5,11 @@ Description: Adds a sidebar widget to display your recent Flickr photos
 Author: Silas Partners (Joe Tan)
 Version: 0.2
 Author URI: http://www.silaspartners.com/
+
+$Revision$
+$Date$
+$Author$
+
 */
 
 class SilasFlickrWidget {
