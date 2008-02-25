@@ -139,7 +139,7 @@ class SilasFlickrPlugin {
 					$message = "Sorry, this feature is not enabled.";
                     $photoTemplate = 'error.html';
 				} elseif ($photo['owner']['nsid'] != $nsid) {
- 					if ($photo['usage']['canblog']) {
+ 					if (((int) $photo['license'] > 0) && $photo['usage']['canblog']) {
                     	$owner = $flickr->people_getInfo($photo['owner']['nsid']);
 		                $photoTemplate = 'photoalbum-photo.html';
 					} else {
