@@ -21,7 +21,9 @@ Not all WordPress themes are created equal, so default look and feel might look 
 on your blog. Try looking at your theme's "index.php" and copy and paste any extra HTML or
 PHP into this file.
 
-
+$Revision$
+$Date$
+$Author$
 
 */
 global $SilasFlickrPlugin;

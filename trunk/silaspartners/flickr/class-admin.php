@@ -1,4 +1,9 @@
 <?php
+/*
+$Revision$
+$Date$
+$Author$
+*/
 require_once(dirname(__FILE__).'/class-public.php');
 
 class SilasFlickrPluginAdmin extends SilasFlickrPlugin {

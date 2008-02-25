@@ -27,6 +27,8 @@ Change Log: http://code.google.com/p/photo-album/wiki/ChangeLog
 
 $Revision$
 $Date$
+$Author$
+
 */
 
 // IMPORTANT: Please make sure you only tell the plugin to only pull in groups for which you have permission to display photos from
