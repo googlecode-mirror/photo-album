@@ -54,9 +54,6 @@ class SilasFlickrWidget {
     
     function animationHeader() {
         global $SilasFlickrPlugin;
-        if (!$SilasFlickrPlugin->config['useLightbox']) { // see if animation libraries are already loaded
-            include ($this->getDisplayTemplate('photoalbum-lightbox-header.html'));
-        }
         include ($this->getDisplayTemplate('widget-header.html'));
     }
     function animationFooter() {

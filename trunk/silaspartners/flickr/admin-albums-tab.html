@@ -1,85 +1,4 @@
-<script>
-var lastPhoto = false;
-function silas_showOptions(id) {
-    if (lastPhoto) silas_hideOptions(lastPhoto)
-    lastPhoto = id
-
-    var div = document.getElementById('options-'+id)
-    if (div) div.style.display='block';
-    return false;
-}
-function silas_hideOptions(id) {
-    var div = document.getElementById('options-'+id)
-    if (div) div.style.display='none';
-    
-    var e = window.event;
-	if (e) {
-        e.cancelBubble = true;
-    	if (e.stopPropagation) e.stopPropagation();
-    }
-    return false;
-}
-function silas_addPhoto(photoUrl, sourceUrl, width, height, title) {
-    var h = 
-        '<a href="'+photoUrl+'" class="tt-flickr">' +
-        '<img src="'+sourceUrl+'" alt="'+title+'" width="'+width+'" height="'+height+'" border="0" />' +
-        '</a> '
-        
-    var win = window.opener ? window.opener : window.dialogArguments;
-	if ( !win ) win = top;
-	tinyMCE = win.tinyMCE;
-	if ( typeof tinyMCE != 'undefined' && tinyMCE.getInstanceById('content') ) {
-		tinyMCE.selectedInstance.getWin().focus();
-		tinyMCE.execCommand('mceInsertContent', false, h);
-	} else win.edInsertContent(win.edCanvas, h);
-
-	return false;
-
-/*			  
-    if ( richedit ) {
-        win.tinyMCE.execCommand('mceInsertContent', false, html);
-    } else {
-        win.edInsertContent(win.edCanvas, html);
-    }
-    return false;
-    */
-}
-</script>
-
-<style>
-#upload-files a.file-link {
-    width:75px;
-    height:75px;
-}
-.photo-options {
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:125px;
-    padding:5px;
-    
-    background:white;
-    opacity:0.9;
-    border:1px solid #ccc;
-    font-size:10px;
-    line-height:12px;
-    z-index:10;
-    
-    display:none;
-}
-.photo-options div.close {
-    position:absolute;
-    top:2px;
-    right:2px;
-}
-.alignleft {
-    position:relative;
-}
-#upload-content {
-    padding-top:10px;
-}
-</style>
-<form method="get" id="photos" action="upload.php">
+<form method="get" id="photos" action="<?php echo (ereg('media-upload.php', $_SERVER['REQUEST_URI']) ? 'media-upload.php' : 'upload.php');?>">
 <input type="hidden" name="tab" value="<?php echo $_GET['tab'];?>" />
 <input type="hidden" name="post_id" value="<?php echo $_GET['post_id'];?>" />
 <input type="hidden" name="action" value="<?php echo $_GET['action'];?>" />
@@ -88,7 +7,9 @@ function silas_addPhoto(photoUrl, sourceUrl, width, height, title) {
 <input type="hidden" name="ID" value="<?php echo $_GET['ID'];?>" />
 
 <input type="submit" name="refresh" value="refresh" />
+<!--
 <input type="button" value="upload" onclick="window.open('http://flickr.com/photos/upload/')"/>
+-->
 <!-- prolly should add a license field -->
 </form>
 
@@ -116,7 +37,7 @@ if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
     id="image<?php echo $id?>" src="<?php echo $album['sizes']['Square']['source']?>" alt="<?php echo htmlentities($album['title']);?>" height="<?php echo $album['sizes']['Square']['height']?>" width="<?php echo $album['sizes']['Square']['width']?>" border="0" /></a>
     <div class="photo-options" id="options-<?php echo $id?>">
     <?php foreach ($album['sizes'] as $k => $size):?>
-        <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', this, '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>')"><?php echo $k?><span class="props"> (<?php echo $size['width']?>x<?php echo $size['height']?>)</span></a><br />
+        <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', this, '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>')"><?php echo $k?><span class="props"> (<?php echo $size['width']?>x<?php echo $size['height']?>)</span></a><br />
     <?php endforeach;?>
     <div class="close"><a href="#" onclick="return silas_hideOptions(<?php echo $id?>);">close</a></div>
     </div>

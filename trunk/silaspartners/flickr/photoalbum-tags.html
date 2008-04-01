@@ -11,20 +11,14 @@ global $SilasFlickrPlugin;
 <?php
 ?>
 
-<div id="photos">
+<div id="photos" class="photos">
 
 <?php 
 $tpl = $SilasFlickrPlugin->getDisplayTemplate('photoalbum-photo-link.html');
-foreach ($photos as $photo):?>
-    <a <?php if ($SilasFlickrPlugin->config['useLightbox']):?>
-        rel="lightbox[album]" href="<?php echo $photo['sizes']['Medium']['source']?>"
-        <?php else:?>
-        href="photo/<?php echo $photo['id']?>/<?php echo $album['pagename2'] . '-' .$photo['pagename']?>"
-        <?php endif;?>
-        id="photo-<?php echo $photo['id']?>"
-        title="<?php echo htmlentities($photo['title'])?>"><img src="<?php echo $photo['sizes']['Square']['source']?>" width="<?php echo $photo['sizes']['Square']['width']?>" height="<?php echo $photo['sizes']['Square']['height']?>" 
-        alt="<?php echo htmlentities($photo['title'])?>" /></a>
-<?php endforeach?>
+foreach ($photos as $photo)
+	echo SilasFlickrDisplay::photo($photo, array(
+		'size' => 'Square'));
+?>
 </div>
 <div class="flickr-meta-links">
 <a href="http://www.flickr.com/photos/tags/<?php echo urlencode($request['tags']);?>/" target="_blank">View this tag on Flickr</a>

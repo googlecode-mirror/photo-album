@@ -11,14 +11,10 @@ if (is_array($photos)) foreach($photos as $photo):
 if (!$baseurl || ($linkoptions == 'flickr')) {
     $photoURL = array_pop($photo['info']['urls']['url'][0]);
 } else {
-    if ($SilasFlickrPlugin->config['useLightbox']) {
-        $photoURL = $photo['sizes']['Medium']['source'];
-    } else {
-        $photoURL = $baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
-    }
+    $photoURL = $baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
 }
 ?>
-<a href="<?echo $photoURL ?>" <?php echo ($SilasFlickrPlugin->config['useLightbox'] ? 'rel="lightbox[photos]"' : '');?>><img src="<?php echo $photo['sizes']['Square']['source']?>" width="<?php echo $photo['sizes']['Square']['width']?>" height="<?php echo $photo['sizes']['Square']['height']?>" alt="<?php echo htmlentities($photo['title'])?>" /></a>
+<a href="<?echo $photoURL ?>"><img src="<?php echo $photo['sizes']['Square']['source']?>" width="<?php echo $photo['sizes']['Square']['width']?>" height="<?php echo $photo['sizes']['Square']['height']?>" alt="<?php echo htmlentities($photo['title'])?>" /></a>
 <?php endforeach;?>
 
 <?php if ($linkoptions != 'flickr'): ?>
