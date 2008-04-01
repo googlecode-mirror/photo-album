@@ -4,7 +4,7 @@ Plugin Name: Flickr Photo Gallery
 Plugin URI: http://www.tantannoodles.com/toolkit/photo-album/
 Description: This plugin will retrieve your Flickr photos and allow you to easily add your photos to your posts. <a href="options-general.php?page=silaspartners/flickr/class-admin.php">Configure...</a>
 Author: Silas Partners (Joe Tan)
-Version: 0.94
+Version: 0.95
 Author URI: http://www.silaspartners.com/
 
 Copyright (C) 2007  Silas Partners
@@ -36,26 +36,27 @@ if (!defined("SILAS_FLICKR_DISPLAYGROUPS"))  define("SILAS_FLICKR_DISPLAYGROUPS"
 if (!defined("SILAS_FLICKR_CACHEMODE"))      define("SILAS_FLICKR_CACHEMODE", "db"); // use "fs" to use filesystem based caching instead
 if (!defined("SILAS_FLICKR_CACHE_TIMEOUT"))  define("SILAS_FLICKR_CACHE_TIMEOUT", 30*86400); // 30 days default cache
 if (!defined("SILAS_FLICKR_SEARCH_LICENSE")) define("SILAS_FLICKR_PUBLIC_LICENSE", '4'); // license to use when searching public photos. more info for possible values: http://www.flickr.com/services/api/flickr.photos.licenses.getInfo.html
+if (!defined("SILAS_FLICKR_BASEURL"))        define("SILAS_FLICKR_BASEURL", get_option('silas_flickr_baseurl'));
 
 if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
     require_once(dirname(__FILE__).'/flickr/class-admin.php');
     $SilasFlickrPluginAdmin =& new SilasFlickrPluginAdmin();
     
 } else {
-    $baseurl = get_option('silas_flickr_baseurl');
-    if ($baseurl) {
-        if (strpos($_SERVER['REQUEST_URI'], $baseurl) === 0) {
+    if (SILAS_FLICKR_BASEURL) {
+        if (strpos($_SERVER['REQUEST_URI'], SILAS_FLICKR_BASEURL) === 0) {
             $_SERVER['_SILAS_FLICKR_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
-            $_SERVER['REQUEST_URI'] = $baseurl;
+            $_SERVER['REQUEST_URI'] = SILAS_FLICKR_BASEURL;
         
             require_once(dirname(__FILE__).'/flickr/class-public.php');
             $SilasFlickrPlugin =& new SilasFlickrPlugin();
-        
+
             status_header(200); // ugly, just force a 200 status code
             add_filter('request', array(&$SilasFlickrPlugin, 'request'));
             add_action('parse_query', array(&$SilasFlickrPlugin, 'parse_query'));
+			add_action('parse_request', array(&$SilasFlickrPlugin, 'parse_query'));
             add_action('template_redirect', array(&$SilasFlickrPlugin, 'template'));
-        } elseif (strpos($_SERVER['REQUEST_URI'].'/', $baseurl) === 0) {
+        } elseif (strpos($_SERVER['REQUEST_URI'].'/', SILAS_FLICKR_BASEURL) === 0) {
             header('location: http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].'/');
             exit;
         }

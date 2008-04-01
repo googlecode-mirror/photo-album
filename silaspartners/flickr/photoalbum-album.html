@@ -9,17 +9,9 @@ global $SilasFlickrPlugin;
 <?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
 
 <h2><?php echo $album['title']?></h2>
-<?php
 
-?>
 <div id="highlight">
-<a <?php if ($SilasFlickrPlugin->config['useLightbox']):?>
-    rel="lightbox[album]" href="<?php echo $photos[$album['primary']]['sizes']['Medium']['source']?>"
-    <?php else:?>
-    href="photo/<?php echo $album['primary'];?>/<?php echo $album['pagename2'] . '-' . $photos[$album['primary']]['pagename']?>"
-    <?php endif; ?>
-    id="photo-<?php echo $photos[$album['primary']]['id']?>"
-    title="<?php echo htmlentities($photos[$album['primary']]['title'] . strip_tags($photos[$album['primary']]['description'] ? ' - '.$photos[$album['primary']]['description'] : '')  )?>"><img src="<?php echo $photos[$album['primary']]['sizes']['Small']['source']?>" width="<?php echo $photos[$album['primary']]['sizes']['Small']['width']?>" height="<?php echo $photos[$album['primary']]['sizes']['Small']['height']?>" alt="<?php echo htmlentities($photos[$album['primary']]['title']) ?>" /></a>
+	<?php echo SilasFlickrDisplay::photo($photos[$album['primary']], array('size' => 'Small', 'album' => $album));?>
 
 <p><?php echo html_entity_decode($album['description'])?></p>
 <p class="meta">
@@ -29,17 +21,12 @@ global $SilasFlickrPlugin;
 </div>
 
 
-<div id="photos">
-<?php foreach ($photos as $photo):?>
-    <a <?php if ($SilasFlickrPlugin->config['useLightbox']):?>
-        rel="lightbox[album]" href="<?php echo $photo['sizes']['Medium']['source']?>"
-        <?php else:?>
-        href="photo/<?php echo $photo['id']?>/<?php echo $album['pagename2'] . '-' .$photo['pagename']?>"
-        <?php endif;?>
-        id="photo-<?php echo $photo['id']?>"
-        title="<?php echo htmlentities($photo['title']) . strip_tags($photo['description'] ? ' - '.$photo['description'] : '')?>"><img src="<?php echo $photo['sizes']['Square']['source']?>" width="<?php echo $photo['sizes']['Square']['width']?>" height="<?php echo $photo['sizes']['Square']['height']?>" 
-        alt="<?php echo htmlentities($photo['title'])?>" /></a>
-<?php endforeach?>
+<div id="photos" class="photos">
+<?php foreach ($photos as $photo)
+	echo SilasFlickrDisplay::photo($photo, array(
+		'size' => 'Square',
+		'album' => $album));
+?>
 </div>
 <div class="flickr-meta-links">
 <a href="http://www.flickr.com/photos/<?php echo $album['owner'];?>/sets/<?php echo $album['id'];?>/" target="_blank">View this album on Flickr</a>

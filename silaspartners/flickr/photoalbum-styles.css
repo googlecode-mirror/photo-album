@@ -222,6 +222,7 @@ div#highlight p.meta a {
 div#highlight div.photos {
     clear:both;
     padding:10px 0;
+	background:none;
 }
 div#highlight div.photos img {
     margin:0 10px 10px 0;

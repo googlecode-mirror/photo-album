@@ -1,0 +1,40 @@
+#upload-files li {
+	display:inline;
+	list-style:none;
+	margin:0 10px 5px 0;
+}
+#upload-files a.file-link {
+    width:75px !important;
+    height:75px !important;
+}
+.photo-options {
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:125px;
+    padding:5px;
+    
+    background:white;
+    opacity:0.9;
+    border:1px solid #ccc;
+    font-size:10px;
+	line-height:12px;
+    z-index:10;
+    
+    display:none;
+}
+.photo-options div.close {
+    position:absolute;
+    top:2px;
+    right:2px;
+}
+.alignleft {
+    position:relative;
+}
+#upload-content {
+    padding-top:10px;
+}
+.tablenav form {
+	margin:0;
+	padding:10px;
+}

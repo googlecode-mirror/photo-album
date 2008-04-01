@@ -126,6 +126,9 @@ class SilasFlickrPlugin {
                 } elseif ($request['group']) { // within context of group
                     $group = $flickr->getGroup($request['group']);
                     $context = $flickr->getContextByGroup($request['photo'], $request['group']);
+					if ($photo['visibility']['ispublic'] <= 0) {
+						$photo = array(); // sorry, no private photos
+					}
                     add_action('wp_head', array(&$this, 'meta_noindex'));
                 } else { // just an individual photo
                     $context = $flickr->getContext($request['photo']);
@@ -242,6 +245,11 @@ class SilasFlickrPlugin {
         } else {
             $message = "The photo album has not been configured.";
         }
+        if (file_exists(TEMPLATEPATH  . '/photoalbum-resources.php')) {
+			require_once(TEMPLATEPATH . '/photoalbum-resources.php');
+		} else {
+			require_once(dirname(__FILE__) . '/photoalbum-resources.php');
+		}
         if (file_exists(TEMPLATEPATH . '/photos.php')) {
             include (TEMPLATEPATH . '/photos.php');
         } else {
@@ -284,22 +292,9 @@ class SilasFlickrPlugin {
             return(dirname(__FILE__).'/'.$file);
         }
     }
-    
-    // is the request coming in for photos
-    function init() {
-        $baseurl = get_option('silas_flickr_baseurl');
-        if ($baseurl && (strpos($_SERVER['REQUEST_URI'], $baseurl) === 0)) {
-            $_SERVER['_SILAS_FLICKR_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
-            $_SERVER['REQUEST_URI'] = $baseurl;
-            
-            status_header(200); // ugly, just force a 200 status code
-            add_filter('request', array(&$this, 'request'));
-            add_action('parse_query', array(&$this, 'parse_query'));
-            add_action('template_redirect', array(&$this, 'template'));
-        }
-    }
-    function parse_query($wp_query) {
-        $wp_query->is_404 = false;
+    function parse_query(&$query) {
+		$query->is_404 = false;
+		$query->did_permalink = false;
     }
     function request($query_vars) {
         $query_vars['error'] = false;

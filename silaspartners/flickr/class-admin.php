@@ -16,6 +16,13 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
         add_action('activate_silaspartners/flickr.php', array(&$this, 'activate'));
         add_action('deactivate_silaspartners/flickr.php', array(&$this, 'deactivate'));
         add_action('load-upload.php', array(&$this, 'addPhotosTab'));
+
+		// WP >= 2.5
+		add_action('media_buttons', array(&$this, 'media_buttons')); 
+		add_filter('media_buttons_context', array(&$this, 'media_buttons_context'));//create_function('$a', "return '%s';"));
+		add_action('media_upload_tantan-flickr-photo-stream', array(&$this, 'media_upload_content'));
+		add_action('media_upload_tantan-flickr-photo-albums', array(&$this, 'media_upload_content_albums'));
+		
         if ($_GET['tantanActivate'] == 'photo-album') {
             $this->showConfigNotice();
         }
@@ -42,8 +49,6 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
             $error = "In order to view your photo album, your <a href='options-permalink.php'>WordPress permalinks</a> need to be set to something other than <em>Default</em>.";
         } elseif (!function_exists('curl_init')) {
             $error = "You do not have the required libraries to use this plugin. The PHP library <a href='http://us2.php.net/curl'>libcurl</a> needs to be installed on your server.";
-        } elseif (!function_exists('xml_parser_create')) {
-            $error = "You do not have the required libraries to use this plugin. The PHP library <a href='http://us2.php.net/xml'>xml</a> needs to be installed on your server.";
         }
 
         if ($_POST['action'] == 'savekey') {
@@ -231,6 +236,49 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
             $TanTanVersionCheck->versionCheck(200, $data['Version']);
         }
     }
+
+	function media_buttons() {
+	}
+	function media_buttons_context($context) {
+		global $post_ID, $temp_ID;
+		$dir = dirname(__FILE__);
+
+		$pluginRootURL = get_option('siteurl').substr($dir, strpos($dir, '/wp-content'));
+		$image_btn = $pluginRootURL.'/icon.gif';
+		$image_title = 'Flickr';
+		
+		$uploading_iframe_ID = (int) (0 == $post_ID ? $temp_ID : $post_ID);
+
+		$media_upload_iframe_src = "media-upload.php?post_id=$uploading_iframe_ID";
+		$out = ' <a href="'.$media_upload_iframe_src.'&tab=tantan-flickr-photo-stream&TB_iframe=true&height=500&width=640" class="thickbox" title="'.$image_title.'"><img src="'.$image_btn.'" alt="'.$image_title.'" /></a>';
+		return $context.$out;
+	}
+	function media_upload_content_albums() { return $this->media_upload_content('albums');}
+	function media_upload_content($mode='stream') {
+        /*    
+		if (!$this->options) $this->options = get_option('tantan_wordpress_s3');
+		//if (!is_object($this->s3)) {
+	        require_once(dirname(__FILE__).'/lib.s3.php');
+	        $this->s3 = new TanTanS3($this->options['key'], $this->options['secret']);
+	        $this->s3->setOptions($this->options);
+        //}
+        */
+		add_filter('media_upload_tabs', array(&$this, 'media_upload_tabs'));
+        add_action('admin_print_scripts', array(&$this, 'upload_tabs_scripts'));
+		add_action('admin_print_scripts', 'media_admin_css');
+		add_action('silas_media_upload_header', 'media_upload_header');
+		if ($mode == 'albums') {
+				wp_iframe(array(&$this, 'albumsTab'));
+		} else {
+			wp_iframe(array(&$this, 'photosTab'), 35);
+		}
+	}
+	function media_upload_tabs($tabs) {
+		return array(
+			'tantan-flickr-photo-stream' => __('Photo Stream'), // handler action suffix => tab text
+			'tantan-flickr-photo-albums' => __('Albums'),
+		);
+	}
     function addPhotosTab() {
         add_filter('wp_upload_tabs', array(&$this, 'wp_upload_tabs'));
         add_action('admin_print_scripts', array(&$this, 'upload_tabs_scripts'));
@@ -244,11 +292,12 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
         3 => total number objects OR array(total, objects per page), 
         4 => add_query_args
 	*/
+		$count = $this->getNumPhotos();
 	    $args = array();
         if ($_REQUEST['tags']) $args['tags'] = $_REQUEST['tags'];
         if ($_REQUEST['everyone']) $args['everyone'] = 1;
         $tab = array(
-            'silas_flickr' => array('Photos (Flickr)', 'upload_files', array(&$this, 'photosTab'), array(100, 10), $args),
+            'silas_flickr' => array('Photos (Flickr)', 'upload_files', array(&$this, 'photosTab'), array(min($count,500), 10), $args),
             'silas_flickr_album' => array('Albums (Flickr)', 'upload_files', array(&$this, 'albumsTab'), 0, $args)
             );
         return array_merge($array, $tab);
@@ -260,22 +309,50 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
     function upload_files_silas_flickr() {
         //echo 'upload_files_silas_flickr';
     }
-    function photosTab() {
-        $perpage = 20;
+    function photosTab($perpage=20) {
         $tags = $_REQUEST['tags'];
         //$offsetpage = (int) ($_GET['start'] / $perpage) + 1;
         $offsetpage = (int) $_GET['paged'];
+		$offsetpage = $offsetpage ? $offsetpage : 1;
         $everyone = isset($_REQUEST['everyone']) && $_REQUEST['everyone'];
         $usecache = ! (isset($_REQUEST['refresh']) && $_REQUEST['refresh']);
 
         $photos = $this->getRecentPhotos($tags, $offsetpage, $perpage, $everyone, $usecache);
+		
+		//
+		// TODO: this is WP2.5 specific code, should abstract out
+		//
+		if (ereg('media-upload.php', $_SERVER['REQUEST_URI'])) {
+			if (!$tags) {
+				$count = $this->getNumPhotos();
+				$page_links = paginate_links( array(
+					'base' => add_query_arg( 'paged', '%#%' ),
+					'format' => '',
+					'total' => ceil($count / $perpage),
+					'mid_size' => 1,
+					'current' => $offsetpage,
+				));
+			} else {
+				$page_links = '';
+				if ($offsetpage > 1) {
+					$link = add_query_arg( 'paged', $offsetpage - 1 );
+					$page_links = "<a class='prev page-numbers' href='" . clean_url($link) . "'>".__('&laquo; Previous')."</a>";
+				}
+				if (count($photos) >= $perpage) {
+				$link = add_query_arg( 'paged', $offsetpage + 1 );
+				$page_links .= "<a class='next page-numbers' href='" . clean_url($link) . "'>".__('Next &raquo;')."</a>";
+				$count = -1;
+				}
+			}
+		}
 
-        
-        include(dirname(__FILE__).'/admin-photos-tab.html');
+        do_action('silas_media_upload_header');
+		include(dirname(__FILE__).'/admin-photos-tab.html');
     }
     function albumsTab() {
         $usecache = ! (isset($_REQUEST['refresh']) && $_REQUEST['refresh']);
         $albums = $this->getRecentAlbums($usecache);
+		do_action('silas_media_upload_header');
         include(dirname(__FILE__).'/admin-albums-tab.html');
     }
     
@@ -295,5 +372,25 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
     }
 
 
+	function getNumPhotos() {
+		$auth_token = get_option('silas_flickr_token');
+        $baseurl = get_option('silas_flickr_baseurl');
+        $linkoptions = get_option('silas_flickr_linkoptions');
+        if ($auth_token) {
+            require_once(dirname(__FILE__).'/lib.flickr.php');
+            $flickr = new SilasFlickr();
+            $flickr->setToken($auth_token);
+            $flickr->setOption(array(
+                'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
+            ));
+			$user = $flickr->auth_checkToken();
+	        $nsid = $user['user']['nsid'];
+			if ($nsid) {
+	            $info = $flickr->people_getInfo($nsid);
+				return (int) $info['photos']['count'];
+			}
+			return 0;
+		}
+	}
 }
 ?>
