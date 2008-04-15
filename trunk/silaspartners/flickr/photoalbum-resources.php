@@ -20,7 +20,7 @@ class SilasFlickrDisplayBase {
 		if (($context == 'gallery-index') && $album) {
 			$prefix = 'album/'.$album['id'].'/';
 		}
-		$html = '<a href="'.SilasFlickrDisplay::href($photo, $album, $prefix).'" '.
+		$html = '<a class="tt-flickr tt-flickr-'.$size.'" href="'.SilasFlickrDisplay::href($photo, $album, $prefix).'" '.
 			'id="photo-'.$photo['id'].'" '.
 			'title="'.htmlentities($photo['title']) . strip_tags($photo['description'] ? ' - '.$photo['description'] : '').'">'.
 			SilasFlickrDisplay::image($photo, $size, $scale).
