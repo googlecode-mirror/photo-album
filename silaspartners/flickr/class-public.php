@@ -79,7 +79,70 @@ class SilasFlickrPlugin {
         }
     }
 
-    
+    function getShortCodeHTML($attribs=false, $content=false) {
+    	global $post;
+    	extract(shortcode_atts(array(
+    		'album' => null,
+    		'tag'     => null,
+    		'num'     => 5,
+    		'size'    => 'Square',
+    		'scale'   => 1,
+    	), $attribs));
+    	$key = "flickr-$albumid-$tag-$max-$size";
+    	if ($html = get_post_meta($post->ID, $key, true)) {
+    	    return $html;
+    	} else {
+    	    $html = '<div class="flickr-photos">';
+    	}
+    	// grab the flickr photos
+    	$photos = array();
+    	
+    	$auth_token = get_option('silas_flickr_token');
+        $baseurl = get_option('silas_flickr_baseurl');
+        $linkoptions = get_option('silas_flickr_linkoptions');
+        $albumData = array();
+        $photos = array();
+        if ($auth_token) {
+            require_once(dirname(__FILE__).'/lib.flickr.php');
+            $flickr = new SilasFlickr();
+            $flickr->setToken($auth_token);
+            $flickr->setOption(array(
+                'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
+            ));
+            $user = $flickr->auth_checkToken();
+            $nsid = $user['user']['nsid'];
+        
+            if ($album) {
+                $albumData = $flickr->getAlbum($album);
+                $photos = $flickr->getPhotos($album);
+            } elseif ($tag) {
+                $photos = $flickr->getPhotosByTags($tag);
+            }
+        } else {
+            $html .= '<p class="error">Error: Flickr plugin is not setup!</p>';
+        }
+    	if (is_feed()) {
+    	}
+
+    	if (count($photos)) {
+            if (file_exists(TEMPLATEPATH  . '/photoalbum-resources.php')) {
+    			require_once(TEMPLATEPATH . '/photoalbum-resources.php');
+    		} else {
+    			require_once(dirname(__FILE__) . '/photoalbum-resources.php');
+    		}
+            foreach (array_slice($photos, 0, $num) as $photo) {
+                $html .= SilasFlickrDisplay::photo($photo, array(
+                    'size' => $size,
+                    'album' => $albumData,
+                    'scale' => $scale,
+                ));
+            }
+    	} // if count photos
+    	
+    	$html .= '</div>';
+    	if (!update_post_meta($post->ID, $key, $html)) add_post_meta($post->ID, $key, $html);
+        return $html;
+    }
     // redirect template to photos template
     function template() {
     global $Silas, $wp_query;
