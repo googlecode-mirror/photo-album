@@ -2,7 +2,7 @@
 
 = Show Groups =
 
-Add the following to the end of your wp-config.php:
+Add the following to the TOP of your wp-config.php:
 
 {{{
 define('SILAS_FLICKR_DISPLAYGROUPS', true);
