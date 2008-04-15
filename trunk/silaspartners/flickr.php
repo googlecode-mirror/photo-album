@@ -61,6 +61,11 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
             exit;
         }
     }
+    // short code support
+    if (function_exists('add_shortcode')) {
+        // lazy load the flickr libraries
+        add_shortcode('flickr', create_function('$attribs=false, $content=false', 'require_once(dirname(__FILE__)."/flickr/class-public.php"); if (!is_object($GLOBALS[SilasFlickrPlugin])) $GLOBALS[SilasFlickrPlugin] =& new SilasFlickrPlugin(); return $GLOBALS[SilasFlickrPlugin]->getShortCodeHTML($attribs, $content);'));
+    }
 }
 if (get_option('silas_flickr_showbadge')) { // load sidebar widget
     add_action('plugins_loaded', create_function('', 'require_once(dirname(__FILE__)."/flickr/widget.php"); $GLOBALS[SilasFlickrWidget] =& new SilasFlickrWidget();'));
