@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (C) 2007  Silas Partners
+Copyright (C) 2008 Joe Tan
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,8 +23,9 @@ $Author$
 */
 
 // keys
-define("SILAS_FLICKR_APIKEY", get_option('silas_flickr_apikey'));
-define("SILAS_FLICKR_SHAREDSECRET", get_option('silas_flickr_sharedsecret'));
+// add this to your wp-config.php to hard code your keys
+if (!defined('SILAS_FLICKR_APIKEY')) define('SILAS_FLICKR_APIKEY', get_option('silas_flickr_apikey'));
+if (!defined('SILAS_FLICKR_SHAREDSECRET')) define('SILAS_FLICKR_SHAREDSECRET', get_option('silas_flickr_sharedsecret'));
 
 require_once(dirname(__FILE__)."/lib.phpFlickr.php");
 

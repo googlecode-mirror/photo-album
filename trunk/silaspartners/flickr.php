@@ -3,11 +3,11 @@
 Plugin Name: Flickr Photo Gallery 
 Plugin URI: http://www.tantannoodles.com/toolkit/photo-album/
 Description: This plugin will retrieve your Flickr photos and allow you to easily add your photos to your posts. <a href="options-general.php?page=silaspartners/flickr/class-admin.php">Configure...</a>
-Author: Silas Partners (Joe Tan)
-Version: 0.95
-Author URI: http://www.silaspartners.com/
+Author: Joe Tan
+Version: 0.96
+Author URI: http://www.tantannoodles.com/
 
-Copyright (C) 2007  Silas Partners
+Copyright (C) 2008 Joe Tan
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

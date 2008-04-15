@@ -22,6 +22,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
 		add_filter('media_buttons_context', array(&$this, 'media_buttons_context'));//create_function('$a', "return '%s';"));
 		add_action('media_upload_tantan-flickr-photo-stream', array(&$this, 'media_upload_content'));
 		add_action('media_upload_tantan-flickr-photo-albums', array(&$this, 'media_upload_content_albums'));
+		add_action('media_upload_tantan-flickr-photo-everyone', array(&$this, 'media_upload_content_everyone'));
 		
         if ($_GET['tantanActivate'] == 'photo-album') {
             $this->showConfigNotice();
@@ -253,7 +254,12 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
 		$out = ' <a href="'.$media_upload_iframe_src.'&tab=tantan-flickr-photo-stream&TB_iframe=true&height=500&width=640" class="thickbox" title="'.$image_title.'"><img src="'.$image_btn.'" alt="'.$image_title.'" /></a>';
 		return $context.$out;
 	}
+	function media_upload_content_everyone() { return $this->media_upload_content('everyone');}
+	
+	// list out albums
 	function media_upload_content_albums() { return $this->media_upload_content('albums');}
+	
+	// display photo stream
 	function media_upload_content($mode='stream') {
         /*    
 		if (!$this->options) $this->options = get_option('tantan_wordpress_s3');
@@ -268,7 +274,10 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
 		add_action('admin_print_scripts', 'media_admin_css');
 		add_action('silas_media_upload_header', 'media_upload_header');
 		if ($mode == 'albums') {
-				wp_iframe(array(&$this, 'albumsTab'));
+			wp_iframe(array(&$this, 'albumsTab'));
+		} elseif ($mode == 'everyone') {
+		    $_REQUEST['everyone'] = true;
+		    wp_iframe(array(&$this, 'photosTab'), 35);
 		} else {
 			wp_iframe(array(&$this, 'photosTab'), 35);
 		}
@@ -277,6 +286,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
 		return array(
 			'tantan-flickr-photo-stream' => __('Photo Stream'), // handler action suffix => tab text
 			'tantan-flickr-photo-albums' => __('Albums'),
+			'tantan-flickr-photo-everyone' => __('Everyone'),
 		);
 	}
     function addPhotosTab() {
@@ -323,7 +333,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
 		// TODO: this is WP2.5 specific code, should abstract out
 		//
 		if (ereg('media-upload.php', $_SERVER['REQUEST_URI'])) {
-			if (!$tags) {
+			if (!$tags && !$everyone) {
 				$count = $this->getNumPhotos();
 				$page_links = paginate_links( array(
 					'base' => add_query_arg( 'paged', '%#%' ),
