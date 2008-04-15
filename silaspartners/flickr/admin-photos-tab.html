@@ -17,10 +17,48 @@ Tags: <input type="text" name="tags" value="<?php echo $tags?>" size="15" />
 -->
 &nbsp; &nbsp; 
 <input type="submit" name="refresh" value="search" />
-<!--
-<input type="button" value="upload" onclick="window.open('http://flickr.com/photos/upload/')"/>
--->
-<!-- prolly should add a license field -->
+
+<?php if ($everyone):
+switch((int) constant('SILAS_FLICKR_PUBLIC_LICENSE')) {
+case 6:
+    $name="Attribution-NoDerivs License";
+    $url="http://creativecommons.org/licenses/by-nd/2.0/";
+    break;
+case 5:
+    $name="Attribution-ShareAlike License";
+    $url="http://creativecommons.org/licenses/by-sa/2.0/";
+    break;
+case 4:
+    $name="Attribution License";
+    $url="http://creativecommons.org/licenses/by/2.0/";
+    break;
+case 3:
+    $name="Attribution-NonCommercial-NoDerivs License";
+    $url="http://creativecommons.org/licenses/by-nc-nd/2.0/";
+    break;
+case 2:
+    $name="Attribution-NonCommercial License";
+    $url="http://creativecommons.org/licenses/by-nc/2.0/";
+    break;
+case 1:
+    $name="Attribution-NonCommercial-ShareAlike License";
+    $url="http://creativecommons.org/licenses/by-nc-sa/2.0/";
+    break;
+default:
+    $name = false;
+    $url = false;
+}
+?>
+<div class="license">
+<?php if ($name):?>
+All photos are licensed as <a href="<?php echo $url;?>">Creative Commons <?php echo $name;?></a>
+<?php else:?>
+Photos are not necessarily licensed for reuse. Please make sure you have the proper permissions before using any photos.
+<?php endif; /* licensed */ ?>
+</div>
+<?php endif; /* everyone */ ?>
+
+
 </form>
 </div>
 
@@ -57,4 +95,5 @@ if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
 $id++;
 endforeach;?>
 </ul>
-<?php endif; ?>
+
+<?php endif; /* has photos */ ?>
