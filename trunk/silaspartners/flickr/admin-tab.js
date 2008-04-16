@@ -34,7 +34,7 @@ function silas_addPhoto(photoUrl, sourceUrl, width, height, title, size) {
 			tinyMCE.execCommand('mceInsertContent', false, h);
 		} else if (win.edInsertContent) win.edInsertContent(win.edCanvas, h);
 	}
-	if (typeof top.tb_remove == 'function') 
+	if (typeof top.tb_remove == 'function' && document.getElementById('closewindowcheck').checked) 
 		top.tb_remove();
 
 	return false;

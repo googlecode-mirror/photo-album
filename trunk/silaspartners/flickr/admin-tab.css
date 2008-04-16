@@ -1,11 +1,17 @@
+#upload-files {
+	padding:0 0 0 10px;
+}
 #upload-files li {
+	float:left;
 	display:inline;
 	list-style:none;
-	margin:0 10px 5px 0;
+	margin:0 3px 5px 0;
+	padding:0;
 }
 #upload-files a.file-link {
     width:75px !important;
     height:75px !important;
+	float:left;
 }
 .photo-options {
     position:absolute;
@@ -37,18 +43,23 @@
 .tablenav form {
 	margin:0;
 }
+#closewin {
+	position:absolute;
+	left:10px;
+	bottom:5px;
+}
 .license {
     clear:both;
     text-align:center;
     position:absolute;
-    top:5px;
+    bottom:5px;
     width:401px;
     right:0px;
     font-size:90%;
     text-align:center;
     line-height:1;
-    color:white;
+    color:#555;
 }
 .license a {
-    color:white;
+    color:#555;
 }
