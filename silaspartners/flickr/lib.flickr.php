@@ -403,7 +403,7 @@ class SilasFlickr extends silas_phpFlickr {
             return false;
         }
     }
-	function clearCacheStale() {
+	function clearCacheStale($what=false) {
 		if (SILAS_FLICKR_CACHEMODE == 'db') {
 			$commands = array(
 			    //'flickr.groups.getInfo' => 4320000,
@@ -428,8 +428,12 @@ class SilasFlickr extends silas_phpFlickr {
 				'getRecent' => 43200,
 				);
 			foreach ($commands as $command => $timeout) {
-				$time = time() - $timeout;
-            	$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$command."' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time)."' ;");
+				if ($what && ereg($what, $command)) { // a specific command
+					$time = time() - 300; // 5 min window
+				} else {
+					$time = time() - $timeout;
+				}
+            	$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$command.($time ? "' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time) : '')."' ;");
 			}
             return true;
         }

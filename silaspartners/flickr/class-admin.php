@@ -277,9 +277,9 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
 			wp_iframe(array(&$this, 'albumsTab'));
 		} elseif ($mode == 'everyone') {
 		    $_REQUEST['everyone'] = true;
-		    wp_iframe(array(&$this, 'photosTab'), 35);
+		    wp_iframe(array(&$this, 'photosTab'), 40);
 		} else {
-			wp_iframe(array(&$this, 'photosTab'), 35);
+			wp_iframe(array(&$this, 'photosTab'), 40);
 		}
 	}
 	function media_upload_tabs($tabs) {
@@ -325,9 +325,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
         $offsetpage = (int) $_GET['paged'];
 		$offsetpage = $offsetpage ? $offsetpage : 1;
         $everyone = isset($_REQUEST['everyone']) && $_REQUEST['everyone'];
-        $usecache = ! (isset($_REQUEST['refresh']) && $_REQUEST['refresh']);
-
-        $photos = $this->getRecentPhotos($tags, $offsetpage, $perpage, $everyone, $usecache);
+        $photos = $this->getRecentPhotos($tags, $offsetpage, $perpage, $everyone, false);
 		
 		//
 		// TODO: this is WP2.5 specific code, should abstract out

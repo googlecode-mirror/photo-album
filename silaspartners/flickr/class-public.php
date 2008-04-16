@@ -24,10 +24,7 @@ class SilasFlickrPlugin {
             ));
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
-            //$usecache = false;
-            //if (!$usecache) $flickr->startClearCache(); // blah, buggy as hell
-            //$flickr->_silas_cacheExpire = 300; // cache just 5 mins
-            //$flickr->_silas_cacheExpire = 3600; // cache one hour
+			if (!$usecache) $flickr->clearCacheStale('search');
             if (!$tags && $everyone) {
                 $photos = $flickr->getRecent(NULL, $max, $offsetpage);
             } else {
