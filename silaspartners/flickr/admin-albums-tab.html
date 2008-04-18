@@ -25,6 +25,7 @@ $home = 'http://'.$parts['host'];
 <ul id='upload-files'>
 <?php 
 $id = 0;
+$hasShortCode = function_exists('add_shortcode');
 foreach ($albums as $album):
 if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
     $photoURL = $home.$baseurl.'album/'.$album['id'].'/'.$album['pagename'];
@@ -36,8 +37,14 @@ if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
 <a id='file-link-3' href='<?php echo $photoURL?>' title='<?php echo htmlentities($album['title']);?>' class='file-link image' onclick="return silas_showOptions(<?php echo $id?>);"><img 
     id="image<?php echo $id?>" src="<?php echo $album['sizes']['Square']['source']?>" alt="<?php echo htmlentities($album['title']);?>" height="<?php echo $album['sizes']['Square']['height']?>" width="<?php echo $album['sizes']['Square']['width']?>" border="0" /></a>
     <div class="photo-options" id="options-<?php echo $id?>">
+<?php if ($hasShortCode):?>
+	<strong>Insert:</strong><br />
+	<a href="#" onclick="return silas_addShortCode('album=<?php echo $album['id'];?> num=5');">5 photos</a> <a href="#" onclick="return silas_addShortCode('album=<?php echo $album['id'];?> num=10');">10 photos</a><br />
+	<a href="#" onclick="return silas_addShortCode('album=<?php echo $album['id'];?> num=20');">20 photos</a> <a href="#"  onclick="return silas_addShortCode('album=<?php echo $album['id'];?> num=50');">50 photos</a><br /><br />
+<?php endif;?>
+	<strong>Insert Album Cover:</strong><br />
     <?php foreach ($album['sizes'] as $k => $size):?>
-        <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', this, '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>')"><?php echo $k?><span class="props"> (<?php echo $size['width']?>x<?php echo $size['height']?>)</span></a><br />
+        <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', this, '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>')" title="<?php echo $size['width']?>x<?php echo $size['height']?>"><?php echo $k?></a> 
     <?php endforeach;?>
     <div class="close"><a href="#" onclick="return silas_hideOptions(<?php echo $id?>);">close</a></div>
     </div>

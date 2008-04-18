@@ -39,3 +39,8 @@ function silas_addPhoto(photoUrl, sourceUrl, width, height, title, size) {
 
 	return false;
 }
+function silas_addShortCode(attribs) {
+	top.send_to_editor('[flickr'+(attribs ? (' '+attribs) : '')+']');
+	if (typeof top.tb_remove == 'function') 
+		top.tb_remove();
+}

@@ -85,11 +85,16 @@ class SilasFlickrPlugin {
     		'size'    => 'Square',
     		'scale'   => 1,
     	), $attribs));
-    	$key = "flickr-$albumid-$tag-$max-$size";
+		$error = '';
+		if (!in_array($size, array('Square', 'Thumbnail', 'Small', 'Medium', 'Large', 'Original'))) { 
+			$error = "Unknown size: $size.";
+			$size = 'Square'; 
+		}
+    	$key = "flickr-$album-$tag-$max-$size";
     	if ($html = get_post_meta($post->ID, $key, true)) {
     	    return $html;
     	} else {
-    	    $html = '<div class="flickr-photos">';
+    	    $html = '';
     	}
     	// grab the flickr photos
     	$photos = array();
@@ -118,8 +123,6 @@ class SilasFlickrPlugin {
         } else {
             $html .= '<p class="error">Error: Flickr plugin is not setup!</p>';
         }
-    	if (is_feed()) {
-    	}
 
     	if (count($photos)) {
             if (file_exists(TEMPLATEPATH  . '/photoalbum-resources.php')) {
@@ -127,16 +130,17 @@ class SilasFlickrPlugin {
     		} else {
     			require_once(dirname(__FILE__) . '/photoalbum-resources.php');
     		}
+			$prefix = get_bloginfo('siteurl').SILAS_FLICKR_BASEURL;
             foreach (array_slice($photos, 0, $num) as $photo) {
                 $html .= SilasFlickrDisplay::photo($photo, array(
                     'size' => $size,
                     'album' => $albumData,
                     'scale' => $scale,
+					'prefix' => $prefix
                 ));
             }
     	} // if count photos
-    	
-    	$html .= '</div>';
+    	$html = '<div class="flickr-photos">'.($error ? ('<p class="error">'.$error.'</p>') : '').$html.'</div>';
     	if (!update_post_meta($post->ID, $key, $html)) add_post_meta($post->ID, $key, $html);
         return $html;
     }
