@@ -19,10 +19,7 @@ function silas_hideOptions(id) {
     return false;
 }
 function silas_addPhoto(photoUrl, sourceUrl, width, height, title, size) {
-	var h = 
-		'<a href="'+photoUrl+'" class="tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'">' +
-		'<img src="'+sourceUrl+'" alt="'+title+'" width="'+width+'" height="'+height+'" border="0" />' +
-		'</a> '
+	var h = silas_makePhotoHTML(photoUrl, sourceUrl, width, height, title, size);
 	if (typeof top.send_to_editor == 'function') {
 		top.send_to_editor(h);
 	} else {
@@ -34,10 +31,15 @@ function silas_addPhoto(photoUrl, sourceUrl, width, height, title, size) {
 			tinyMCE.execCommand('mceInsertContent', false, h);
 		} else if (win.edInsertContent) win.edInsertContent(win.edCanvas, h);
 	}
-	if (typeof top.tb_remove == 'function' && document.getElementById('closewindowcheck').checked) 
+	if (typeof top.tb_remove == 'function' && document.getElementById('closewindowcheck') && document.getElementById('closewindowcheck').checked) 
 		top.tb_remove();
 
 	return false;
+}
+function silas_makePhotoHTML(photoUrl, sourceUrl, width, height, title, size) { 
+	return '<a href="'+photoUrl+'" class="tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'">' +
+		'<img src="'+sourceUrl+'" alt="'+title+'" width="'+width+'" height="'+height+'" border="0" />' +
+		'</a> ';
 }
 function silas_addShortCode(attribs) {
 	top.send_to_editor('[flickr'+(attribs ? (' '+attribs) : '')+']');
