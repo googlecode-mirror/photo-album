@@ -1,4 +1,3 @@
-
 <div class="tablenav">
 <?php if ( $page_links ) echo "<div class='tablenav-pages'>$page_links</div>"; ?>
 
@@ -85,8 +84,9 @@ if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
 <a id='file-link-3' href='<?php echo $photoURL?>' title='<?php echo htmlentities($photo['title']);?>' class='file-link image' onclick="return silas_showOptions(<?php echo $id?>);"><img 
     id="image<?php echo $photo['id']?>" src="<?php echo $photo['sizes']['Square']['source']?>" alt="<?php echo htmlentities($photo['title']);?>" height="<?php echo $photo['sizes']['Square']['height']?>" width="<?php echo $photo['sizes']['Square']['width']?>" border="0" /></a>
     <div class="photo-options" id="options-<?php echo $id?>">
+    <strong>Insert Photo:</strong><br />
     <?php foreach ($photo['sizes'] as $k => $size):?>
-        <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', '<?php echo $size['source']?>', '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>');return false;"><?php echo $k?><span class="props"> (<?php echo $size['width']?>x<?php echo $size['height']?>)</span></a><br />
+        <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', '<?php echo $size['source']?>', '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>');return false;" title="<?php echo $size['width']?>x<?php echo $size['height']?>"><?php echo $k?></a>
     <?php endforeach;?>
     <div class="close"><a href="#" onclick="return silas_hideOptions(<?php echo $id?>);">close</a></div>
     </div>

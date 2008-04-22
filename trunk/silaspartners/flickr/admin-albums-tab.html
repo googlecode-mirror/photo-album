@@ -1,3 +1,4 @@
+<div class="tablenav">
 <form method="get" id="photos" action="<?php echo (ereg('media-upload.php', $_SERVER['REQUEST_URI']) ? 'media-upload.php' : 'upload.php');?>">
 <input type="hidden" name="tab" value="<?php echo $_GET['tab'];?>" />
 <input type="hidden" name="post_id" value="<?php echo $_GET['post_id'];?>" />
@@ -6,13 +7,9 @@
 <input type="hidden" name="_wpnonce" value="<?php echo $_GET['_wpnonce'];?>" />
 <input type="hidden" name="ID" value="<?php echo $_GET['ID'];?>" />
 
-<input type="submit" name="refresh" value="refresh" />
-<!--
-<input type="button" value="upload" onclick="window.open('http://flickr.com/photos/upload/')"/>
--->
-<!-- prolly should add a license field -->
+<input type="submit" name="refresh" value="refresh albums" />
 </form>
-
+</div>
 
 <?php if (count($albums) == 0):?>
 Sorry, no albums found!
@@ -39,9 +36,13 @@ if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
     <div class="photo-options" id="options-<?php echo $id?>">
 <?php if ($hasShortCode):?>
 	<strong>Insert:</strong><br />
-	<a href="#" onclick="return silas_addShortCode('album=<?php echo $album['id'];?> num=5');">5 photos</a> <a href="#" onclick="return silas_addShortCode('album=<?php echo $album['id'];?> num=10');">10 photos</a><br />
-	<a href="#" onclick="return silas_addShortCode('album=<?php echo $album['id'];?> num=20');">20 photos</a> <a href="#"  onclick="return silas_addShortCode('album=<?php echo $album['id'];?> num=50');">50 photos</a><br /><br />
+	<?php foreach(array(5,10,20,50) as $count): if ($count > $album['photos']) $count = $album['photos'];?>
+		<a href="#" onclick="return silas_addShortCode('album=<?php echo $album['id'];?> num=<?php echo $count;?>');"><?php echo $count;?> photos</a>
+	<?php
+	if ($count == $album['photos']) break;
+	endforeach;?>
 <?php endif;?>
+<br /><br />
 	<strong>Insert Album Cover:</strong><br />
     <?php foreach ($album['sizes'] as $k => $size):?>
         <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', this, '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>')" title="<?php echo $size['width']?>x<?php echo $size['height']?>"><?php echo $k?></a> 

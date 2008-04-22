@@ -60,6 +60,7 @@ class SilasFlickrPlugin {
             ));
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
+            if (!$usecache) $flickr->clearCacheStale('photosets.getList');
             //$usecache = false;
             //if (!$usecache) $flickr->startClearCache(); // blah, buggy as hell
             //$flickr->_silas_cacheExpire = 300; // cache just 5 mins
