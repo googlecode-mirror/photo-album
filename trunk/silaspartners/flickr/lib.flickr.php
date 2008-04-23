@@ -429,7 +429,7 @@ class SilasFlickr extends silas_phpFlickr {
 				);
 			foreach ($commands as $command => $timeout) {
 				if ($what && ereg($what, $command)) { // a specific command
-					$time = time() - 300; // 5 min window
+					$time = time() - 60; // 1 min window
 				} else {
 					$time = time() - $timeout;
 				}
