@@ -24,7 +24,7 @@ function get_out_now() { exit; }
 add_action('shutdown', 'get_out_now', -1);
 
 require_once(dirname(__FILE__).'/lib.flickr.php');
-$flickr = new SilasFlickr();
+$flickr = new TanTanFlickr();
 $auth_token  = get_option('silas_flickr_token');
 $hideAlbums  = get_option('silas_flickr_hidealbums');
 $hideGroups  = get_option('silas_flickr_hidegroups');

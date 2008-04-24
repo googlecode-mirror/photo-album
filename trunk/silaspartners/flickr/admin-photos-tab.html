@@ -16,10 +16,11 @@ Tags: <input type="text" name="tags" value="<?php echo $tags?>" size="15" />
 -->
 &nbsp; &nbsp; 
 <input type="submit" name="refresh" value="search" />
+<?php if (ereg('media-upload.php', $_SERVER['REQUEST_URI'])):?>
 <label for="closewindowcheck" id="closewin"><input type="checkbox" id="closewindowcheck" name="closewindowcheck" value="1" checked="checked" /> Close after inserting photo</label> 
-
+<?php endif;?>
 <?php if ($everyone):
-switch((int) constant('SILAS_FLICKR_PUBLIC_LICENSE')) {
+switch((int) constant('TANTAN_FLICKR_PUBLIC_LICENSE')) {
 case 6:
     $name="Attribution-NoDerivs License";
     $url="http://creativecommons.org/licenses/by-nd/2.0/";
@@ -81,14 +82,14 @@ if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
 }
 ?>
 <li id='flickr-photo-<?php echo $id?>' class='alignleft'>
-<a id='file-link-3' href='<?php echo $photoURL?>' title='<?php echo htmlentities($photo['title']);?>' class='file-link image' onclick="return silas_showOptions(<?php echo $id?>);"><img 
+<a id='file-link-3' href='<?php echo $photoURL?>' title='<?php echo htmlentities($photo['title']);?>' class='file-link image' onclick="return tantan_showOptions(<?php echo $id?>);"><img 
     id="image<?php echo $photo['id']?>" src="<?php echo $photo['sizes']['Square']['source']?>" alt="<?php echo htmlentities($photo['title']);?>" height="<?php echo $photo['sizes']['Square']['height']?>" width="<?php echo $photo['sizes']['Square']['width']?>" border="0" /></a>
     <div class="photo-options" id="options-<?php echo $id?>">
     <strong>Insert Photo:</strong><br />
     <?php foreach ($photo['sizes'] as $k => $size):?>
-        <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', '<?php echo $size['source']?>', '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>');return false;" title="<?php echo $size['width']?>x<?php echo $size['height']?>"><?php echo $k?></a>
+        <a href="<?php echo $size['source']?>" onclick="return tantan_addPhoto('<?php echo $photoURL?>', '<?php echo $size['source']?>', '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>');return false;" title="<?php echo $size['width']?>x<?php echo $size['height']?>"><?php echo $k?></a>
     <?php endforeach;?>
-    <div class="close"><a href="#" onclick="return silas_hideOptions(<?php echo $id?>);">close</a></div>
+    <div class="close"><a href="#" onclick="return tantan_hideOptions(<?php echo $id?>);">close</a></div>
     </div>
 
 </li>

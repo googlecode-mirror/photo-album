@@ -45,7 +45,7 @@ if (strpos(__FILE__, ':') !== false) {
 
 // ini_set('include_path', dirname(__FILE__) . '/PEAR' . $path_delimiter . ini_get('include_path'));
 
-class silas_phpFlickr {
+class tantan_phpFlickr {
     var $api_key;
     var $secret;
     var $REST = 'http://api.flickr.com/services/rest/';
@@ -77,7 +77,7 @@ class silas_phpFlickr {
      */
     var $max_cache_rows = 1000;
 
-    function silas_phpFlickr ($api_key, $secret = NULL, $die_on_error = false)
+    function tantan_phpFlickr ($api_key, $secret = NULL, $die_on_error = false)
     {
         //The API Key must be set before any calls can be made.  You can
         //get your own at http://www.flickr.com/services/api/misc.api_keys.html
