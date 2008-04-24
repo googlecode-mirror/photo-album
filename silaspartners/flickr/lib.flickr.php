@@ -24,34 +24,34 @@ $Author$
 
 // keys
 // add this to your wp-config.php to hard code your keys
-if (!defined('SILAS_FLICKR_APIKEY')) define('SILAS_FLICKR_APIKEY', get_option('silas_flickr_apikey'));
-if (!defined('SILAS_FLICKR_SHAREDSECRET')) define('SILAS_FLICKR_SHAREDSECRET', get_option('silas_flickr_sharedsecret'));
+if (!defined('TANTAN_FLICKR_APIKEY')) define('TANTAN_FLICKR_APIKEY', get_option('silas_flickr_apikey'));
+if (!defined('TANTAN_FLICKR_SHAREDSECRET')) define('TANTAN_FLICKR_SHAREDSECRET', get_option('silas_flickr_sharedsecret'));
 
 require_once(dirname(__FILE__)."/lib.phpFlickr.php");
 
-class SilasFlickr extends silas_phpFlickr {
-    var $_silas_apiKey;
-    var $_silas_sharedSecret;
-    var $_silas_user;
-    var $_silas_useCache;
-    var $_silas_errorCode;
-    var $_silas_errorMsg;
-    var $_silas_cacheExpire;
-    var $_silas_options;
+class TanTanFlickr extends tantan_phpFlickr {
+    var $_tantan_apiKey;
+    var $_tantan_sharedSecret;
+    var $_tantan_user;
+    var $_tantan_useCache;
+    var $_tantan_errorCode;
+    var $_tantan_errorMsg;
+    var $_tantan_cacheExpire;
+    var $_tantan_options;
     
-    function SilasFlickr() {
-        $this->_silas_apiKey = SILAS_FLICKR_APIKEY;
-        $this->_silas_sharedSecret = SILAS_FLICKR_SHAREDSECRET;
-        $this->_silas_errorCode = array();
-        $this->_silas_errorMsg = array();
-        $this->_silas_cacheExpire = -1; //3600;
-        $this->_silas_options = array();
+    function TanTanFlickr() {
+        $this->_tantan_apiKey = TANTAN_FLICKR_APIKEY;
+        $this->_tantan_sharedSecret = TANTAN_FLICKR_SHAREDSECRET;
+        $this->_tantan_errorCode = array();
+        $this->_tantan_errorMsg = array();
+        $this->_tantan_cacheExpire = -1; //3600;
+        $this->_tantan_options = array();
         
-        parent::silas_phpFlickr(SILAS_FLICKR_APIKEY, SILAS_FLICKR_SHAREDSECRET, false);
-        if (SILAS_FLICKR_CACHEMODE == 'db') {
+        parent::tantan_phpFlickr(TANTAN_FLICKR_APIKEY, TANTAN_FLICKR_SHAREDSECRET, false);
+        if (TANTAN_FLICKR_CACHEMODE == 'db') {
             global $wpdb; // hmm, might need to think of a better way of doing this
             $this->enableCache('db', $wpdb);
-		} elseif (SILAS_FLICKR_CACHEMODE == 'false') {
+		} elseif (TANTAN_FLICKR_CACHEMODE == 'false') {
 			// no cache
         } else {
             $cacheDir = dirname(__FILE__).'/flickr-cache';
@@ -63,10 +63,10 @@ class SilasFlickr extends silas_phpFlickr {
     }
     
     function getAPIKey() {
-        return $this->_silas_apiKey;
+        return $this->_tantan_apiKey;
     }
     function getSharedSecret() {
-        return $this->_silas_sharedSecret;
+        return $this->_tantan_sharedSecret;
     }
     function getFrob() {
         $this->startClearCache();
@@ -74,22 +74,22 @@ class SilasFlickr extends silas_phpFlickr {
     }
     
     function getUser() {
-        return $this->_silas_user;
+        return $this->_tantan_user;
     }
     
     function setUser($user) {
-        $this->_silas_user = $user;
+        $this->_tantan_user = $user;
     }
     
     function setOption($key, $value=NULL) {
         if (is_array($key)) {
-            $this->_silas_options = $key;
+            $this->_tantan_options = $key;
         } else {
-            $this->_silas_options[$key] = $value;
+            $this->_tantan_options[$key] = $value;
         }
     }
     function getOption($key) {
-        return $this->_silas_options[$key];
+        return $this->_tantan_options[$key];
     }
     
     function getRecent($extras = NULL, $per_page = NULL, $page = NULL) {
@@ -206,7 +206,7 @@ class SilasFlickr extends silas_phpFlickr {
     }
     
     function getGroupsActual() {
-		if (!SILAS_FLICKR_DISPLAYGROUPS) return array();
+		if (!TANTAN_FLICKR_DISPLAYGROUPS) return array();
 	
         $this->startClearCache();
         $groups = $this->getGroups();
@@ -214,7 +214,7 @@ class SilasFlickr extends silas_phpFlickr {
         return $groups;
     }
     function getGroups() {
-		if (!SILAS_FLICKR_DISPLAYGROUPS) return array();
+		if (!TANTAN_FLICKR_DISPLAYGROUPS) return array();
 		
         $groups = $this->groups_pools_getGroups();
         $return = array();
@@ -241,7 +241,7 @@ class SilasFlickr extends silas_phpFlickr {
         return $return;
     }
     function getGroup($group_id) {
-		if (!SILAS_FLICKR_DISPLAYGROUPS) return array();
+		if (!TANTAN_FLICKR_DISPLAYGROUPS) return array();
 	
         $group_id = $group_id . '';
         $group = $this->groups_getInfo($group_id);
@@ -260,13 +260,13 @@ class SilasFlickr extends silas_phpFlickr {
     }
     
     function getPhotosByGroup($group_id, $tags=NULL, $user_id = NULL, $extras = NULL, $per_page = NULL, $page = NULL) {
-		if (!SILAS_FLICKR_DISPLAYGROUPS) return array();
+		if (!TANTAN_FLICKR_DISPLAYGROUPS) return array();
 	
         $group_id = $group_id . '';
         
-        $this->_silas_cacheExpire = 3600;
+        $this->_tantan_cacheExpire = 3600;
         $photos = $this->groups_pools_getPhotos($group_id, $tags, $user_id, $extras, $per_page, $page);
-        $this->_silas_cacheExpire = -1;
+        $this->_tantan_cacheExpire = -1;
         
         
         $return = array();
@@ -306,13 +306,23 @@ class SilasFlickr extends silas_phpFlickr {
     function getPhoto($photo_id) {
         $photo_id = $photo_id . '';
         $photo = $this->photos_getInfo($photo_id);
+
+		// do some housekeeping and clean stuff up to save memory
+		$flatten = array('tag', 'url');
+		foreach ($flatten as $key) {
+			$flattend = array();
+			if (is_array($photo[$key.'s'][$key])) foreach ($photo[$key.'s'][$key] as $node) $flattend[] = $node['_content'];
+			unset($photo[$key.'s']);
+			$photo[$key.'s'] = $flattend;
+		}		
+		foreach (array('farm','rotation','originalsecret','originalformat', 'secret', 'server') as $key) unset($photo[$key]);
         return $photo;
     }
     function getComments($photo_id) {
         $photo_id = $photo_id . '';
-        $this->_silas_cacheExpire = 3600;
+        $this->_tantan_cacheExpire = 3600;
         $comments = $this->photos_comments_getList($photo_id);
-        $this->_silas_cacheExpire = -1;
+        $this->_tantan_cacheExpire = -1;
         
         $return = array();
         $comments = $comments['comment'];
@@ -351,7 +361,7 @@ class SilasFlickr extends silas_phpFlickr {
         return $context;
     }
     function getContextByGroup($photo_id, $group_id) {
-		if (!SILAS_FLICKR_DISPLAYGROUPS) return array();
+		if (!TANTAN_FLICKR_DISPLAYGROUPS) return array();
 	
         $photo_id = $photo_id . '';
         $group_id = $group_id . '';
@@ -388,13 +398,13 @@ class SilasFlickr extends silas_phpFlickr {
     }
 
     function startClearCache() {
-        $this->_silas_useCache = false;
+        $this->_tantan_useCache = false;
     }
     function doneClearCache() {
-        $this->_silas_useCache = true;
+        $this->_tantan_useCache = true;
     }
     function clearCache() {
-        if (SILAS_FLICKR_CACHEMODE == 'db') {
+        if (TANTAN_FLICKR_CACHEMODE == 'db') {
             $result = $this->cache_db->query("DELETE FROM " . $this->cache_table . ";");
             return true;
         } elseif ($this->_clearCache($this->cache_dir)) {
@@ -404,7 +414,7 @@ class SilasFlickr extends silas_phpFlickr {
         }
     }
 	function clearCacheStale($what=false) {
-		if (SILAS_FLICKR_CACHEMODE == 'db') {
+		if (TANTAN_FLICKR_CACHEMODE == 'db') {
 			$commands = array(
 			    //'flickr.groups.getInfo' => 4320000,
 				'flickr.groups.pools.getContext' => 432000,
@@ -474,16 +484,16 @@ class SilasFlickr extends silas_phpFlickr {
        return $output;
     }
     function getErrorMsgs() {
-        return implode("\n", $this->_silas_errorMsg);
+        return implode("\n", $this->_tantan_errorMsg);
     }
         
     /*
         Reimplemented methods
     */
     function request ($command, $args = array(), $nocache = false) {
-        $nocache = (($this->_silas_cacheExpire > 0) ? true : false);
+        $nocache = (($this->_tantan_cacheExpire > 0) ? true : false);
         $nocache = ($nocache ? true : 
-            ($this->_silas_useCache ? false : true));
+            ($this->_tantan_useCache ? false : true));
         if ($this->getOption('hidePrivatePhotos')) {
             $args['privacy_filter'] = 1;
             if ($command != 'flickr.auth.checkToken')  {
@@ -502,12 +512,12 @@ class SilasFlickr extends silas_phpFlickr {
             $this->cache = 'db';
             $this->cache_db =& $connection;
             $this->cache_table = $wpdb->prefix.'silas_flickr_cache';
-            $this->_silas_useCache = true;
+            $this->_tantan_useCache = true;
         } elseif ($type == 'fs') {
             $this->cache = 'fs';
             $this->cache_expire = $cache_expire;
             $this->cache_dir = $connection;
-            $this->_silas_useCache = true;
+            $this->_tantan_useCache = true;
         }
     }
 
@@ -529,8 +539,8 @@ class SilasFlickr extends silas_phpFlickr {
             $file = $this->cache_dir . '/' . $pre . '/' . $reqhash . '.cache';
 
             if (file_exists($file)) {
-                if ($this->_silas_cacheExpire > 0) {
-                    if ((time() - filemtime($file)) > $this->_silas_cacheExpire) {
+                if ($this->_tantan_cacheExpire > 0) {
+                    if ((time() - filemtime($file)) > $this->_tantan_cacheExpire) {
                         return false;
                     }
                 } 
@@ -543,7 +553,7 @@ class SilasFlickr extends silas_phpFlickr {
     
     function cache ($request, $response, $expiration=false) {
 		if (!$expiration) {
-			$expiration = time() + SILAS_FLICKR_CACHE_TIMEOUT; // 30 days default cache
+			$expiration = time() + TANTAN_FLICKR_CACHE_TIMEOUT; // 30 days default cache
 		}
         $reqhash = $this->makeReqHash($request);
         if ($this->cache == 'db') {

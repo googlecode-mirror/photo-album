@@ -6,12 +6,12 @@ $Author$
 */
 require_once(dirname(__FILE__).'/class-public.php');
 
-class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
+class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 
     var $config = array();
     
-    function SilasFlickrPluginAdmin() {
-        //parent::SilasFlickrPlugin();
+    function TanTanFlickrPluginAdmin() {
+        //parent::TanTanFlickrPlugin();
         add_action('admin_menu', array(&$this, 'addhooks'));
         add_action('activate_silaspartners/flickr.php', array(&$this, 'activate'));
         add_action('deactivate_silaspartners/flickr.php', array(&$this, 'deactivate'));
@@ -68,7 +68,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
         if ($flickr_apikey && $flickr_sharedsecret) {
             
         require_once(dirname(__FILE__).'/lib.flickr.php');
-        $flickr = new SilasFlickr();
+        $flickr = new TanTanFlickr();
 
         if ($flickr->cache == 'db') {
             global $wpdb;
@@ -272,7 +272,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
 		add_filter('media_upload_tabs', array(&$this, 'media_upload_tabs'));
         add_action('admin_print_scripts', array(&$this, 'upload_tabs_scripts'));
 		add_action('admin_print_scripts', 'media_admin_css');
-		add_action('silas_media_upload_header', 'media_upload_header');
+		add_action('tantan_media_upload_header', 'media_upload_header');
 		if ($mode == 'albums') {
 			wp_iframe(array(&$this, 'albumsTab'));
 		} elseif ($mode == 'everyone') {
@@ -292,7 +292,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
     function addPhotosTab() {
         add_filter('wp_upload_tabs', array(&$this, 'wp_upload_tabs'));
         add_action('admin_print_scripts', array(&$this, 'upload_tabs_scripts'));
-        //add_action('upload_files_silas_flickr', array(&$this, 'upload_files_silas_flickr'));
+        //add_action('upload_files_tantan_flickr', array(&$this, 'upload_files_tantan_flickr'));
     }
     function wp_upload_tabs ($array) {
         /*
@@ -307,8 +307,8 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
         if ($_REQUEST['tags']) $args['tags'] = $_REQUEST['tags'];
         if ($_REQUEST['everyone']) $args['everyone'] = 1;
         $tab = array(
-            'silas_flickr' => array('Photos (Flickr)', 'upload_files', array(&$this, 'photosTab'), array(min($count,500), 10), $args),
-            'silas_flickr_album' => array('Albums (Flickr)', 'upload_files', array(&$this, 'albumsTab'), 0, $args)
+            'tantan_flickr' => array('Photos (Flickr)', 'upload_files', array(&$this, 'photosTab'), array(min($count,500), 10), $args),
+            'tantan_flickr_album' => array('Albums (Flickr)', 'upload_files', array(&$this, 'albumsTab'), 0, $args)
             );
         return array_merge($array, $tab);
     }
@@ -316,8 +316,8 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
         include(dirname(__FILE__).'/admin-tab-head.html');
     }
     // gets called before tabs are rendered
-    function upload_files_silas_flickr() {
-        //echo 'upload_files_silas_flickr';
+    function upload_files_tantan_flickr() {
+        //echo 'upload_files_tantan_flickr';
     }
     function photosTab($perpage=20) {
         $tags = $_REQUEST['tags'];
@@ -354,13 +354,13 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
 			}
 		}
 
-        do_action('silas_media_upload_header');
+        do_action('tantan_media_upload_header');
 		include(dirname(__FILE__).'/admin-photos-tab.html');
     }
     function albumsTab() {
         $usecache = ! (isset($_REQUEST['refresh']) && $_REQUEST['refresh']);
         $albums = $this->getRecentAlbums($usecache);
-		do_action('silas_media_upload_header');
+		do_action('tantan_media_upload_header');
         include(dirname(__FILE__).'/admin-albums-tab.html');
     }
     
@@ -369,7 +369,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
     // cleanup after yourself
     function deactivate() {
         require_once(dirname(__FILE__).'/lib.flickr.php');
-        $flickr = new SilasFlickr();
+        $flickr = new TanTanFlickr();
         if (is_writable(dirname(__FILE__).'/flickr-cache/')) {
             $flickr->clearCache();
         }
@@ -386,7 +386,7 @@ class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
         $linkoptions = get_option('silas_flickr_linkoptions');
         if ($auth_token) {
             require_once(dirname(__FILE__).'/lib.flickr.php');
-            $flickr = new SilasFlickr();
+            $flickr = new TanTanFlickr();
             $flickr->setToken($auth_token);
             $flickr->setOption(array(
                 'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),

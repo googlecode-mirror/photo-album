@@ -31,23 +31,23 @@ if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
 }
 ?>
 <li id='flickr-photo-<?php echo $id?>' class='alignleft'>
-<a id='file-link-3' href='<?php echo $photoURL?>' title='<?php echo htmlentities($album['title']);?>' class='file-link image' onclick="return silas_showOptions(<?php echo $id?>);"><img 
+<a id='file-link-3' href='<?php echo $photoURL?>' title='<?php echo htmlentities($album['title']);?>' class='file-link image' onclick="return tantan_showOptions(<?php echo $id?>);"><img 
     id="image<?php echo $id?>" src="<?php echo $album['sizes']['Square']['source']?>" alt="<?php echo htmlentities($album['title']);?>" height="<?php echo $album['sizes']['Square']['height']?>" width="<?php echo $album['sizes']['Square']['width']?>" border="0" /></a>
     <div class="photo-options" id="options-<?php echo $id?>">
 <?php if ($hasShortCode):?>
 	<strong>Insert:</strong><br />
 	<?php foreach(array(5,10,20,50) as $count): if ($count > $album['photos']) $count = $album['photos'];?>
-		<a href="#" onclick="return silas_addShortCode('album=<?php echo $album['id'];?> num=<?php echo $count;?>');"><?php echo $count;?> photos</a>
+		<a href="#" onclick="return tantan_addShortCode('album=<?php echo $album['id'];?> num=<?php echo $count;?>');"><?php echo $count;?> photos</a>
 	<?php
 	if ($count == $album['photos']) break;
 	endforeach;?>
-<?php endif;?>
 <br /><br />
-	<strong>Insert Album Cover:</strong><br />
+<?php endif;?>
+	<strong>Insert Cover:</strong><br />
     <?php foreach ($album['sizes'] as $k => $size):?>
-        <a href="<?php echo $size['source']?>" onclick="return silas_addPhoto('<?php echo $photoURL?>', this, '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>')" title="<?php echo $size['width']?>x<?php echo $size['height']?>"><?php echo $k?></a> 
+        <a href="<?php echo $size['source']?>" onclick="return tantan_addPhoto('<?php echo $photoURL?>', this, '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>')" title="<?php echo $size['width']?>x<?php echo $size['height']?>"><?php echo $k?></a> 
     <?php endforeach;?>
-    <div class="close"><a href="#" onclick="return silas_hideOptions(<?php echo $id?>);">close</a></div>
+    <div class="close"><a href="#" onclick="return tantan_hideOptions(<?php echo $id?>);">close</a></div>
     </div>
 
 </li>

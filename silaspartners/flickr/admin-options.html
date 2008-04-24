@@ -126,7 +126,7 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
     <fieldset class="options">
     <legend>Group Photos</legend>
     <form method="post">
-<?php if (SILAS_FLICKR_DISPLAYGROUPS): ?>
+<?php if (TANTAN_FLICKR_DISPLAYGROUPS): ?>
     <input type="hidden" name="action" value="cleargroupcache" />
     <input type="hidden" name="group" value="all" />
     
@@ -168,14 +168,14 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
     <script>
     function getOptions(what) {
         var ajaxUpdate = new sack();
-        ajaxUpdate._silas_what = what
+        ajaxUpdate._tantan_what = what
         ajaxUpdate.requestFile = "../wp-content/plugins/silaspartners/flickr/admin-options-load.php"
         ajaxUpdate.method = 'GET';
         ajaxUpdate.onLoading = function() {}
         ajaxUpdate.onLoaded = function() {}
         ajaxUpdate.onInteractive = function() {}
         ajaxUpdate.onCompletion = function() {
-            var options = document.getElementById('options-'+this._silas_what);
+            var options = document.getElementById('options-'+this._tantan_what);
             options.innerHTML = this.response
         }
         ajaxUpdate.runAJAX('view='+what);

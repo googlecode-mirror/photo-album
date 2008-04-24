@@ -4,11 +4,11 @@ $Revision$
 $Date$
 $Author$
 */
-class SilasFlickrPlugin {
+class TanTanFlickrPlugin {
 
     var $config = array();
     
-    function SilasFlickrPlugin() {
+    function TanTanFlickrPlugin() {
     }
 
     function getRecentPhotos($tags='', $offsetpage=0, $max=15, $everyone=false, $usecache=true) {
@@ -17,7 +17,7 @@ class SilasFlickrPlugin {
         $linkoptions = get_option('silas_flickr_linkoptions');
         if ($auth_token) {
             require_once(dirname(__FILE__).'/lib.flickr.php');
-            $flickr = new SilasFlickr();
+            $flickr = new TanTanFlickr();
             $flickr->setToken($auth_token);
             $flickr->setOption(array(
                 'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
@@ -31,7 +31,7 @@ class SilasFlickrPlugin {
                 $photos = $flickr->search(array(
                     'tags' => ($tags ? $tags : ''),
                     'user_id' => ($everyone ? '' : $nsid),
-					'license' => ($everyone ? SILAS_FLICKR_PUBLIC_LICENSE : ''),
+					'license' => ($everyone ? TANTAN_FLICKR_PUBLIC_LICENSE : ''),
                     'per_page' => $max,
                     'page' => $offsetpage,
                 ));
@@ -53,7 +53,7 @@ class SilasFlickrPlugin {
         $baseurl = get_option('silas_flickr_baseurl');
         if ($auth_token) {
             require_once(dirname(__FILE__).'/lib.flickr.php');
-            $flickr = new SilasFlickr();
+            $flickr = new TanTanFlickr();
             $flickr->setToken($auth_token);
             $flickr->setOption(array(
                 'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
@@ -63,14 +63,14 @@ class SilasFlickrPlugin {
             if (!$usecache) $flickr->clearCacheStale('photosets.getList');
             //$usecache = false;
             //if (!$usecache) $flickr->startClearCache(); // blah, buggy as hell
-            //$flickr->_silas_cacheExpire = 300; // cache just 5 mins
-            //$flickr->_silas_cacheExpire = 3600; // cache one hour
+            //$flickr->_tantan_cacheExpire = 300; // cache just 5 mins
+            //$flickr->_tantan_cacheExpire = 3600; // cache one hour
             $albums = $flickr->manualSort($flickr->getAlbums(), get_option('silas_flickr_albumorder'));
             foreach ($albums as $key => $album) {
                 $albums[$key]['sizes'] = $flickr->getPhotoSizes($album['primary']);
             }
             //if (!$usecache) $flickr->doneClearCache();
-            //$this->_silas_cacheExpire = -1;
+            //$this->_tantan_cacheExpire = -1;
             return $albums;
         } else {
             return array();
@@ -107,7 +107,7 @@ class SilasFlickrPlugin {
         $photos = array();
         if ($auth_token) {
             require_once(dirname(__FILE__).'/lib.flickr.php');
-            $flickr = new SilasFlickr();
+            $flickr = new TanTanFlickr();
             $flickr->setToken($auth_token);
             $flickr->setOption(array(
                 'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
@@ -131,9 +131,9 @@ class SilasFlickrPlugin {
     		} else {
     			require_once(dirname(__FILE__) . '/photoalbum-resources.php');
     		}
-			$prefix = get_bloginfo('siteurl').SILAS_FLICKR_BASEURL;
+			$prefix = get_bloginfo('siteurl').TANTAN_FLICKR_BASEURL;
             foreach (array_slice($photos, 0, $num) as $photo) {
-                $html .= SilasFlickrDisplay::photo($photo, array(
+                $html .= TanTanFlickrDisplay::photo($photo, array(
                     'size' => $size,
                     'album' => $albumData,
                     'scale' => $scale,
@@ -155,7 +155,7 @@ class SilasFlickrPlugin {
             $photoAlbumTitle = 'Photo Gallery';
         }
     
-        if (!isset($_SERVER['_SILAS_FLICKR_REQUEST_URI'])) {
+        if (!isset($_SERVER['_TANTAN_FLICKR_REQUEST_URI'])) {
             return;
         }
         $auth_token = get_option('silas_flickr_token');
@@ -163,13 +163,13 @@ class SilasFlickrPlugin {
         $photoTemplate = 'error.html';
         if ($auth_token) {
             require_once(dirname(__FILE__).'/lib.flickr.php');
-            $flickr = new SilasFlickr();
+            $flickr = new TanTanFlickr();
             $flickr->setToken($auth_token);
             $flickr->setOption(array(
                 'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
             ));
             
-            $parts = explode('/', substr($_SERVER['_SILAS_FLICKR_REQUEST_URI'], strlen($_SERVER['REQUEST_URI'])));
+            $parts = explode('/', substr($_SERVER['_TANTAN_FLICKR_REQUEST_URI'], strlen($_SERVER['REQUEST_URI'])));
             $request = array();
             $title = '';
             $i = 0;
@@ -208,7 +208,7 @@ class SilasFlickrPlugin {
                 
                 $user = $flickr->auth_checkToken();
                 $nsid = $user['user']['nsid'];
-				if ($request['group'] && !SILAS_FLICKR_DISPLAYGROUPS) {
+				if ($request['group'] && !TANTAN_FLICKR_DISPLAYGROUPS) {
 					$message = "Sorry, this feature is not enabled.";
                     $photoTemplate = 'error.html';
 				} elseif ($photo['owner']['nsid'] != $nsid) {
@@ -240,7 +240,7 @@ class SilasFlickrPlugin {
                     $photoTemplate = 'photoalbum-album.html';
                 }
             } elseif ($request['group']) {
-				if (!SILAS_FLICKR_DISPLAYGROUPS) {
+				if (!TANTAN_FLICKR_DISPLAYGROUPS) {
                     $message = "Sorry, this feature is not enabled.";
                     $photoTemplate = 'error.html';
 				} else {
@@ -366,4 +366,5 @@ class SilasFlickrPlugin {
         return $query_vars;
     }
 }
+class SilasFlickrPlugin extends TanTanFlickrPlugin {}; // backwards compatibility
 ?>

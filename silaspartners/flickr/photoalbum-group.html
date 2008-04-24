@@ -2,17 +2,17 @@
 /*
 This template displays photos from a Flickr group
 */
-global $SilasFlickrPlugin;
+global $TanTanFlickrPlugin;
 
 ?>
 
-<?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
+<?php include($TanTanFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
 
 <h2><?php echo $group['name']?></h2>
 <p><?php echo $group['description']?></p>
 <div id="photos" class="photos">
 <?php foreach ($photos as $photo)
-echo SilasFlickrDisplay::photo($photo, array(
+echo TanTanFlickrDisplay::photo($photo, array(
 	'size' => 'Square'));
 ?>
 </div>

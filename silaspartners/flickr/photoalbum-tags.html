@@ -2,10 +2,10 @@
 /*
 This template displays Flickr photos based on a tag
 */
-global $SilasFlickrPlugin;
+global $TanTanFlickrPlugin;
 ?>
 
-<?php include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-nav.html'));?>
+<?php include($TanTanFlickrPlugin->getDisplayTemplate('photoalbum-nav.html'));?>
 
 <h2>Tag: <?php echo htmlentities($request['tags'])?></h2>
 <?php
@@ -14,9 +14,9 @@ global $SilasFlickrPlugin;
 <div id="photos" class="photos">
 
 <?php 
-$tpl = $SilasFlickrPlugin->getDisplayTemplate('photoalbum-photo-link.html');
+$tpl = $TanTanFlickrPlugin->getDisplayTemplate('photoalbum-photo-link.html');
 foreach ($photos as $photo)
-	echo SilasFlickrDisplay::photo($photo, array(
+	echo TanTanFlickrDisplay::photo($photo, array(
 		'size' => 'Square'));
 ?>
 </div>

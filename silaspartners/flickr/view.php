@@ -26,14 +26,14 @@ $Date$
 $Author$
 
 */
-global $SilasFlickrPlugin;
+global $TanTanFlickrPlugin;
 get_header();
 
 // load the appropriate albums index, album's photos, or individual photo template.
 ?>
 <div id="content" class="narrowcolumn">
 <?php
-include($SilasFlickrPlugin->getDisplayTemplate($photoTemplate));
+include($TanTanFlickrPlugin->getDisplayTemplate($photoTemplate));
 ?>
 
 <?php if (!is_object($Silas)):?>
