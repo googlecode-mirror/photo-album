@@ -360,6 +360,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
     function albumsTab() {
         $usecache = ! (isset($_REQUEST['refresh']) && $_REQUEST['refresh']);
         $albums = $this->getRecentAlbums($usecache);
+		$user = $this->getUser();
 		do_action('tantan_media_upload_header');
         include(dirname(__FILE__).'/admin-albums-tab.html');
     }

@@ -11,17 +11,6 @@ if (!isset($_GET['view']) ) {
     exit;
 }
 require_once(dirname(__FILE__).$tmpPath.'/wp-config.php');
-//require_once(dirname(__FILE__).$tmpPath.'/wp-admin/admin-functions.php');
-//require_once(dirname(__FILE__).$tmpPath.'/wp-admin/admin-db.php');
-
-get_currentuserinfo();
-//print_r(wp_get_current_user());
-//if ( !current_user_can('manage_categories') )
-//	die('Insufficient priviledges');
-
-function get_out_now() { exit; }
-
-add_action('shutdown', 'get_out_now', -1);
 
 require_once(dirname(__FILE__).'/lib.flickr.php');
 $flickr = new TanTanFlickr();

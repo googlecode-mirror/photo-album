@@ -27,7 +27,7 @@ foreach ($albums as $album):
 if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
     $photoURL = $home.$baseurl.'album/'.$album['id'].'/'.$album['pagename'];
 } else {
-    $photoURL = $photo['info']['urls']['url'][0]['_value'];
+	$photoURL = 'http://www.flickr.com/photos/'.$user['user']['nsid'].'/sets/'.$album['id'].'/';
 }
 ?>
 <li id='flickr-photo-<?php echo $id?>' class='alignleft'>

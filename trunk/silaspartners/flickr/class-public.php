@@ -11,6 +11,9 @@ class TanTanFlickrPlugin {
     function TanTanFlickrPlugin() {
     }
 
+	function getUser() {
+		return get_option('silas_flickr_user');
+	}
     function getRecentPhotos($tags='', $offsetpage=0, $max=15, $everyone=false, $usecache=true) {
         $auth_token = get_option('silas_flickr_token');
         $baseurl = get_option('silas_flickr_baseurl');
@@ -40,7 +43,7 @@ class TanTanFlickrPlugin {
             //$this->_silas_cacheExpire = -1;
             if ($everyone || !$baseurl || $linkoptions) {
                 foreach ($photos as $k => $photo) {
-                    $photos[$k]['info'] = $flickr->photos_getInfo($photo['id']);
+                    $photos[$k]['info'] = $flickr->getPhoto($photo['id']);
                 }
             }
             return $photos;
