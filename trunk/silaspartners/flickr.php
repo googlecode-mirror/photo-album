@@ -61,6 +61,7 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
             $TanTanFlickrPlugin =& new TanTanFlickrPlugin();
 
             status_header(200);
+			remove_action('template_redirect', 'redirect_canonical');
             add_filter('request', array(&$TanTanFlickrPlugin, 'request'));
             add_action('parse_query', array(&$TanTanFlickrPlugin, 'parse_query'));
 			add_action('parse_request', array(&$TanTanFlickrPlugin, 'parse_query'));

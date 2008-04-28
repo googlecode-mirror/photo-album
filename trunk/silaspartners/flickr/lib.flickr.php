@@ -523,6 +523,8 @@ class TanTanFlickr extends tantan_phpFlickr {
 
     function getCached ($request) // buggy, time based caching doesnt work
     {
+		if (!$this->_tantan_useCache) return false;
+		
         $reqhash = $this->makeReqHash($request);
         if ($this->cache == 'db') {
             $result = $this->cache_db->get_col("SELECT response FROM " . $this->cache_table . " WHERE request = '" . $reqhash . "'");
