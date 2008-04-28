@@ -325,7 +325,11 @@ class TanTanFlickrPlugin {
 		} else {
 			require_once(dirname(__FILE__) . '/photoalbum-resources.php');
 		}
-        if (file_exists(TEMPLATEPATH . '/photos.php')) {
+        if (file_exists(TEMPLATEPATH . '/photoalbum-index.php')) {
+            include (TEMPLATEPATH . '/photoalbum-index.php');
+        } elseif (file_exists(dirname(__FILE__) . '/photoalbum-index.php')) {
+            include (dirname(__FILE__) . '/photoalbum-index.php');
+        } elseif (file_exists(TEMPLATEPATH . '/photos.php')) {
             include (TEMPLATEPATH . '/photos.php');
         } else {
             include(dirname(__FILE__).'/view.php');
