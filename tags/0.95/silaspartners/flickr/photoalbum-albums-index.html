@@ -1,0 +1,18 @@
+<?php 
+/*
+This template lists out your Flickr photosets
+*/
+
+global $SilasFlickrPlugin;
+
+$SilasFlickrPlugin->config['numAlbumPreviews'] = 3; // how many album previews to show
+
+include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-highlight.html'));
+
+include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-tags.html'));
+
+include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-other-albums.html'));
+
+
+if (SILAS_FLICKR_DISPLAYGROUPS) include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-groups.html'));
+?>

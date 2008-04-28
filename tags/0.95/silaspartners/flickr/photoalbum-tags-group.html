@@ -1,0 +1,22 @@
+<?php
+/*
+This template displays Flickr photos based on a tag
+*/
+global $SilasFlickrPlugin;
+?>
+
+<?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
+
+<h2><?php echo $group['name']?> : <?php echo htmlentities($request['tags'])?></h2>
+<p><?php echo $group['description']?></p>
+<p>Photos tagged with <strong><?php echo htmlentities($request['tags'])?></strong></p>
+<div id="photos">
+<?php foreach ($photos as $photo)
+echo SilasFlickrDisplay::photo($photo, array(
+	'size' => 'Square',
+	'prefix' => '../../'));
+?>
+</div>
+<div class="flickr-meta-links">
+<a href="http://www.flickr.com/photos/tags/<?php echo urlencode($request['tags']);?>/" target="_blank">View this tag on Flickr</a>
+</div>

@@ -1,0 +1,21 @@
+<?php
+/*
+This template displays photos from a Flickr group
+*/
+global $SilasFlickrPlugin;
+
+?>
+
+<?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
+
+<h2><?php echo $group['name']?></h2>
+<p><?php echo $group['description']?></p>
+<div id="photos" class="photos">
+<?php foreach ($photos as $photo)
+echo SilasFlickrDisplay::photo($photo, array(
+	'size' => 'Square'));
+?>
+</div>
+<div class="flickr-meta-links">
+<a href="<?php echo $group['flickrURL']?>" target="_blank">View this group on Flickr</a>
+</div>
