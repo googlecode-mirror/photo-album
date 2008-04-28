@@ -7,8 +7,8 @@ If you want to customize the look and feel of your photo album, follow these ste
 You'll probably need a good understanding of HTML and CSS!
 
 1. Copy this file into your current active theme's directory
-2. Copy all html files starting with photoalbum- into this same directory
-      Alternatively, you could only copy the photoalbum-* template files you want to customize into your current themes directory.
+2. Also copy all the files starting with "photoalbum-" into your theme's directory
+      * Alternatively, you could only copy just the "photoalbum-" file you want to customize into your current themes directory.
 3. Customize the CSS in photoalbum-header.html to your liking.
 4. That's it :)
 
@@ -28,6 +28,8 @@ $Author: joetan54 $
 
 */
 global $TanTanFlickrPlugin;
+if (!is_object($TanTanFlickrPlugin)) wp_die('Flickr Photo Album plugin is not installed / activated!');
+
 get_header();
 
 // load the appropriate albums index, album's photos, or individual photo template.

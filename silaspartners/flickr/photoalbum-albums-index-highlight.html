@@ -1,4 +1,11 @@
-<?php if (count($albums) > 0):
+<?php
+/*
+Copy this file into your current active theme's directory to customize this template
+
+This template highlights the first album
+*/
+
+if (count($albums) > 0):
 $album = array_shift($albums);
 $highlight = $flickr->getPhotoSizes($album['primary']);
 $photos = $flickr->getPhotos($album['id']);

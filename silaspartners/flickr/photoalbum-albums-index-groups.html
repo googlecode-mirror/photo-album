@@ -1,4 +1,9 @@
 <?php
+/*
+Copy this file into your current active theme's directory to customize this template
+
+This template displays a list of your Flickr groups
+*/
 $groups = $flickr->manualSort($flickr->getGroups(), get_option('silas_flickr_grouporder'));
 $hideGroups = get_option('silas_flickr_hidegroups');
 if (is_array($hideGroups)) foreach ($groups as $k=>$g) if (in_array($g['id'], $hideGroups)) unset($groups[$k]);

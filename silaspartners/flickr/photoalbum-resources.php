@@ -1,16 +1,20 @@
 <?php
 /*
-This resource file defines the template tags used to create the HTML for your photos.
+Copy this file into your current active theme's directory to customize this template
 
-Copy this file into your themes directory to customize
+This template resource file defines the template tags used to create the HTML for your photos.
+
 */
 
 //
-// This is the base class used to display photos. You can override the methods defined in this class if you want to use a JavaScript display library (ie Lightbox)
+// This is the base class used to display photos. You can override the methods defined in this class if you want to use
+// a JavaScript display library (ie Lightbox). Some examples given below.
 //
 class TanTanFlickrDisplayBase {
 	function headTags() { echo ''; /* include links to javascript, or stylesheet libraries here */}
 	function footer() {echo ''; /* anything that might need to go into the footer*/ }
+	
+	// draw out a photo thumbnail, with <a> and <img> tags
 	function photo ($photo, $options=null) {
 		if (!is_array($options)) $options = array();
 		$defaults = array(
@@ -33,14 +37,20 @@ class TanTanFlickrDisplayBase {
 			'</a> ';
 		return $html;
 	}
+	
+	// return the link to where the photo should go
 	function href($photo, $album=null, $prefix='') {
 		return $prefix.'photo/'.$photo['id'].'/'.($album ? ($album['pagename2'].'-') : '').$photo['pagename'];
 	}
+	
+	// draw out an image tag
 	function image($photo, $size, $scale=1) {
 		return '<img src="'.$photo['sizes'][$size]['source'].'" width="'.($photo['sizes'][$size]['width']*$scale).'" '.
 			'height="'.($photo['sizes'][$size]['height']*$scale).'" '. 
 			'alt="'.htmlentities($photo['title']).'" />';
 	}
+	
+	// this prints out the JavaScript function used to insert a photo into blog posts
 	function js() {
 		return 
 			"function tantan_makePhotoHTML(photoUrl, sourceUrl, width, height, title, size) { \n".
