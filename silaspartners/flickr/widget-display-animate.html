@@ -8,7 +8,7 @@ $linkoptions = get_option('silas_flickr_linkoptions');
     <?php 
     if (is_array($photos)) foreach($photos as $photo):
     if ($linkoptions == 'flickr') {
-        $photoURL = $photo['info']['urls']['url'][0]['_value'];
+        $photoURL = array_pop($photo['info']['urls']);
     } else {
         $photoURL = $baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
     }
@@ -21,7 +21,7 @@ $linkoptions = get_option('silas_flickr_linkoptions');
     <?php
     if (is_array($altPhotos)) foreach($altPhotos as $photo):
     if ($linkoptions == 'flickr') {
-        $photoURL = $photo['info']['urls']['url'][0]['_value'];
+        $photoURL = array_pop($photo['info']['urls']);
     } else {
         $photoURL = $baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
     }

@@ -220,7 +220,7 @@ class TanTanFlickrPlugin {
 		                $photoTemplate = 'photoalbum-photo.html';
 					} else {
 						$message = "This photo is not available. ";
-						if ($photo['urls']['url'][0]['_content']) $message .= '<a href="'.$photo['urls']['url'][0]['_content'].'">View this photo at Flickr</a>';
+						if (is_array($photo['urls'])) $message .= '<a href="'.array_pop($photo['urls']).'">View this photo at Flickr</a>';
 						
 						$photoTemplate = 'error.html';
 					}
@@ -230,7 +230,14 @@ class TanTanFlickrPlugin {
                 
             } elseif ($request['album']) {
                 $album = $flickr->getAlbum($request['album']);
-                if (isset($request['tags'])) {
+				$user = $flickr->auth_checkToken();
+                $nsid = $user['user']['nsid'];
+				if ($album['owner'] != $nsid) {
+					$message = "This album is not available. ".
+						'<a href="http://www.flickr.com/photos/'.$album['owner'].'/sets/'.$album['id'].'/">View this album on Flickr</a>';
+
+					$photoTemplate = 'error.html';
+				} elseif (isset($request['tags'])) {
                         $message = "Sorry, this feature is not supported";
                         $photoTemplate = 'error.html';
                     if ($request['tags']) {
@@ -347,8 +354,7 @@ class TanTanFlickrPlugin {
         include($this->getDisplayTemplate('photoalbum-header.html'));
     }
     function footer() {
-        global $userdata;
-        if (isset($userdata->wp_capabilities['administrator']) && $userdata->wp_capabilities['administrator']) {
+        if (function_exists('current_user_can') && current_user_can('edit_pages')) {
             $showClearCache = true;
         }
         include($this->getDisplayTemplate('photoalbum-footer.html'));

@@ -29,6 +29,9 @@
     
     display:none;
 }
+.photo-options a {
+	white-space:nowrap;
+}
 .photo-options div.close {
     position:absolute;
     top:2px;
