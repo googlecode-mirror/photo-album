@@ -62,7 +62,7 @@ class TanTanFlickrWidget {
     
     function display($args) {
         global $TanTanFlickrPlugin;
-		if (!is_object($TanTanFlickrPlugin)) {
+		if (!is_object($TanTanFlickrPlugin) || strtolower(get_class($TanTanFlickrPlugin)) != 'tantanflickrplugin' ) {
 		    require_once(dirname(__FILE__).'/class-public.php');
             $TanTanFlickrPlugin =& new TanTanFlickrPlugin();
 		}
