@@ -56,10 +56,10 @@ Here are a couple examples of how to hook into other image display libraries.
 Note that these examples requires that you download the appropriate JavaScript libraries. 
 You'll probably also need to tweak some paths in order for it to work with your setup.
 
-A bunch of these libraries use jQuery, so if you're on a version of WordPress (2.1 or order), 
-you may need to download and setup jQuery as well.
+A bunch of these libraries use jQuery, so if you're on an old version of WordPress (2.1 or order), 
+you may need to download and install jQuery.
 
-jQuery: http://jquery.com/ (also included by default with WordPress)
+jQuery: http://jquery.com/ (also included by default with WordPress 2.2+)
 
 */
 
