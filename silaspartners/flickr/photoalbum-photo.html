@@ -2,10 +2,10 @@
 /*
 This template displays one photo, along with links to the next and previous photo (if available)
 */
-global $TanTanFlickrPlugin;
+global $SilasFlickrPlugin;
 ?>
 
-<?php include($TanTanFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
+<?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
 
 
 <h2><?php echo $photo['title']?></h2>
@@ -25,11 +25,11 @@ global $TanTanFlickrPlugin;
 </div>
 <p><?php echo apply_filters('the_content', $photo['description']);?></p>
 
-<?php include($TanTanFlickrPlugin->getDisplayTemplate('/photoalbum-photometa.html'));?>
+<?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-photometa.html'));?>
 
-<?php include($TanTanFlickrPlugin->getDisplayTemplate('/photoalbum-comments.html')); ?>
+<?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-comments.html')); ?>
 
-<?php include($TanTanFlickrPlugin->getDisplayTemplate('/photoalbum-context.html')); ?>
+<?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-context.html')); ?>
 
 
 <div class="flickr-meta-links">

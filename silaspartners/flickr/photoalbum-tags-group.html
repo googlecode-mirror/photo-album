@@ -2,17 +2,17 @@
 /*
 This template displays Flickr photos based on a tag
 */
-global $TanTanFlickrPlugin;
+global $SilasFlickrPlugin;
 ?>
 
-<?php include($TanTanFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
+<?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
 
 <h2><?php echo $group['name']?> : <?php echo htmlentities($request['tags'])?></h2>
 <p><?php echo $group['description']?></p>
 <p>Photos tagged with <strong><?php echo htmlentities($request['tags'])?></strong></p>
 <div id="photos">
 <?php foreach ($photos as $photo)
-echo TanTanFlickrDisplay::photo($photo, array(
+echo SilasFlickrDisplay::photo($photo, array(
 	'size' => 'Square',
 	'prefix' => '../../'));
 ?>

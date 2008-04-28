@@ -2,9 +2,9 @@
 /*
 Plugin Name: Flickr Sidebar widget
 Description: Adds a sidebar widget to display your recent Flickr photos
-Author: Joe Tan
-Version: 0.2.1
-Author URI: http://www.tantannoodles.com/
+Author: Silas Partners (Joe Tan)
+Version: 0.2
+Author URI: http://www.silaspartners.com/
 
 $Revision$
 $Date$
@@ -12,8 +12,8 @@ $Author$
 
 */
 
-class TanTanFlickrWidget {
-    function TanTanFlickrWidget () {
+class SilasFlickrWidget {
+    function SilasFlickrWidget () {
         if (function_exists('register_sidebar_widget')) { 
             register_sidebar_widget('Flickr Sidebar', array(&$this, 'display'));
             register_widget_control('Flickr Sidebar', array(&$this, 'control'));
@@ -27,7 +27,7 @@ class TanTanFlickrWidget {
     
     function control() {
         require_once(dirname(__FILE__).'/lib.flickr.php');
-        $flickr = new TanTanFlickr();
+        $flickr = new SilasFlickr();
         $auth_token  = get_option('silas_flickr_token');
         $flickr->setToken($auth_token);
         $flickr->setOption(array(
@@ -37,12 +37,12 @@ class TanTanFlickrWidget {
 
         
 		$options = $newoptions = get_option('silas_flickr_widget');
-		if ( $_POST['tantan-flickr-submit'] ) {
-			$newoptions['title'] = strip_tags(stripslashes($_POST['tantan-flickr-title']));
-			$newoptions['tags'] = strip_tags(stripslashes($_POST['tantan-flickr-tags']));
-			$newoptions['count'] = (int) $_POST['tantan-flickr-count'];
-			$newoptions['randomize'] = $_POST['tantan-flickr-randomize'] ? true : false;
-			$newoptions['animate'] = $_POST['tantan-flickr-animate'] ? true : false;
+		if ( $_POST['silas-flickr-submit'] ) {
+			$newoptions['title'] = strip_tags(stripslashes($_POST['silas-flickr-title']));
+			$newoptions['tags'] = strip_tags(stripslashes($_POST['silas-flickr-tags']));
+			$newoptions['count'] = (int) $_POST['silas-flickr-count'];
+			$newoptions['randomize'] = $_POST['silas-flickr-randomize'] ? true : false;
+			$newoptions['animate'] = $_POST['silas-flickr-animate'] ? true : false;
 		}
 		if ( $options != $newoptions ) {
 			$options = $newoptions;
@@ -53,7 +53,7 @@ class TanTanFlickrWidget {
     }
     
     function animationHeader() {
-        global $TanTanFlickrPlugin;
+        global $SilasFlickrPlugin;
         include ($this->getDisplayTemplate('widget-header.html'));
     }
     function animationFooter() {
@@ -61,10 +61,10 @@ class TanTanFlickrWidget {
     }
     
     function display($args) {
-        global $TanTanFlickrPlugin;
-		if (!is_object($TanTanFlickrPlugin)) {
+        global $SilasFlickrPlugin;
+		if (!is_object($SilasFlickrPlugin)) {
 		    require_once(dirname(__FILE__).'/class-public.php');
-            $TanTanFlickrPlugin =& new TanTanFlickrPlugin();
+            $SilasFlickrPlugin =& new SilasFlickrPlugin();
 		}
         extract($args);
         $defaults = array('count' => 10);
@@ -78,7 +78,7 @@ class TanTanFlickrWidget {
 		} else {
 		    $count = $options['count'];
 		}
-		$photos = $TanTanFlickrPlugin->getRecentPhotos($options['tags'], 0, $count);
+		$photos = $SilasFlickrPlugin->getRecentPhotos($options['tags'], 0, $count);
 		if ($options['randomize'] || $options['animate']) {
 		    if ($options['randomize']) shuffle($photos);
 		    if (count($photos) < $options['count']) {

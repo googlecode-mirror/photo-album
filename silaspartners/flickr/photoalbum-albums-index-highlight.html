@@ -6,7 +6,7 @@ $photos = $flickr->getPhotos($album['id']);
 <div id="highlight">
 
 <h2><a href="album/<?php echo $album['id']?>/<?php echo $album['pagename']?>"><?php echo $album['title']?></a></h2>
-<?php echo TanTanFlickrDisplay::photo($photos[$album['primary']], array('size' => 'Small', 'scale' => 0.5, 'album' => $album, 'context' => 'gallery-index'));?>
+<?php echo SilasFlickrDisplay::photo($photos[$album['primary']], array('size' => 'Small', 'scale' => 0.5, 'album' => $album, 'context' => 'gallery-index'));?>
 <!--
 	<a href="album/<?php echo $album['id']?>/<?php echo $album['pagename']?>"
 	title="<?php echo htmlentities($photos[$album['primary']]['title'] . strip_tags($photos[$album['primary']]['description'] ? ' - '.$photos[$album['primary']]['description'] : '')) ?>"><img class="highlight" src="<?php echo $highlight['Small']['source']?>" width="<?php echo round($highlight['Small']['width']/2)?>" height="<?php echo round($highlight['Small']['height']/2)?>" alt="" /></a>
@@ -19,7 +19,7 @@ $photos = $flickr->getPhotos($album['id']);
 
 <div id="photos" class="photos">
 	<?php foreach ($photos as $photo)
-		echo TanTanFlickrDisplay::photo($photo, array('size' => 'Square', 'scale' => 0.5, 'album' => $album, 'context' => 'gallery-index'));
+		echo SilasFlickrDisplay::photo($photo, array('size' => 'Square', 'scale' => 0.5, 'album' => $album, 'context' => 'gallery-index'));
 	?>
 </div>
 

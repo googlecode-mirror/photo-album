@@ -3,16 +3,16 @@
 This template lists out your Flickr photosets
 */
 
-global $TanTanFlickrPlugin;
+global $SilasFlickrPlugin;
 
-$TanTanFlickrPlugin->config['numAlbumPreviews'] = 3; // how many album previews to show
+$SilasFlickrPlugin->config['numAlbumPreviews'] = 3; // how many album previews to show
 
-include($TanTanFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-highlight.html'));
+include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-highlight.html'));
 
-include($TanTanFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-tags.html'));
+include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-tags.html'));
 
-include($TanTanFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-other-albums.html'));
+include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-other-albums.html'));
 
 
-if (TANTAN_FLICKR_DISPLAYGROUPS) include($TanTanFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-groups.html'));
+if (SILAS_FLICKR_DISPLAYGROUPS) include($SilasFlickrPlugin->getDisplayTemplate('photoalbum-albums-index-groups.html'));
 ?>

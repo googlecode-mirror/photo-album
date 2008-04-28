@@ -6,9 +6,8 @@ If you want to customize the look and feel of your photo album, follow these ste
 
 You'll probably need a good understanding of HTML and CSS!
 
-1. Copy this file into your current active theme's directory
+1. Rename this file to "photos.php" and place it into your current active theme's directory
 2. Copy all html files starting with photoalbum- into this same directory
-      Alternatively, you could only copy the photoalbum-* template files you want to customize into your current themes directory.
 3. Customize the CSS in photoalbum-header.html to your liking.
 4. That's it :)
 
@@ -22,23 +21,19 @@ Not all WordPress themes are created equal, so default look and feel might look 
 on your blog. Try looking at your theme's "index.php" and copy and paste any extra HTML or
 PHP into this file.
 
-$Revision: 128 $
-$Date: 2008-04-24 00:16:32 -0400 (Thu, 24 Apr 2008) $
-$Author: joetan54 $
+$Revision$
+$Date$
+$Author$
 
 */
-global $TanTanFlickrPlugin;
+global $SilasFlickrPlugin;
 get_header();
 
 // load the appropriate albums index, album's photos, or individual photo template.
-// $photoTemplate contains the template being used
 ?>
 <div id="content" class="narrowcolumn">
 <?php
-include($tpl = $TanTanFlickrPlugin->getDisplayTemplate($photoTemplate));
-
-// uncomment this line to print out the template being used
-// echo 'Photo Album Template: '.$tpl;
+include($SilasFlickrPlugin->getDisplayTemplate($photoTemplate));
 ?>
 
 <?php if (!is_object($Silas)):?>

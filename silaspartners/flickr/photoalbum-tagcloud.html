@@ -2,14 +2,14 @@
 /*
 This template displays all your tags
 */
-global $TanTanFlickrPlugin;
+global $SilasFlickrPlugin;
 $max = 0;
 if (is_array($tags)) foreach ($tags as $tag => $count) {
     if ($count > $max) $max = $count;
 }
 ?>
 
-<?php include($TanTanFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
+<?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
 
 <h2>Tag Cloud</h2>
 <div id="cloud">

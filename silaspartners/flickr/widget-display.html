@@ -9,7 +9,7 @@ $linkoptions = get_option('silas_flickr_linkoptions');
 //$home = 'http://'.$parts['host'];
 if (is_array($photos)) foreach($photos as $photo):
 if (!$baseurl || ($linkoptions == 'flickr')) {
-    $photoURL = array_pop($photo['info']['urls']);
+    $photoURL = array_pop($photo['info']['urls']['url'][0]);
 } else {
     $photoURL = $baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
 }

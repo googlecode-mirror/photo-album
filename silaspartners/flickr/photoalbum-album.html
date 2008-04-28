@@ -3,15 +3,15 @@
 This template displays one Flickr photo set
 */
 //$highlight = $flickr->getPhotoSizes($album['primary']);
-global $TanTanFlickrPlugin;
+global $SilasFlickrPlugin;
 ?>
 
-<?php include($TanTanFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
+<?php include($SilasFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
 
 <h2><?php echo $album['title']?></h2>
 
 <div id="highlight">
-	<?php echo TanTanFlickrDisplay::photo($photos[$album['primary']], array('size' => 'Small', 'album' => $album));?>
+	<?php echo SilasFlickrDisplay::photo($photos[$album['primary']], array('size' => 'Small', 'album' => $album));?>
 
 <p><?php echo html_entity_decode($album['description'])?></p>
 <p class="meta">
@@ -23,7 +23,7 @@ global $TanTanFlickrPlugin;
 
 <div id="photos" class="photos">
 <?php foreach ($photos as $photo)
-	echo TanTanFlickrDisplay::photo($photo, array(
+	echo SilasFlickrDisplay::photo($photo, array(
 		'size' => 'Square',
 		'album' => $album));
 ?>

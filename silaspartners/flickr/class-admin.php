@@ -6,12 +6,12 @@ $Author$
 */
 require_once(dirname(__FILE__).'/class-public.php');
 
-class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
+class SilasFlickrPluginAdmin extends SilasFlickrPlugin {
 
     var $config = array();
     
-    function TanTanFlickrPluginAdmin() {
-        //parent::TanTanFlickrPlugin();
+    function SilasFlickrPluginAdmin() {
+        //parent::SilasFlickrPlugin();
         add_action('admin_menu', array(&$this, 'addhooks'));
         add_action('activate_silaspartners/flickr.php', array(&$this, 'activate'));
         add_action('deactivate_silaspartners/flickr.php', array(&$this, 'deactivate'));
@@ -22,7 +22,6 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 		add_filter('media_buttons_context', array(&$this, 'media_buttons_context'));//create_function('$a', "return '%s';"));
 		add_action('media_upload_tantan-flickr-photo-stream', array(&$this, 'media_upload_content'));
 		add_action('media_upload_tantan-flickr-photo-albums', array(&$this, 'media_upload_content_albums'));
-		add_action('media_upload_tantan-flickr-photo-everyone', array(&$this, 'media_upload_content_everyone'));
 		
         if ($_GET['tantanActivate'] == 'photo-album') {
             $this->showConfigNotice();
@@ -68,7 +67,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         if ($flickr_apikey && $flickr_sharedsecret) {
             
         require_once(dirname(__FILE__).'/lib.flickr.php');
-        $flickr = new TanTanFlickr();
+        $flickr = new SilasFlickr();
 
         if ($flickr->cache == 'db') {
             global $wpdb;
@@ -254,12 +253,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 		$out = ' <a href="'.$media_upload_iframe_src.'&tab=tantan-flickr-photo-stream&TB_iframe=true&height=500&width=640" class="thickbox" title="'.$image_title.'"><img src="'.$image_btn.'" alt="'.$image_title.'" /></a>';
 		return $context.$out;
 	}
-	function media_upload_content_everyone() { return $this->media_upload_content('everyone');}
-	
-	// list out albums
 	function media_upload_content_albums() { return $this->media_upload_content('albums');}
-	
-	// display photo stream
 	function media_upload_content($mode='stream') {
         /*    
 		if (!$this->options) $this->options = get_option('tantan_wordpress_s3');
@@ -272,27 +266,23 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 		add_filter('media_upload_tabs', array(&$this, 'media_upload_tabs'));
         add_action('admin_print_scripts', array(&$this, 'upload_tabs_scripts'));
 		add_action('admin_print_scripts', 'media_admin_css');
-		add_action('tantan_media_upload_header', 'media_upload_header');
+		add_action('silas_media_upload_header', 'media_upload_header');
 		if ($mode == 'albums') {
-			wp_iframe(array(&$this, 'albumsTab'));
-		} elseif ($mode == 'everyone') {
-		    $_REQUEST['everyone'] = true;
-		    wp_iframe(array(&$this, 'photosTab'), 40);
+				wp_iframe(array(&$this, 'albumsTab'));
 		} else {
-			wp_iframe(array(&$this, 'photosTab'), 40);
+			wp_iframe(array(&$this, 'photosTab'), 35);
 		}
 	}
 	function media_upload_tabs($tabs) {
 		return array(
 			'tantan-flickr-photo-stream' => __('Photo Stream'), // handler action suffix => tab text
 			'tantan-flickr-photo-albums' => __('Albums'),
-			'tantan-flickr-photo-everyone' => __('Everyone'),
 		);
 	}
     function addPhotosTab() {
         add_filter('wp_upload_tabs', array(&$this, 'wp_upload_tabs'));
         add_action('admin_print_scripts', array(&$this, 'upload_tabs_scripts'));
-        //add_action('upload_files_tantan_flickr', array(&$this, 'upload_files_tantan_flickr'));
+        //add_action('upload_files_silas_flickr', array(&$this, 'upload_files_silas_flickr'));
     }
     function wp_upload_tabs ($array) {
         /*
@@ -307,8 +297,8 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         if ($_REQUEST['tags']) $args['tags'] = $_REQUEST['tags'];
         if ($_REQUEST['everyone']) $args['everyone'] = 1;
         $tab = array(
-            'tantan_flickr' => array('Photos (Flickr)', 'upload_files', array(&$this, 'photosTab'), array(min($count,500), 10), $args),
-            'tantan_flickr_album' => array('Albums (Flickr)', 'upload_files', array(&$this, 'albumsTab'), 0, $args)
+            'silas_flickr' => array('Photos (Flickr)', 'upload_files', array(&$this, 'photosTab'), array(min($count,500), 10), $args),
+            'silas_flickr_album' => array('Albums (Flickr)', 'upload_files', array(&$this, 'albumsTab'), 0, $args)
             );
         return array_merge($array, $tab);
     }
@@ -316,8 +306,8 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         include(dirname(__FILE__).'/admin-tab-head.html');
     }
     // gets called before tabs are rendered
-    function upload_files_tantan_flickr() {
-        //echo 'upload_files_tantan_flickr';
+    function upload_files_silas_flickr() {
+        //echo 'upload_files_silas_flickr';
     }
     function photosTab($perpage=20) {
         $tags = $_REQUEST['tags'];
@@ -325,13 +315,15 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         $offsetpage = (int) $_GET['paged'];
 		$offsetpage = $offsetpage ? $offsetpage : 1;
         $everyone = isset($_REQUEST['everyone']) && $_REQUEST['everyone'];
-        $photos = $this->getRecentPhotos($tags, $offsetpage, $perpage, $everyone, false);
+        $usecache = ! (isset($_REQUEST['refresh']) && $_REQUEST['refresh']);
+
+        $photos = $this->getRecentPhotos($tags, $offsetpage, $perpage, $everyone, $usecache);
 		
 		//
 		// TODO: this is WP2.5 specific code, should abstract out
 		//
 		if (ereg('media-upload.php', $_SERVER['REQUEST_URI'])) {
-			if (!$tags && !$everyone) {
+			if (!$tags) {
 				$count = $this->getNumPhotos();
 				$page_links = paginate_links( array(
 					'base' => add_query_arg( 'paged', '%#%' ),
@@ -354,14 +346,13 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 			}
 		}
 
-        do_action('tantan_media_upload_header');
+        do_action('silas_media_upload_header');
 		include(dirname(__FILE__).'/admin-photos-tab.html');
     }
     function albumsTab() {
         $usecache = ! (isset($_REQUEST['refresh']) && $_REQUEST['refresh']);
         $albums = $this->getRecentAlbums($usecache);
-		$user = $this->getUser();
-		do_action('tantan_media_upload_header');
+		do_action('silas_media_upload_header');
         include(dirname(__FILE__).'/admin-albums-tab.html');
     }
     
@@ -370,7 +361,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
     // cleanup after yourself
     function deactivate() {
         require_once(dirname(__FILE__).'/lib.flickr.php');
-        $flickr = new TanTanFlickr();
+        $flickr = new SilasFlickr();
         if (is_writable(dirname(__FILE__).'/flickr-cache/')) {
             $flickr->clearCache();
         }
@@ -387,7 +378,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         $linkoptions = get_option('silas_flickr_linkoptions');
         if ($auth_token) {
             require_once(dirname(__FILE__).'/lib.flickr.php');
-            $flickr = new TanTanFlickr();
+            $flickr = new SilasFlickr();
             $flickr->setToken($auth_token);
             $flickr->setOption(array(
                 'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),

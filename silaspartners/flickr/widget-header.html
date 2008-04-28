@@ -16,7 +16,7 @@ div.flickr-widget-photo a {
 }
 </style>
 <script type="text/javascript">
-var TanTanFlickrWidget = {
+var SilasFlickrWidget = {
     widget: null,
     imgs: null,
     imgsAlt: null,
@@ -35,8 +35,8 @@ var TanTanFlickrWidget = {
             new Effect.Appear('photo-'+this.imgs[i].id, {
                 delay: 0.2*i,
                 afterFinish: function() {
-                    if (TanTanFlickrWidget.timer) clearTimeout(TanTanFlickrWidget.timer)
-                    TanTanFlickrWidget.timer = setTimeout("TanTanFlickrWidget.animate()", TanTanFlickrWidget.delay*2);
+                    if (SilasFlickrWidget.timer) clearTimeout(SilasFlickrWidget.timer)
+                    SilasFlickrWidget.timer = setTimeout("SilasFlickrWidget.animate()", SilasFlickrWidget.delay*2);
                 }
             });
         }
@@ -50,17 +50,17 @@ var TanTanFlickrWidget = {
         this.imgs[this.randOld].appendChild(imgNew);
         new Effect.Fade(imgOld, {
             afterFinish: function(obj) {
-                var tmp = TanTanFlickrWidget.imgs[TanTanFlickrWidget.randOld].removeChild(obj.element)
-                TanTanFlickrWidget.imgsAlt[TanTanFlickrWidget.randNew].appendChild(tmp)
+                var tmp = SilasFlickrWidget.imgs[SilasFlickrWidget.randOld].removeChild(obj.element)
+                SilasFlickrWidget.imgsAlt[SilasFlickrWidget.randNew].appendChild(tmp)
             }
         });
         new Effect.Appear(imgNew, {
             afterFinish: function() {
-                var tmp = TanTanFlickrWidget.imgs[TanTanFlickrWidget.randOld].id
-                TanTanFlickrWidget.imgs[TanTanFlickrWidget.randOld].id = TanTanFlickrWidget.imgsAlt[TanTanFlickrWidget.randNew].id
-                TanTanFlickrWidget.imgsAlt[TanTanFlickrWidget.randNew].id = tmp
-                if (TanTanFlickrWidget.timer) clearTimeout(TanTanFlickrWidget.timer);
-                TanTanFlickrWidget.timer = setTimeout("TanTanFlickrWidget.animate()", TanTanFlickrWidget.delay);
+                var tmp = SilasFlickrWidget.imgs[SilasFlickrWidget.randOld].id
+                SilasFlickrWidget.imgs[SilasFlickrWidget.randOld].id = SilasFlickrWidget.imgsAlt[SilasFlickrWidget.randNew].id
+                SilasFlickrWidget.imgsAlt[SilasFlickrWidget.randNew].id = tmp
+                if (SilasFlickrWidget.timer) clearTimeout(SilasFlickrWidget.timer);
+                SilasFlickrWidget.timer = setTimeout("SilasFlickrWidget.animate()", SilasFlickrWidget.delay);
             }
         });
     }
