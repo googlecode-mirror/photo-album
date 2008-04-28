@@ -1,13 +1,20 @@
 <?php
+/*
+Copy this file into your current active theme's directory to customize this template
+
+This template pulls in the stylesheet and javascript
+*/
 global $TanTanFlickrPlugin;
 
-/* use this line instead if you customized the stylesheet
+/* 
+use this line instead if you customized the stylesheet
 <link rel='stylesheet' href='<?php bloginfo('home');?>/wp-content/themes/YOURTHEMEDIRECTORY/photoalbum-styles.css' type='text/css' />
 */
 ?>
 <link rel='stylesheet' href='<?php bloginfo('home');?>/wp-content/plugins/silaspartners/flickr/photoalbum-styles.css' type='text/css' />
 <script type="text/javascript">
 /* <![CDATA[ */
+// this pops open the Flickr slideshow
 function openSlideShow(id, gid) {
     username = "<?php echo $user['user']['nsid'];?>";
     var url = "http://flickr.com/";

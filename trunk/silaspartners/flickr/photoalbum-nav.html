@@ -1,4 +1,11 @@
-<?php if ($request['group'] || $request['album'] || $request['photo'] || isset($request['tags'])):?>
+<?php
+/*
+Copy this file into your current active theme's directory to customize this template
+
+This template displays a breadcrumb
+
+*/
+if ($request['group'] || $request['album'] || $request['photo'] || isset($request['tags'])):?>
 <div id="photoalbum-nav">
 <?php if ($request['group'] && ($request['photo'] || $request['tags'])):?>
 <a href="../../../../">Back to Photo Album</a> |
