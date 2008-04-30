@@ -59,7 +59,8 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
         
             require_once(dirname(__FILE__).'/flickr/class-public.php');
             $TanTanFlickrPlugin =& new TanTanFlickrPlugin();
-
+			$SilasFlickrPlugin =& $TanTanFlickrPlugin; // backwards compatibility
+			
             status_header(200);
 			remove_action('template_redirect', 'redirect_canonical');
             add_filter('request', array(&$TanTanFlickrPlugin, 'request'));

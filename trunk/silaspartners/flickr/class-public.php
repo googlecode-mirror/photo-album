@@ -27,8 +27,9 @@ class TanTanFlickrPlugin {
             ));
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
-			if (!$usecache) $flickr->clearCacheStale('search');
+			if (!$usecache) $flickr->clearCacheStale('search'); // should probably not blanket clear out everything in 'search'
             if (!$tags && $everyone) {
+				if (!$usecache) $flickr->clearCacheStale('getRecent');
                 $photos = $flickr->getRecent(NULL, $max, $offsetpage);
             } else {
                 $photos = $flickr->search(array(
