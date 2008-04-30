@@ -10,10 +10,11 @@
 <input type="hidden" name="ID" value="<?php echo $_GET['ID'];?>" />
 
 Tags: <input type="text" name="tags" value="<?php echo $tags?>" size="15" />
-<!--
+<?php if (!ereg('media-upload.php', $_SERVER['REQUEST_URI'])):?>
 <input type="radio" name="everyone" value="" <?php echo (!$everyone ? 'checked="checked"' : '')?> id="showmine" /><label for="showmine"> My Photos </label> &nbsp;
 <input type="radio" name="everyone" value="1" <?php echo ($everyone ? 'checked="checked"' : '')?> id="showeveryone" /><label for="showeveryone"> Everyone </label>
--->
+<?php endif;?>
+
 &nbsp; &nbsp; 
 <input type="submit" name="refresh" value="search" />
 <?php if (ereg('media-upload.php', $_SERVER['REQUEST_URI'])):?>
