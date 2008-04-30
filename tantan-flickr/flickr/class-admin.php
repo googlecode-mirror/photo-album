@@ -13,8 +13,8 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
     function TanTanFlickrPluginAdmin() {
         //parent::TanTanFlickrPlugin();
         add_action('admin_menu', array(&$this, 'addhooks'));
-        add_action('activate_silaspartners/flickr.php', array(&$this, 'activate'));
-        add_action('deactivate_silaspartners/flickr.php', array(&$this, 'deactivate'));
+        add_action('activate_tantan-flickr/flickr.php', array(&$this, 'activate'));
+        add_action('deactivate_tantan-flickr/flickr.php', array(&$this, 'deactivate'));
         add_action('load-upload.php', array(&$this, 'addPhotosTab'));
 
 		// WP >= 2.5
@@ -33,7 +33,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         exit;
     }
     function showConfigNotice() {
-        add_action('admin_notices', create_function('', 'echo \'<div id="message" class="updated fade"><p>The Flickr Photo Album plugin has been <strong>activated</strong>. <a href="options-general.php?page=silaspartners/flickr/class-admin.php">Configure the plugin &gt;</a></p></div>\';'));
+        add_action('admin_notices', create_function('', 'echo \'<div id="message" class="updated fade"><p>The Flickr Photo Album plugin has been <strong>activated</strong>. <a href="options-general.php?page=tantan-flickr/flickr/class-admin.php">Configure the plugin &gt;</a></p></div>\';'));
     }
 
     function admin() {
@@ -220,7 +220,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         
     }
     function uploading_iframe($src) {
-        return '../wp-content/plugins/silaspartners/flickr/'.$src;
+        return '../wp-content/plugins/tantan-flickr/flickr/'.$src;
     }
     
     function addhooks() {
