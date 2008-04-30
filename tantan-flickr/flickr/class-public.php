@@ -324,12 +324,12 @@ class TanTanFlickrPlugin {
         if (file_exists(TEMPLATEPATH  . '/photoalbum-resources.php')) {
 			require_once(TEMPLATEPATH . '/photoalbum-resources.php');
 		} else {
-			require_once(dirname(__FILE__) . '/photoalbum-resources.php');
+			require_once(dirname(__FILE__) . '/../templates/photoalbum-resources.php');
 		}
         if (file_exists(TEMPLATEPATH . '/photoalbum-index.php')) {
             include (TEMPLATEPATH . '/photoalbum-index.php');
-        } elseif (file_exists(dirname(__FILE__) . '/photoalbum-index.php')) {
-            include (dirname(__FILE__) . '/photoalbum-index.php');
+        } elseif (file_exists(dirname(__FILE__) . '/../templates/photoalbum-index.php')) {
+            include (dirname(__FILE__) . '/../templates/photoalbum-index.php');
         } elseif (file_exists(TEMPLATEPATH . '/photos.php')) {
             include (TEMPLATEPATH . '/photos.php');
         } else {
@@ -368,7 +368,7 @@ class TanTanFlickrPlugin {
         if (file_exists(TEMPLATEPATH . '/'.$file)) {
             return (TEMPLATEPATH . '/'.$file);
         } else {
-            return(dirname(__FILE__).'/'.$file);
+            return(dirname(__FILE__).'/../templates/'.$file);
         }
     }
     function parse_query(&$query) {
