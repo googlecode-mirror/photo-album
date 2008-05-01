@@ -7,6 +7,7 @@ $Author$
 class TanTanFlickrPlugin {
 
     var $config = array();
+    var $request = array();
     
     function TanTanFlickrPlugin() {
     }
@@ -269,7 +270,6 @@ class TanTanFlickrPlugin {
 	                    $photoTemplate = 'photoalbum-group.html';
 	                }
 				}
-                add_action('wp_head', array(&$this, 'meta_noindex'));
             } elseif (isset($request['tags'])) {
                 if ($request['tags']) {
                     $photos = $flickr->getPhotosByTags($request['tags']);
@@ -289,6 +289,11 @@ class TanTanFlickrPlugin {
 
                 $photoTemplate = 'photoalbum-albums-index.html';
             }
+            $this->request = $request;
+            if ($request['group']) {
+                add_action('wp_head', array(&$this, 'meta_noindex'));
+            }
+            add_action('wp_head', array(&$this, 'rss_feed'));
             add_action('wp_head', array(&$this, 'header'));
             add_action('wp_footer', array(&$this, 'footer'));
             
@@ -350,7 +355,17 @@ class TanTanFlickrPlugin {
     function wp_title($title) {
         return ' '.($this->config['title'] ? $this->config['title'] : $title).' ';
     }
-    
+    function rss_feed() {
+        $user = get_option('silas_flickr_user');
+        if ($this->request['album']) {
+            echo '<link rel="alternate" type="application/atom+xml" title="Flickr Album Feed" href="http://api.flickr.com/services/feeds/photoset.gne?set='.$this->request['album'].'&nsid='.$user['user']['nsid'].'" />';
+        }
+        if ($this->request['group']) {
+            echo '<link rel="alternate" type="application/atom+xml" title="Flickr Group Feed" href="http://api.flickr.com/services/feeds/groups_discuss.gne?id='.$this->request['group'].'" />';
+        }
+        
+
+    }
     function meta_noindex() {
         echo '<meta name="robots" content="noindex" />';
     }
