@@ -8,7 +8,7 @@ Retrieve recent photos. Could be used as a photo stream or just display your mos
 
 {{{
 <?php
-require_once(dirname(__FILE__).'/../../plugins/silaspartners/flickr/class-public.php');
+require_once(dirname(__FILE__).'/../../plugins/tantan-flickr/flickr/class-public.php');
 $SilasFlickrPlugin =& new SilasFlickrPlugin();
 $photos = $SilasFlickrPlugin->getRecentPhotos($tags='', $offsetpage=0, $max=15, $everyone=false);
 ?>
@@ -22,7 +22,7 @@ This code block retrieves your 40 most recent photos, randomizes the order, and 
 
 {{{
 <?php
-require_once(dirname(__FILE__).'/../../plugins/silaspartners/flickr/class-public.php');
+require_once(dirname(__FILE__).'/../../plugins/tantan-flickr/flickr/class-public.php');
 $SilasFlickrPlugin =& new SilasFlickrPlugin();
 $photos = $SilasFlickrPlugin->getRecentPhotos('', 0, 40);
 shuffle($photos);
