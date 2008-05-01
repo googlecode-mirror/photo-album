@@ -133,7 +133,7 @@ class TanTanFlickrPlugin {
             if (file_exists(TEMPLATEPATH  . '/photoalbum-resources.php')) {
     			require_once(TEMPLATEPATH . '/photoalbum-resources.php');
     		} else {
-    			require_once(dirname(__FILE__) . '/photoalbum-resources.php');
+    			require_once(dirname(__FILE__) . '/../templates/photoalbum-resources.php');
     		}
 			$prefix = get_bloginfo('siteurl').TANTAN_FLICKR_BASEURL;
             foreach (array_slice($photos, 0, $num) as $photo) {
