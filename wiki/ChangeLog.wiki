@@ -1,6 +1,7 @@
 #summary Plugin release history.
 
 For the full changelog, [http://code.google.com/p/photo-album/source/list please see the SVN log results].
+ * 0.96 - April 30 2008 - Lightbox support, WordPress shortcode support
  * 0.95 - Mar 31 2008 - Update for WP 2.5
  * 0.94 - Feb 24 2008 - Address photo licensing issues
  * 0.93 - Nov 4 2007 - Update for WP 2.3, updates to caching logic
