@@ -244,8 +244,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 		global $post_ID, $temp_ID;
 		$dir = dirname(__FILE__);
 
-		$pluginRootURL = get_option('siteurl').substr($dir, strpos($dir, '/wp-content'));
-		$image_btn = $pluginRootURL.'/icon.gif';
+		$image_btn = get_option('siteurl').'/wp-content/plugins/tantan-flickr/flickr/icon.gif';
 		$image_title = 'Flickr';
 		
 		$uploading_iframe_ID = (int) (0 == $post_ID ? $temp_ID : $post_ID);
