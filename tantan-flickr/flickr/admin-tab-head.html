@@ -1,7 +1,7 @@
 <?php
 $dir = dirname(__FILE__);
 $pluginRootURL = get_option('siteurl').substr($dir, strpos($dir, '/wp-content'));
-require_once($dir.'/photoalbum-resources.php');
+require_once($dir.'/../templates/photoalbum-resources.php');
 if (!ereg('media-upload.php', $_SERVER['REQUEST_URI'])): // WP < 2.5
 ?>
 <script type="text/javascript">
