@@ -1,12 +1,26 @@
 #summary Known issues and workarounds
 
-= Details =
+= Important Details =
 
     * Your PHP setup will need to have the libcurl and XML libraries installed in order for this plugin to work.
     * This plugin may not work well if your WordPress blog is installed on a Microsoft IIS web server.
     * WordPress permalinks need to be enabled and set to something other than “Default”.
-    * The plugin’s directory needs to be writable by Apache (or whatever webserver you are using), this is to store cache data from Flickr.
-      * Try using a [http://phpfm.sourceforge.net/ php file manager] to create the "flickr-cache" directory if you're getting errors about the cache.
-    * You will need approx 25 MB of free space on your server for the cache.
     * Please check the Flickr group if you are having problems with this plugin. Chances are somebody else encountered it before and a solution was posted to the forum.
 
+= Common Issues =
+
+== Oops! Flickr can't find a valid callback URL. ==
+
+This probably means your server can't communicate with the outside world. Try installing this simple PHP script on your server, and visit it in your browser. If it works, then you should see the Flickr.com homepage. Otherwise, you'll see nothing (meaning the plugin's not going to work).
+
+{{{
+<?php
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "http://www.flickr.com/");
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_exec($ch);
+
+curl_close($ch);
+echo 'done';
+?>
+}}}
