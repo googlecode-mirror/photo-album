@@ -9,6 +9,10 @@
 
 = Common Issues =
 
+== Fatal error: Call to undefined function: curl_init()  ==
+
+You need to have the CURL PHP library installed. [http://us3.php.net/manual/en/curl.setup.php See here for setup] instructions.
+
 == Oops! Flickr can't find a valid callback URL. ==
 
 This probably means your server can't communicate with the outside world. Try installing this simple PHP script on your server, and visit it in your browser. If it works, then you should see the Flickr.com homepage. Otherwise, you'll see nothing (meaning the plugin's not going to work).
