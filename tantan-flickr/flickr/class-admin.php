@@ -50,7 +50,10 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
             $error = "In order to view your photo album, your <a href='options-permalink.php'>WordPress permalinks</a> need to be set to something other than <em>Default</em>.";
         } elseif (!function_exists('curl_init')) {
             $error = "You do not have the required libraries to use this plugin. The PHP library <a href='http://us2.php.net/curl'>libcurl</a> needs to be installed on your server.";
-        }
+        } elseif (@constant('DB_CHARSET') === null) {
+			$error = "Your database character encoding does not seem to be set. It is <strong>strongly</strong> recommended that you set it to <em>utf8</em> for maximum compatibility. <a href=\"http://codex.wordpress.org/Editing_wp-config.php#Database_character_set\">Instructions are available here.</a> ".
+				"Once you have set your database encoding, please deactivate and reactivate this plugin.";
+		}
 
         if ($_POST['action'] == 'savekey') {
             update_option('silas_flickr_apikey', $_POST['flickr_apikey']);
@@ -73,6 +76,13 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         if ($flickr->cache == 'db') {
             global $wpdb;
 			$wpdb->hide_errors();
+			$charset_collate = '';
+			if ( $wpdb->supports_collation() ) {
+				if ( ! empty($wpdb->charset) )
+					$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+				if ( ! empty($wpdb->collate) )
+					$charset_collate .= " COLLATE $wpdb->collate";
+			}
             $wpdb->query("
                 CREATE TABLE IF NOT EXISTS `$flickr->cache_table` (
                     `command` CHAR( 255 ) NOT NULL ,
@@ -82,8 +92,8 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
                     `expiration` DATETIME NOT NULL ,
                     INDEX ( `request` ),
 					INDEX ( `command` )
-                ) TYPE = MYISAM");
-			$wpdb->query("CREATE INDEX commandCreated on wp_silas_flickr_cache(command, created)");
+                ) $charset_collate");//
+			$wpdb->query("CREATE INDEX commandCreated on $flickr->cache_table(command, created)");
 			$wpdb->show_errors();
 			
         }
@@ -375,7 +385,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         }
         if ($flickr->cache == 'db') {
             global $wpdb;
-            $wpdb->query("DELETE FROM $flickr->cache_table;");
+            $wpdb->query("DROP TABLE $flickr->cache_table;");
         }
     }
 

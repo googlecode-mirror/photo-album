@@ -491,7 +491,6 @@ class TanTanFlickr extends tantan_phpFlickr {
         Reimplemented methods
     */
     function request ($command, $args = array(), $nocache = false) {
-        $nocache = (($this->_tantan_cacheExpire > 0) ? true : false);
         $nocache = ($nocache ? true : 
             ($this->_tantan_useCache ? false : true));
         if ($this->getOption('hidePrivatePhotos')) {
