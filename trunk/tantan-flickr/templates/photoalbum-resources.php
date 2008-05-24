@@ -15,8 +15,8 @@ jQuery: http://jquery.com/ (also included by default with WordPress 2.2+)
 
 // where you uploaded the library
 
-if (!defined('TANTAN_DISPLAY_LIBRARY'))      define('TANTAN_DISPLAY_LIBRARY', 'fancyzoom');
-if (!defined('TANTAN_DISPLAY_LIBRARY_PATH')) define('TANTAN_DISPLAY_LIBRARY_PATH', '/tpl'); 
+if (!defined('TANTAN_DISPLAY_LIBRARY'))      define('TANTAN_DISPLAY_LIBRARY', false);
+if (!defined('TANTAN_DISPLAY_LIBRARY_PATH')) define('TANTAN_DISPLAY_LIBRARY_PATH', '*** PATH TO POPUP DISPLAY LIBRARY ***'); 
 if (!defined('TANTAN_DISPLAY_POPUP_SIZE'))   define('TANTAN_DISPLAY_POPUP_SIZE', 'Medium');
 
 
