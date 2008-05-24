@@ -28,3 +28,7 @@ curl_close($ch);
 echo 'done';
 ?>
 }}}
+
+== Infinite Redirects ==
+
+You'll need to set your WordPress permalinks to something other than the "Default" settings. [http://codex.wordpress.org/Using_Permalinks See here for more information]
