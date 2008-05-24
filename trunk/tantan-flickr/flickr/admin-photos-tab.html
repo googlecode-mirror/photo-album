@@ -71,24 +71,26 @@ $baseurl = get_option('silas_flickr_baseurl');
 $linkoptions = get_option('silas_flickr_linkoptions');
 $parts = parse_url(get_bloginfo('home'));
 $home = 'http://'.$parts['host'];
+$json = new Services_JSON();
 ?>
 <ul id='upload-files'>
 <?php
 $id = 0;
 foreach ($photos as $photo):
 if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
-    $photoURL = $home.$baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
+    $photo['targetURL'] = $home.$baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
 } else {
-    if (is_array($photo['info']['urls'])) $photoURL = array_pop($photo['info']['urls']);
+    if (is_array($photo['info']['urls'])) $photo['targetURL'] = array_pop($photo['info']['urls']);
 }
+$photoJSON = $json->encode($photo);
 ?>
 <li id='flickr-photo-<?php echo $id?>' class='alignleft'>
-<a id='file-link-3' href='<?php echo $photoURL?>' title='<?php echo htmlentities($photo['title']);?>' class='file-link image' onclick="return tantan_showOptions(<?php echo $id?>);"><img 
-    id="image<?php echo $photo['id']?>" src="<?php echo $photo['sizes']['Square']['source']?>" alt="<?php echo htmlentities($photo['title']);?>" height="<?php echo $photo['sizes']['Square']['height']?>" width="<?php echo $photo['sizes']['Square']['width']?>" border="0" /></a>
+<a id='file-link-3' href='<?php echo $photoURL?>' title='<?php echo htmlentities($photo['title'], ENT_COMPAT, 'UTF-8');?>' class='file-link image' onclick="return tantan_showOptions(<?php echo $id?>);"><img 
+    id="image<?php echo $photo['id']?>" src="<?php echo $photo['sizes']['Square']['source']?>" alt="<?php echo htmlentities($photo['title'], ENT_COMPAT, 'UTF-8');?>" height="<?php echo $photo['sizes']['Square']['height']?>" width="<?php echo $photo['sizes']['Square']['width']?>" border="0" /></a>
     <div class="photo-options" id="options-<?php echo $id?>">
     <strong>Insert Photo:</strong><br />
     <?php foreach ($photo['sizes'] as $k => $size):?>
-        <a href="<?php echo $size['source']?>" onclick="return tantan_addPhoto('<?php echo $photoURL?>', '<?php echo $size['source']?>', '<?php echo $size['width']?>', '<?php echo $size['height']?>', '<?php echo addslashes(htmlentities($photo['title']));?>', '<?php echo $k?>');return false;" title="<?php echo $size['width']?>x<?php echo $size['height']?>"><?php echo $k?></a>
+        <a href="<?php echo $size['source']?>" onclick='return tantan_addPhoto(<?php echo $photoJSON;?>, "<?php echo $k?>");return false;' title="<?php echo $size['width']?>x<?php echo $size['height']?>"><?php echo $k?></a>
     <?php endforeach;?>
     <div class="close"><a href="#" onclick="return tantan_hideOptions(<?php echo $id?>);">close</a></div>
     </div>
