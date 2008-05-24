@@ -4,7 +4,21 @@ Copy this file into your current active theme's directory to customize this temp
 
 This template resource file defines the template tags used to create the HTML for your photos.
 
+Note that the popup overlay display methods requires that you download the appropriate JavaScript libraries. 
+You'll probably also need to tweak some paths in order for it to work with your setup.
+
+A bunch of these libraries use jQuery, so if you're on an old version of WordPress (2.1 or order), 
+you may need to download and install jQuery.
+
+jQuery: http://jquery.com/ (also included by default with WordPress 2.2+)
 */
+
+// where you uploaded the library
+
+if (!defined('TANTAN_DISPLAY_LIBRARY'))      define('TANTAN_DISPLAY_LIBRARY', 'fancyzoom');
+if (!defined('TANTAN_DISPLAY_LIBRARY_PATH')) define('TANTAN_DISPLAY_LIBRARY_PATH', '/tpl'); 
+if (!defined('TANTAN_DISPLAY_POPUP_SIZE'))   define('TANTAN_DISPLAY_POPUP_SIZE', 'Medium');
+
 
 //
 // This is the base class used to display photos. You can override the methods defined in this class if you want to use
@@ -32,7 +46,7 @@ class TanTanFlickrDisplayBase {
 		}
 		$html = '<a class="tt-flickr tt-flickr-'.$size.'" href="'.TanTanFlickrDisplay::href($photo, $album, $prefix).'" '.
 			'id="photo-'.$photo['id'].'" '.
-			'title="'.htmlentities($photo['title']) . strip_tags($photo['description'] ? ' - '.$photo['description'] : '').'">'.
+			'title="'.htmlentities($photo['title'], ENT_COMPAT, 'UTF-8') . strip_tags($photo['description'] ? ' - '.$photo['description'] : '').'">'.
 			TanTanFlickrDisplay::image($photo, $size, $scale).
 			'</a> ';
 		return $html;
@@ -47,40 +61,48 @@ class TanTanFlickrDisplayBase {
 	function image($photo, $size, $scale=1) {
 		return '<img src="'.$photo['sizes'][$size]['source'].'" width="'.($photo['sizes'][$size]['width']*$scale).'" '.
 			'height="'.($photo['sizes'][$size]['height']*$scale).'" '. 
-			'alt="'.htmlentities($photo['title']).'" />';
+			'alt="'.htmlentities($photo['title'], ENT_COMPAT, 'UTF-8').'" />';
 	}
 	
 	// this prints out the JavaScript function used to insert a photo into blog posts
 	function js() {
-		return 
-			"function tantan_makePhotoHTML(photoUrl, sourceUrl, width, height, title, size) { \n".
-			"	return '<a href=\"'+photoUrl+'\" class=\"tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'\">' + \n".
-			"		'<img src=\"'+sourceUrl+'\" alt=\"'+title+'\" width=\"'+width+'\" height=\"'+height+'\" border=\"0\" />' + \n".
-			"		'</a> '; \n".
+		return "function tantan_makePhotoHTML(photo, size) { \n".
+			//photoSourceUrl, photoPageUrl, thumbnailSourceUrl, width, height, title
+				"return '<a href=\"'+photo['targetURL']+'\" class=\"tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'\">' + \n".
+				"	'<img src=\"'+photo['sizes'][size]['source']+'\" alt=\"'+photo['title']+'\" width=\"'+photo['sizes'][size]['width']+'\" height=\"'+photo['sizes'][size]['height']+'\" border=\"0\" />' + \n".
+				"	'</a> '; \n".
 			"} \n";
 	}
 }
+
+
 /*
-Here are a couple examples of how to hook into other image display libraries.
-
-Note that these examples requires that you download the appropriate JavaScript libraries. 
-You'll probably also need to tweak some paths in order for it to work with your setup.
-
-A bunch of these libraries use jQuery, so if you're on an old version of WordPress (2.1 or order), 
-you may need to download and install jQuery.
-
-jQuery: http://jquery.com/ (also included by default with WordPress 2.2+)
-
+	Base class for common functions used by popup overlay libraries
 */
-
-
-// where you uploaded the library
-define('TANTAN_DISPLAY_LIBRARY_PATH', '****PATH-TO-LIBRARY-HERE-****'); 
-
+class TanTanFlickrPopUpOverlay extends TanTanFlickrDisplayBase {
+	function href($photo, $album=null, $prefix='') {
+		return $photo['sizes'][TANTAN_DISPLAY_POPUP_SIZE]['source'];
+	}
+	function js() {
+		return 
+			"function tantan_makePhotoHTML(photo, size) { \n".
+			"var imgTag = '<img src=\"'+photo['sizes'][size]['source']+'\" alt=\"'+photo['title']+'\" width=\"'+photo['sizes'][size]['width']+'\" height=\"'+photo['sizes'][size]['height']+'\" border=\"0\" />' \n".
+			"if (photo['photos']) { \n".
+				"return '<a href=\"'+photo['targetURL']+'\" class=\"tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'\">' + \n".
+				"imgTag + \n".
+				"'</a>'\n".
+			"} else if (parseInt(photo['sizes'][size]['width']) < parseInt(photo['sizes']['".TANTAN_DISPLAY_POPUP_SIZE."']['width'])) { \n".
+			"	return '<a href=\"'+photo['sizes']['".TANTAN_DISPLAY_POPUP_SIZE."']['source']+'\" class=\"tt-flickr tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'\">' + \n".
+			"	imgTag + \n".
+			"		'</a> '; \n".
+			"} else { return imgTag } \n".
+			"} \n";
+	}	
+}
 /*
 	FancyBox: http://fancy.klade.lv/
 */
-class TanTanFlickrDisplayFancyBox extends TanTanFlickrDisplayBase {
+class TanTanFlickrDisplayFancyBox extends TanTanFlickrPopUpOverlay {
 	function headTags() {
 		wp_enqueue_script('jquery');
 		wp_print_scripts();
@@ -88,15 +110,12 @@ class TanTanFlickrDisplayFancyBox extends TanTanFlickrDisplayBase {
 		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancybox/jquery.fancybox.js" type="text/javascript"></script>';
 		echo '<script type="text/javascript">jQuery(function($) { $("a.tt-flickr").fancybox(); });</script>';
 	}
-	function href($photo, $album=null, $prefix='') {
-		return $photo['sizes']['Medium']['source'];
-	}	
 }
 
 /*
 	Facebox: http://famspam.com/facebox
 */
-class TanTanFlickrDisplayFaceBox extends TanTanFlickrDisplayBase {
+class TanTanFlickrDisplayFaceBox extends TanTanFlickrPopUpOverlay {
 	function headTags() {
 		wp_enqueue_script('jquery');
 		wp_print_scripts();
@@ -105,15 +124,12 @@ class TanTanFlickrDisplayFaceBox extends TanTanFlickrDisplayBase {
 		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/facebox/facebox.js" type="text/javascript"></script>';
 		echo '<script type="text/javascript">jQuery(function($) { $("a.tt-flickr").facebox(); });</script>';
 	}
-	function href($photo, $album=null, $prefix='') {
-		return $photo['sizes']['Medium']['source'];
-	}	
 }
 
 /*
 	jQuery lightBox: http://leandrovieira.com/projects/jquery/lightbox/
 */
-class TanTanFlickrDisplayJQueryLightboxBox extends TanTanFlickrDisplayBase {
+class TanTanFlickrDisplayJQueryLightboxBox extends TanTanFlickrPopUpOverlay {
 	function headTags() {
 		wp_enqueue_script('jquery');
 		wp_print_scripts();
@@ -122,15 +138,12 @@ class TanTanFlickrDisplayJQueryLightboxBox extends TanTanFlickrDisplayBase {
 		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/jquery-lightbox/js/jquery.lightbox.js" type="text/javascript"></script>';
 		echo '<script type="text/javascript">jQuery(function($) { $("a.tt-flickr").lightBox(); });</script>';
 	}
-	function href($photo, $album=null, $prefix='') {
-		return $photo['sizes']['Medium']['source'];
-	}	
 }
 
 /*
 	FancyZoom: http://www.cabel.name/2008/02/fancyzoom-10.html   (not a jQuery plugin)
 */
-class TanTanFlickrDisplayFancyZoom extends TanTanFlickrDisplayBase {
+class TanTanFlickrDisplayFancyZoom extends TanTanFlickrPopUpOverlay {
 	function headTags() {
 		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancyzoom/js-global/FancyZoom.js" type="text/javascript"></script>';
 		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancyzoom/js-global/FancyZoomHTML.js" type="text/javascript"></script>';
@@ -138,18 +151,21 @@ class TanTanFlickrDisplayFancyZoom extends TanTanFlickrDisplayBase {
 	function footer() {
 		echo '<script type="text/javascript">setupZoom();</script>';
 	}
-	function href($photo, $album=null, $prefix='') {
-		return $photo['sizes']['Medium']['source'];
-	}	
 }
 // comment out the line below, and replace it with one of these...
-//class TanTanFlickrDisplay extends TanTanFlickrDisplayFancyBox {};
-//class TanTanFlickrDisplay extends TanTanFlickrDisplayFaceBox {};
-//class TanTanFlickrDisplay extends TanTanFlickrDisplayJQueryLightboxBox {};
-//class TanTanFlickrDisplay extends TanTanFlickrDisplayFancyZoom {};
+$fancybox  = "class TanTanFlickrDisplay extends TanTanFlickrDisplayFancyBox {};";
+$facebox   = "class TanTanFlickrDisplay extends TanTanFlickrDisplayFaceBox {};";
+$lightbox  = "class TanTanFlickrDisplay extends TanTanFlickrDisplayJQueryLightboxBox {};";
+$fancyzoom = "class TanTanFlickrDisplay extends TanTanFlickrDisplayFancyZoom {};";
 
-// this is the default
-class TanTanFlickrDisplay extends TanTanFlickrDisplayBase {}; 
+$default   = "class TanTanFlickrDisplay extends TanTanFlickrDisplayBase {}; ";
+switch (TANTAN_DISPLAY_LIBRARY) {
+	case 'fancybox':  eval($fancybox); break;
+	case 'facebox':   eval($facebox); break;
+	case 'lightbox':  eval($lightbox); break;
+	case 'fancyzoom': eval($fancyzoom); break;
+	default: eval($default);
+}
 
 add_action('wp_head', create_function('', 'TanTanFlickrDisplay::headTags();'));
 add_action('wp_footer', create_function('', 'TanTanFlickrDisplay::footer();'));

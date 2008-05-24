@@ -9,9 +9,9 @@ global $TanTanFlickrPlugin;
 
 <?php include($TanTanFlickrPlugin->getDisplayTemplate('/photoalbum-nav.html'));?>
 
-<h2><?php echo $group['name']?> : <?php echo htmlentities($request['tags'])?></h2>
+<h2><?php echo $group['name']?> : <?php echo htmlentities($request['tags'], ENT_COMPAT, 'UTF-8')?></h2>
 <p><?php echo $group['description']?></p>
-<p>Photos tagged with <strong><?php echo htmlentities($request['tags'])?></strong></p>
+<p>Photos tagged with <strong><?php echo htmlentities($request['tags'], ENT_COMPAT, 'UTF-8')?></strong></p>
 <div id="photos">
 <?php foreach ($photos as $photo)
 echo TanTanFlickrDisplay::photo($photo, array(

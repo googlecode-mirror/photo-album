@@ -9,7 +9,7 @@ global $TanTanFlickrPlugin;
 
 <?php include($TanTanFlickrPlugin->getDisplayTemplate('photoalbum-nav.html'));?>
 
-<h2>Tag: <?php echo htmlentities($request['tags'])?></h2>
+<h2>Tag: <?php echo htmlentities($request['tags'], ENT_COMPAT, 'UTF-8')?></h2>
 <?php
 ?>
 

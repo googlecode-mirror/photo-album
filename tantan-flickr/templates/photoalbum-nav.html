@@ -21,7 +21,7 @@ if ($request['group'] || $request['album'] || $request['photo'] || isset($reques
     <?php if ($request['photo']):?>
         <a href="../../../../">Back to Photo Album</a> | 
         <a href="../../../">Tags</a> | 
-        <a href="../../"><?php echo htmlentities($request['tags']);?></a>
+        <a href="../../"><?php echo htmlentities($request['tags'], ENT_COMPAT, 'UTF-8');?></a>
     <?php else:?>
         <a href="../../">Back to Photo Album</a> | 
         <a href="../">Tags</a>  
