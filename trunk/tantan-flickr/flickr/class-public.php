@@ -138,12 +138,15 @@ class TanTanFlickrPlugin {
     			require_once(dirname(__FILE__) . '/../templates/photoalbum-resources.php');
     		}
 			$prefix = get_bloginfo('siteurl').'/'.substr($baseurl, strlen($baseurl_pre));
+			$linkoptions = get_option('silas_flickr_linkoptions');
+			
             foreach (array_slice($photos, 0, $num) as $photo) {
                 $html .= TanTanFlickrDisplay::photo($photo, array(
                     'size' => $size,
                     'album' => $albumData,
                     'scale' => $scale,
-					'prefix' => $prefix
+					'prefix' => $prefix,
+					'linkoptions' => $linkoptions
                 ));
             }
     	} // if count photos

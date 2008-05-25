@@ -13,10 +13,8 @@ you may need to download and install jQuery.
 jQuery: http://jquery.com/ (also included by default with WordPress 2.2+)
 */
 
-// where you uploaded the library
-
 if (!defined('TANTAN_DISPLAY_LIBRARY'))      define('TANTAN_DISPLAY_LIBRARY', false);
-if (!defined('TANTAN_DISPLAY_LIBRARY_PATH')) define('TANTAN_DISPLAY_LIBRARY_PATH', '*** PATH TO POPUP DISPLAY LIBRARY ***'); 
+if (!defined('TANTAN_DISPLAY_LIBRARY_PATH')) define('TANTAN_DISPLAY_LIBRARY_PATH', 'http://static.tantannoodles.com.s3.amazonaws.com'); 
 if (!defined('TANTAN_DISPLAY_POPUP_SIZE'))   define('TANTAN_DISPLAY_POPUP_SIZE', 'Medium');
 
 
@@ -37,6 +35,7 @@ class TanTanFlickrDisplayBase {
 			'album' => null,
 			'context' => null,
 			'prefix' => '',
+			'linkoptions' => null
 			);
 		$options = array_merge($defaults, $options);
 		extract($options);
@@ -44,7 +43,12 @@ class TanTanFlickrDisplayBase {
 		if (($context == 'gallery-index') && $album) {
 			$prefix = 'album/'.$album['id'].'/';
 		}
-		$html = '<a class="tt-flickr tt-flickr-'.$size.'" href="'.TanTanFlickrDisplay::href($photo, $album, $prefix).'" '.
+		if (($linkoptions == 'flickr') && is_array($photo['urls'])) {
+			$href = array_pop($photo['urls']);
+		} else {
+			$href = TanTanFlickrDisplay::href($photo, $album, $prefix);
+		}
+		$html = '<a class="tt-flickr tt-flickr-'.$size.'" href="'.$href.'" '.
 			'id="photo-'.$photo['id'].'" '.
 			'title="'.htmlentities($photo['title'], ENT_COMPAT, 'UTF-8') . strip_tags($photo['description'] ? ' - '.$photo['description'] : '').'">'.
 			TanTanFlickrDisplay::image($photo, $size, $scale).
@@ -107,7 +111,7 @@ class TanTanFlickrDisplayFancyBox extends TanTanFlickrPopUpOverlay {
 		wp_enqueue_script('jquery');
 		wp_print_scripts();
 		echo '<script>$ = jQuery;</script>'; // careful about conflicts with other libraries!
-		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancybox/jquery.fancybox.js" type="text/javascript"></script>';
+		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancybox-0.1b/jquery.fancybox.js" type="text/javascript"></script>';
 		echo '<script type="text/javascript">jQuery(function($) { $("a.tt-flickr").fancybox(); });</script>';
 	}
 }
@@ -120,8 +124,8 @@ class TanTanFlickrDisplayFaceBox extends TanTanFlickrPopUpOverlay {
 		wp_enqueue_script('jquery');
 		wp_print_scripts();
 		echo '<script>$ = jQuery;</script>'; // careful about conflicts with other libraries!
-		echo '<link href="'.TANTAN_DISPLAY_LIBRARY_PATH.'/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css"/>';
-		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/facebox/facebox.js" type="text/javascript"></script>';
+		echo '<link href="'.TANTAN_DISPLAY_LIBRARY_PATH.'/facebox-1.1/facebox.css" media="screen" rel="stylesheet" type="text/css"/>';
+		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/facebox-1.1/facebox.js" type="text/javascript"></script>';
 		echo '<script type="text/javascript">jQuery(function($) { $("a.tt-flickr").facebox(); });</script>';
 	}
 }
@@ -134,8 +138,8 @@ class TanTanFlickrDisplayJQueryLightboxBox extends TanTanFlickrPopUpOverlay {
 		wp_enqueue_script('jquery');
 		wp_print_scripts();
 		echo '<script>$ = jQuery;</script>'; // careful about conflicts with other libraries!
-		echo '<link href="'.TANTAN_DISPLAY_LIBRARY_PATH.'/jquery-lightbox/css/jquery.lightbox.css" media="screen" rel="stylesheet" type="text/css"/>';
-		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/jquery-lightbox/js/jquery.lightbox.js" type="text/javascript"></script>';
+		echo '<link href="'.TANTAN_DISPLAY_LIBRARY_PATH.'/jquery-lightbox-0.5/css/jquery.lightbox.css" media="screen" rel="stylesheet" type="text/css"/>';
+		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/jquery-lightbox-0.5/js/jquery.lightbox.js" type="text/javascript"></script>';
 		echo '<script type="text/javascript">jQuery(function($) { $("a.tt-flickr").lightBox(); });</script>';
 	}
 }
@@ -145,8 +149,8 @@ class TanTanFlickrDisplayJQueryLightboxBox extends TanTanFlickrPopUpOverlay {
 */
 class TanTanFlickrDisplayFancyZoom extends TanTanFlickrPopUpOverlay {
 	function headTags() {
-		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancyzoom/js-global/FancyZoom.js" type="text/javascript"></script>';
-		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancyzoom/js-global/FancyZoomHTML.js" type="text/javascript"></script>';
+		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancyzoom-1.1/js-global/FancyZoom.js" type="text/javascript"></script>';
+		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancyzoom-1.1/js-global/FancyZoomHTML.js" type="text/javascript"></script>';
 	}
 	function footer() {
 		echo '<script type="text/javascript">setupZoom();</script>';
