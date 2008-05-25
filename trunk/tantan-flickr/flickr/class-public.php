@@ -96,7 +96,7 @@ class TanTanFlickrPlugin {
 			$error = "Unknown size: $size.";
 			$size = 'Square'; 
 		}
-    	$key = "flickr-$album-$tag-$max-$size";
+    	$key = "flickr-$album-$tag-$num-$size";
     	if ($html = get_post_meta($post->ID, $key, true)) {
     	    return $html;
     	} else {
