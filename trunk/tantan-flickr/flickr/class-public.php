@@ -107,6 +107,7 @@ class TanTanFlickrPlugin {
     	
     	$auth_token = get_option('silas_flickr_token');
         $baseurl = get_option('silas_flickr_baseurl');
+		$baseurl_pre = get_option('silas_flickr_baseurl_pre');
         $linkoptions = get_option('silas_flickr_linkoptions');
         $albumData = array();
         $photos = array();
@@ -136,7 +137,7 @@ class TanTanFlickrPlugin {
     		} else {
     			require_once(dirname(__FILE__) . '/../templates/photoalbum-resources.php');
     		}
-			$prefix = get_bloginfo('siteurl').TANTAN_FLICKR_BASEURL;
+			$prefix = get_bloginfo('siteurl').'/'.substr($baseurl, strlen($baseurl_pre));
             foreach (array_slice($photos, 0, $num) as $photo) {
                 $html .= TanTanFlickrDisplay::photo($photo, array(
                     'size' => $size,
