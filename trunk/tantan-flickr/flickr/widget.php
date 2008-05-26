@@ -61,40 +61,39 @@ class TanTanFlickrWidget {
     }
     
     function display($args) {
-        global $TanTanFlickrPlugin;
-		if (!is_object($TanTanFlickrPlugin) || strtolower(get_class($TanTanFlickrPlugin)) != 'tantanflickrplugin' ) {
+			global $TanTanFlickrPlugin;
+			if (!is_object($TanTanFlickrPlugin) || strtolower(get_class($TanTanFlickrPlugin)) != 'tantanflickrplugin' ) {
 		    require_once(dirname(__FILE__).'/class-public.php');
-            $TanTanFlickrPlugin =& new TanTanFlickrPlugin();
-		}
-        extract($args);
-        $defaults = array('count' => 10);
-        $options = (array) get_option('silas_flickr_widget');
-        $altPhotos = array();
-        foreach ( $defaults as $key => $value )
+				$TanTanFlickrPlugin =& new TanTanFlickrPlugin();
+			}
+			extract($args);
+			$defaults = array('count' => 10);
+			$options = (array) get_option('silas_flickr_widget');
+			$altPhotos = array();
+			foreach ( $defaults as $key => $value )
 			if ( !isset($options[$key]) )
 				$options[$key] = $defaults[$key];
-		if ($options['randomize']) {
-		    $count = $options['count'] * 2;
-		} else {
-		    $count = $options['count'];
-		}
-		$photos = $TanTanFlickrPlugin->getRecentPhotos($options['tags'], 0, $count);
-		if ($options['randomize'] || $options['animate']) {
-		    if ($options['randomize']) shuffle($photos);
-		    if (count($photos) < $options['count']) {
-		        $altPhotos = $photos;
-		    } else {
-    		    $altPhotos = array_slice($photos, $options['count']);
-    		    $photos = array_slice($photos, 0, $options['count']);
-		    }
-		}
-		echo $before_widget;
-		if ($options['animate']) {
-		    include ($this->getDisplayTemplate('widget-display-animate.html'));
-		} else {
-		    include ($this->getDisplayTemplate('widget-display.html'));
-		}
-        echo $after_widget;
+			$photos;
+			if ($options['randomize']) {
+				$photos = $TanTanFlickrPlugin->getRandomPhotos($options['tags'], $options['count']);
+			} else {
+				$photos = $TanTanFlickrPlugin->getRecentPhotos($options['tags'], 0, $options['count']);
+			}
+			if ($options['randomize'] || $options['animate']) {
+				if (count($photos) < $options['count']) {
+					$altPhotos = $photos;
+				} else {
+					$altPhotos = array_slice($photos, $options['count']);
+					$photos = array_slice($photos, 0, $options['count']);
+				}
+			}
+			echo $before_widget;
+			if ($options['animate']) {
+				include ($this->getDisplayTemplate('widget-display-animate.html'));
+			} else {
+				include ($this->getDisplayTemplate('widget-display.html'));
+			}
+				echo $after_widget;
     }
     function getDisplayTemplate($file) {
         if (file_exists(TEMPLATEPATH . '/'.$file)) {

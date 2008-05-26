@@ -15,6 +15,59 @@ class TanTanFlickrPlugin {
 	function getUser() {
 		return get_option('silas_flickr_user');
 	}
+
+
+
+	/*
+	 * Get a selection of random photos
+	 */
+	function getrandomPhotos($tags='', $num=15, $everyone=false, $usecache=true) {
+		$auth_token = get_option('silas_flickr_token');
+		$baseurl = get_option('silas_flickr_baseurl');
+		$linkoptions = get_option('silas_flickr_linkoptions');
+		if ($auth_token) {
+			require_once(dirname(__FILE__).'/lib.flickr.php');
+			$flickr = new TanTanFlickr();
+			$flickr->setToken($auth_token);
+			$flickr->setOption(array(
+					'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
+			));
+			$user = $flickr->auth_checkToken();
+			$nsid = $user['user']['nsid'];
+			if (!$usecache) $flickr->clearCacheStale('random'); 
+
+			//check cache
+			//TODO: change cache to shorter time?
+		  if ($cache = $flickr->getObjCache('random', "$num-$tags")) {
+				return $cache;
+			}
+			$extra = '';#TODO: set tags
+			// Find number of photos 
+			$query = $flickr->people_getPublicPhotos( $nsid, $extra, 1, 0);
+			$total_photos = $query['total'];
+			//get details about $bum photos
+			for($i=0; $i < $num; $i++){
+				$this_photo = $flickr->people_getPublicPhotos( $nsid, $extra, 1, rand(0,$total_photos));
+				if (is_array($this_photo['photo'])) foreach ($this_photo['photo'] as $photo) {
+					$row = array();
+					$row['id'] = $photo['id'];
+					$row['title'] = $photo['title'];
+					$row['sizes'] = $flickr->getPhotoSizes($photo['id']);
+					$row['pagename2'] = $flickr->_sanitizeTitle($photo['title']);
+					$row['pagename'] = $row['pagename2'] . '.html';
+					$photos[$photo['id']] = $row;
+				}
+			}
+
+			shuffle($photos);
+			//set cache
+			$flickr->setObjCache('random', "$num-$tags", $photos);
+			return $photos;
+		} else {
+			return array();
+		}
+	}
+
     function getRecentPhotos($tags='', $offsetpage=0, $max=15, $everyone=false, $usecache=true) {
         $auth_token = get_option('silas_flickr_token');
         $baseurl = get_option('silas_flickr_baseurl');
@@ -36,7 +89,7 @@ class TanTanFlickrPlugin {
                 $photos = $flickr->search(array(
                     'tags' => ($tags ? $tags : ''),
                     'user_id' => ($everyone ? '' : $nsid),
-					'license' => ($everyone ? TANTAN_FLICKR_PUBLIC_LICENSE : ''),
+										'license' => ($everyone ? TANTAN_FLICKR_PUBLIC_LICENSE : ''),
                     'per_page' => $max,
                     'page' => $offsetpage,
                 ));
