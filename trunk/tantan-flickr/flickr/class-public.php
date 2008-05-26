@@ -61,7 +61,7 @@ class TanTanFlickrPlugin {
 
 			shuffle($photos);
 			//set cache
-			print "<br>\nset: ". $flickr->setObjCache('getRandom', "$num-$tags", $photos);
+			$flickr->setObjCache('getRandom', "$num-$tags", $photos);
 			return $photos;
 		} else {
 			return array();
