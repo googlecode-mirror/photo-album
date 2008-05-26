@@ -436,6 +436,7 @@ class TanTanFlickr extends tantan_phpFlickr {
 				'getPhotos' => 43200,
 				'search' => 43200,
 				'getRecent' => 43200,
+				'getRandom'=> 600,
 				);
 			foreach ($commands as $command => $timeout) {
 				if ($what && ereg($what, $command)) { // a specific command
