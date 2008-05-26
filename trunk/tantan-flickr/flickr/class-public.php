@@ -55,6 +55,7 @@ class TanTanFlickrPlugin {
 					$row['sizes'] = $flickr->getPhotoSizes($photo['id']);
 					$row['pagename2'] = $flickr->_sanitizeTitle($photo['title']);
 					$row['pagename'] = $row['pagename2'] . '.html';
+					$row['info'] = $flickr->getPhoto($photo['id']);
 					$photos[$photo['id']] = $row;
 				}
 			}
