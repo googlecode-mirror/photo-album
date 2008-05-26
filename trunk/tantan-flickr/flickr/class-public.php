@@ -34,11 +34,10 @@ class TanTanFlickrPlugin {
 			));
 			$user = $flickr->auth_checkToken();
 			$nsid = $user['user']['nsid'];
-			if (!$usecache) $flickr->clearCacheStale('random'); 
+			if (!$usecache) $flickr->clearCacheStale('getRandom'); 
 
 			//check cache
-			//TODO: change cache to shorter time?
-		  if ($cache = $flickr->getObjCache('random', "$num-$tags")) {
+		  if ($cache = $flickr->getObjCache('getRandom', "$num-$tags")) {
 				return $cache;
 			}
 			$extra = '';#TODO: set tags
@@ -62,7 +61,7 @@ class TanTanFlickrPlugin {
 
 			shuffle($photos);
 			//set cache
-			$flickr->setObjCache('random', "$num-$tags", $photos);
+			print "<br>\nset: ". $flickr->setObjCache('getRandom', "$num-$tags", $photos);
 			return $photos;
 		} else {
 			return array();
