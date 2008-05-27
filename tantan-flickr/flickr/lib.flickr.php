@@ -438,16 +438,17 @@ class TanTanFlickr extends tantan_phpFlickr {
 				'getRecent' => 43200,
 				'getRandom'=> 600,
 				);
-			foreach ($commands as $command => $timeout) {
-				if ($what && ereg($what, $command)) { // a specific command
-					$time = time() - 60; // 1 min window
-				} else {
+			if($what && $commands[$what]){
+					$time = time() - $commands[$what];
+					$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$command.($time ? "' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time) : '')."' ;");
+			}else {
+				foreach ($commands as $command => $timeout) {
 					$time = time() - $timeout;
+					$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$command.($time ? "' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time) : '')."' ;");
 				}
-            	$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$command.($time ? "' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time) : '')."' ;");
 			}
-            return true;
-        }
+      return true;
+		}
 	}
     function _clearCache($dir) {
        if (substr($dir, strlen($dir)-1, 1) != '/')
