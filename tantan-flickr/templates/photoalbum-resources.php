@@ -85,7 +85,11 @@ class TanTanFlickrDisplayBase {
 */
 class TanTanFlickrPopUpOverlay extends TanTanFlickrDisplayBase {
 	function href($photo, $album=null, $prefix='') {
-		return $photo['sizes'][TANTAN_DISPLAY_POPUP_SIZE]['source'];
+		if (isset($photo['sizes'][TANTAN_DISPLAY_POPUP_SIZE]['source'])) {
+			return $photo['sizes'][TANTAN_DISPLAY_POPUP_SIZE]['source'];
+		} else {
+			return $photo['sizes']['Original']['source'];
+		}
 	}
 	function js() {
 		return 
