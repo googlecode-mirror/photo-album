@@ -21,6 +21,47 @@
 
 == Popup Overlay Support ==
 
- # Depending on your blogs theme, this may require a little bit of JavaScript / CSS mojo.
- # First you'll want to download and install a display library into your blog. Here's a page with a list of all the various libraries you might want to use.
- # Take a peek inside the file photoalbum-resources.php to see how to hook up the plugin with the display library. Example implementation is provided for Lightbox, Facebox, FancyZoom, and Fancybox. [http://tantannoodles.com/flickr-demo/ Here's a quick demo of these display libraries]
+The plugin comes bundled with 4 different display libraries, hosted on TanTanNoodles: Lightbox, Facebox, FancyZoom, and Fancybox. [http://tantannoodles.com/flickr-demo/ Here's a quick demo of these display libraries]. 
+
+To use one of these hosted bundled display libraries, add the following to the TOP of your wp-config.php file:
+
+For _[http://leandrovieira.com/projects/jquery/lightbox/ Light Box]_, add this code:
+
+{{{
+define('TANTAN_DISPLAY_LIBRARY', 'lightbox');
+}}}
+
+For _[http://fancy.klade.lv/ Fancy Box]_, add this code:
+
+{{{
+define('TANTAN_DISPLAY_LIBRARY', 'fancybox');
+}}}
+
+For _[http://famspam.com/facebox Face Box]_, add this code:
+
+{{{
+define('TANTAN_DISPLAY_LIBRARY', 'facebox');
+}}}
+
+For _[http://www.cabel.name/2008/02/fancyzoom-10.html Fancy Zoom]_, add this code:
+
+{{{
+define('TANTAN_DISPLAY_LIBRARY', 'fancyzoom');
+}}}
+
+
+In the end, your wp-config.php should look something like this:
+
+{{{
+<?php
+define('TANTAN_DISPLAY_LIBRARY', 'facebox');
+
+// ** MySQL settings ** //
+define('DB_NAME', '...');
+... etc ...
+}}}
+
+*Notes:*
+ # Depending on your blogs theme, there may need to be a little bit of JavaScript / CSS mojo.
+ # Here's a page with [http://planetozh.com/projects/lightbox-clones/ a list of all the various libraries] you might want to use if you want to use your own.
+ # Take a peek inside the file photoalbum-resources.php to see how to hook up the plugin with a custom display library. 
