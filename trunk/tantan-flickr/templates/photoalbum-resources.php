@@ -14,7 +14,7 @@ jQuery: http://jquery.com/ (also included by default with WordPress 2.2+)
 */
 
 if (!defined('TANTAN_DISPLAY_LIBRARY'))      define('TANTAN_DISPLAY_LIBRARY', false);
-if (!defined('TANTAN_DISPLAY_LIBRARY_PATH')) define('TANTAN_DISPLAY_LIBRARY_PATH', 'http://static.tantannoodles.com.s3.amazonaws.com'); 
+if (!defined('TANTAN_DISPLAY_LIBRARY_PATH')) define('TANTAN_DISPLAY_LIBRARY_PATH', 'http://static.tantannoodles.com'); 
 if (!defined('TANTAN_DISPLAY_POPUP_SIZE'))   define('TANTAN_DISPLAY_POPUP_SIZE', 'Medium');
 
 
