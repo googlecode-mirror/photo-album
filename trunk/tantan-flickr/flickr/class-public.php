@@ -140,6 +140,8 @@ class TanTanFlickrPlugin {
     	extract(shortcode_atts(array(
     		'album' => null,
     		'tag'     => null,
+			'video'   => null,
+			'photo'   => null,
     		'num'     => 5,
     		'size'    => 'Square',
     		'scale'   => 1,
@@ -149,7 +151,7 @@ class TanTanFlickrPlugin {
 			$error = "Unknown size: $size.";
 			$size = 'Square'; 
 		}
-    	$key = "flickr-$album-$tag-$num-$size";
+    	$key = "flickr-$album-$tag-$num-$size-$video-$photo";
     	if ($html = get_post_meta($post->ID, $key, true)) {
     	    return $html;
     	} else {
@@ -173,8 +175,14 @@ class TanTanFlickrPlugin {
             ));
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
-        
-            if ($album) {
+        	if ($video) {
+				$sizes = $flickr->getPhotoSizes($video);
+				$html .= TanTanFlickrDisplay::video($sizes['Video Player']);
+			} elseif ($photo) {
+				$photoInfo = $flickr->getPhoto($photo);
+				$photoInfo['sizes'] = $flickr->getPhotoSizes($photo);
+				$html .= TanTanFlickrDisplay::image($photoInfo, $size);
+			} elseif ($album) {
                 $albumData = $flickr->getAlbum($album);
                 $photos = $flickr->getPhotos($album);
             } elseif ($tag) {
@@ -284,7 +292,11 @@ class TanTanFlickrPlugin {
 						$photoTemplate = 'error.html';
 					}
                 } else {
-	                $photoTemplate = 'photoalbum-photo.html';
+					if ($photo['media'] == 'video') {
+						$photoTemplate = 'photoalbum-video.html';
+					} else {
+	                	$photoTemplate = 'photoalbum-photo.html';
+					}
 				}
                 
             } elseif ($request['album']) {

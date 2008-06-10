@@ -42,9 +42,13 @@ function tantan_addPhoto(photo, size) {
 	return false;
 }
 function tantan_makePhotoHTML(photo, size) { 
+	if (size == 'Video Player') {
+		return '[flickr video='+photo['id']+']'
+	} else {
 	return '<a href="'+photo['targetURL']+'" class="tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'">' +
 		'<img src="'+photo['sizes'][size]['source']+'" alt="'+photo['title']+'" width="'+photo['sizes'][size]['width']+'" height="'+photo['sizes'][size]['height']+'" border="0" />' +
 		'</a> ';
+	}
 }
 function tantan_addShortCode(attribs) {
 	top.send_to_editor('[flickr'+(attribs ? (' '+attribs) : '')+']');

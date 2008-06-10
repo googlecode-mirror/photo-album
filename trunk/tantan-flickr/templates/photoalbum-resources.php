@@ -68,10 +68,29 @@ class TanTanFlickrDisplayBase {
 			'alt="'.htmlentities($photo['title'], ENT_COMPAT, 'UTF-8').'" />';
 	}
 	
+	// draw the video code
+	function video($video) {
+		return '<object '.
+		'width="'.$video['width'].'" height="'.$video['height'].'" '.
+		'data="'.$video['source'].'" '. 
+		'type="application/x-shockwave-flash" '.
+		'classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> '.
+		'<param name="flashvars" value="flickr_show_info_box=false"></param> '.
+		'<param name="movie" value="'.$video['source'].'"></param> '.
+		'<param name="bgcolor" value="#000000"></param> '.
+		'<param name="allowFullScreen" value="true"></param> '.
+		'<embed type="application/x-shockwave-flash" '.
+			'src="'.$video['source'].'" bgcolor="#000000" allowfullscreen="true" '.
+			'flashvars="flickr_show_info_box=false" '.
+			'width="'.$video['width'].'" height="'.$video['height'].'"></embed></object>';
+	}
+	
 	// this prints out the JavaScript function used to insert a photo into blog posts
 	function js() {
 		return "function tantan_makePhotoHTML(photo, size) { \n".
-			//photoSourceUrl, photoPageUrl, thumbnailSourceUrl, width, height, title
+			"if (size == 'Video Player') {\n".
+				"return '[flickr video='+photo['id']+']'\n".
+			"}\n".
 				"return '<a href=\"'+photo['targetURL']+'\" class=\"tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'\">' + \n".
 				"	'<img src=\"'+photo['sizes'][size]['source']+'\" alt=\"'+photo['title']+'\" width=\"'+photo['sizes'][size]['width']+'\" height=\"'+photo['sizes'][size]['height']+'\" border=\"0\" />' + \n".
 				"	'</a> '; \n".
@@ -85,7 +104,9 @@ class TanTanFlickrDisplayBase {
 */
 class TanTanFlickrPopUpOverlay extends TanTanFlickrDisplayBase {
 	function href($photo, $album=null, $prefix='') {
-		if (isset($photo['sizes'][TANTAN_DISPLAY_POPUP_SIZE]['source'])) {
+		if (isset($photo['sizes']['Video Player'])) {
+			return parent::href($photo, $album=null, $prefix='');
+		} elseif (isset($photo['sizes'][TANTAN_DISPLAY_POPUP_SIZE]['source'])) {
 			return $photo['sizes'][TANTAN_DISPLAY_POPUP_SIZE]['source'];
 		} else {
 			return $photo['sizes']['Original']['source'];
@@ -94,6 +115,9 @@ class TanTanFlickrPopUpOverlay extends TanTanFlickrDisplayBase {
 	function js() {
 		return 
 			"function tantan_makePhotoHTML(photo, size) { \n".
+			"if (size == 'Video Player') {\n".
+				"return '[flickr video='+photo['id']+']'\n".
+			"}\n".
 			"var imgTag = '<img src=\"'+photo['sizes'][size]['source']+'\" alt=\"'+photo['title']+'\" width=\"'+photo['sizes'][size]['width']+'\" height=\"'+photo['sizes'][size]['height']+'\" border=\"0\" />' \n".
 			"if (photo['photos']) { \n".
 				"return '<a href=\"'+photo['targetURL']+'\" class=\"tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'\">' + \n".
