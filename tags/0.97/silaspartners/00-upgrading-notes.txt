@@ -1,0 +1,16 @@
+*** Important Upgrade Notice ***
+
+Since version 0.96, everything in the "silaspartners" directory has been 
+moved into the "tantan-flickr" directory.
+
+Additionally, the plugin object $SilasFlickrPlugin has also been renamed to 
+$TanTanFlickrPlugin.
+
+If you've made modifications directly to files inside this directory, be sure 
+to back them up and copy them to the tantan-flickr directory. Otherwise, you
+should be able to safely delete this directory since it's no longer used. You
+may need to update your theme to reference the new tantan-flickr directory, 
+particularly if you have been initializing the $SilasFlickrPlugin object 
+directly inside your PHP code.
+
+Note: You may need to re-activate this plugin from your "Plugins" admin screen.
