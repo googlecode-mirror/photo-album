@@ -138,9 +138,9 @@ class TanTanFlickrDisplayFancyBox extends TanTanFlickrPopUpOverlay {
 	function headTags() {
 		wp_enqueue_script('jquery');
 		wp_print_scripts();
-		echo '<script>$ = jQuery;</script>'; // careful about conflicts with other libraries!
-		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancybox-0.1b/jquery.fancybox.js" type="text/javascript"></script>';
-		echo '<script type="text/javascript">jQuery(function($) { $("a.tt-flickr").fancybox(); });</script>';
+		echo '<link href="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancybox-1.0.0/fancy.css" media="screen" rel="stylesheet" type="text/css"/>';
+		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancybox-1.0.0/jquery.fancybox-1.0.0.js" type="text/javascript"></script>';
+		echo '<script type="text/javascript">jQuery(document).ready(function($) { $("a.tt-flickr").fancybox(); });</script>';
 	}
 }
 
@@ -151,10 +151,9 @@ class TanTanFlickrDisplayFaceBox extends TanTanFlickrPopUpOverlay {
 	function headTags() {
 		wp_enqueue_script('jquery');
 		wp_print_scripts();
-		echo '<script>$ = jQuery;</script>'; // careful about conflicts with other libraries!
 		echo '<link href="'.TANTAN_DISPLAY_LIBRARY_PATH.'/facebox-1.1/facebox.css" media="screen" rel="stylesheet" type="text/css"/>';
 		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/facebox-1.1/facebox.js" type="text/javascript"></script>';
-		echo '<script type="text/javascript">jQuery(function($) { $("a.tt-flickr").facebox(); });</script>';
+		echo '<script type="text/javascript">jQuery(document).ready(function($) { $("a.tt-flickr").facebox(); });</script>';
 	}
 }
 
@@ -165,10 +164,9 @@ class TanTanFlickrDisplayJQueryLightboxBox extends TanTanFlickrPopUpOverlay {
 	function headTags() {
 		wp_enqueue_script('jquery');
 		wp_print_scripts();
-		echo '<script>$ = jQuery;</script>'; // careful about conflicts with other libraries!
 		echo '<link href="'.TANTAN_DISPLAY_LIBRARY_PATH.'/jquery-lightbox-0.5/css/jquery.lightbox.css" media="screen" rel="stylesheet" type="text/css"/>';
 		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/jquery-lightbox-0.5/js/jquery.lightbox.js" type="text/javascript"></script>';
-		echo '<script type="text/javascript">jQuery(function($) { $("a.tt-flickr").lightBox(); });</script>';
+		echo '<script type="text/javascript">jQuery(document).ready(function($) { $("a.tt-flickr").lightBox(); });</script>';
 	}
 }
 
