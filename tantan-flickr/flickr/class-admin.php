@@ -77,7 +77,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
             global $wpdb;
 			$wpdb->hide_errors();
 			$charset_collate = '';
-			if ( $wpdb->supports_collation() ) {
+			if ( (method_exists($wpdb, 'supports_collation') && $wpdb->supports_collation()) || (version_compare(mysql_get_server_info($wpdb->dbh), '4.1.0', '>=')) ) {
 				if ( ! empty($wpdb->charset) )
 					$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
 				if ( ! empty($wpdb->collate) )
