@@ -440,7 +440,7 @@ class TanTanFlickr extends tantan_phpFlickr {
 				);
 			if($what && $commands[$what]){
 					$time = time() - $commands[$what];
-					$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$command.($time ? "' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time) : '')."' ;");
+					$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$what.($time ? "' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time) : '')."' ;");
 			}else {
 				foreach ($commands as $command => $timeout) {
 					$time = time() - $timeout;
