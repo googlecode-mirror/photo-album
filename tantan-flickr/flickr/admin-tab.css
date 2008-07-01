@@ -1,4 +1,6 @@
 #upload-files {
+    margin-left:0;
+	margin-right:0;
 	padding:0 0 0 10px;
 }
 #upload-files li {
@@ -60,7 +62,6 @@
     right:0px;
     font-size:90%;
     text-align:center;
-    line-height:1;
     color:#555;
 }
 .license a {

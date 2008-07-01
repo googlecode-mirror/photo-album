@@ -322,7 +322,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         return array_merge($array, $tab);
     }
     function upload_tabs_scripts() {
-		require_once(dirname(__FILE__).'/json.php');
+		if (!class_exists('Services_JSON')) require_once(dirname(__FILE__).'/json.php');
         include(dirname(__FILE__).'/admin-tab-head.html');
     }
     // gets called before tabs are rendered
