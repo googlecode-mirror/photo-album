@@ -111,7 +111,25 @@ class TanTanFlickr extends tantan_phpFlickr {
 		$this->setObjCache('getRecent', array($extras, $per_page, $page), $return);
         return $return;
     }
-    
+    function getInteresting($date = NULL, $extras = NULL, $per_page = NULL, $page = NULL) {
+		if ($return = $this->getObjCache('getInteresting', array($extras, $per_page, $page))) {
+			return $return;
+		}
+        $photos = $this->interestingness_getList($date, $extras, $per_page, $page);
+        $return = array();
+        if (is_array($photos['photo'])) foreach ($photos['photo'] as $photo) {
+            $row = array();
+            $row['id'] = $photo['id'];
+            $row['title'] = $photo['title'];
+            $row['sizes'] = $this->getPhotoSizes($photo['id']);
+            $row['pagename2'] = $this->_sanitizeTitle($photo['title']);
+            $row['pagename'] = $row['pagename2'] . '.html';
+            //$row['total'] = $photos['total'];
+            $return[$photo['id']] = $row;
+        }
+		$this->setObjCache('getRecent', array($extras, $per_page, $page), $return);
+        return $return;
+    }    
     function getPhotosByTags($tags) {
         $user = $this->auth_checkToken();
         //TODO: should disable caching here or something

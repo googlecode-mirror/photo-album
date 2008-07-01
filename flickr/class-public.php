@@ -68,6 +68,40 @@ class TanTanFlickrPlugin {
 		}
 	}
 
+	function getInterestingPhotos($date=false, $offsetpage=0, $max=15, $usecache=true) {
+	    if ($date) $time_t = strtotime($date);
+	    else $date = date('Y-m-d');
+	    
+	    $auth_token = get_option('silas_flickr_token');
+        $baseurl = get_option('silas_flickr_baseurl');
+        $linkoptions = get_option('silas_flickr_linkoptions');
+        
+	    if ($auth_token) {
+            require_once(dirname(__FILE__).'/lib.flickr.php');
+            $flickr = new TanTanFlickr();
+            $flickr->setToken($auth_token);
+            $flickr->setOption(array(
+                'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
+            ));
+            $user = $flickr->auth_checkToken();
+            $nsid = $user['user']['nsid'];
+			if (!$usecache) {
+			    $flickr->clearCacheStale('search'); // should probably not blanket clear out everything in 'search'
+			    $flickr->clearCacheStale('getInteresting');
+			}
+            $photos = $flickr->getInteresting();
+
+            if (!$baseurl || $linkoptions) {
+                foreach ($photos as $k => $photo) {
+                    $photos[$k]['info'] = $flickr->getPhoto($photo['id']);
+                }
+            }
+            return $photos;
+        } else {
+            return array();
+        }
+	}
+	
     function getRecentPhotos($tags='', $offsetpage=0, $max=15, $everyone=false, $usecache=true) {
         $auth_token = get_option('silas_flickr_token');
         $baseurl = get_option('silas_flickr_baseurl');
