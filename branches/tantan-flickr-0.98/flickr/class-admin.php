@@ -23,6 +23,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 		add_action('media_upload_tantan-flickr-photo-stream', array(&$this, 'media_upload_content'));
 		add_action('media_upload_tantan-flickr-photo-albums', array(&$this, 'media_upload_content_albums'));
 		add_action('media_upload_tantan-flickr-photo-everyone', array(&$this, 'media_upload_content_everyone'));
+		add_action('media_upload_tantan-flickr-photo-interesting', array(&$this, 'media_upload_content_interesting'));
 		
         if ($_GET['tantanActivate'] == 'photo-album') {
             $this->showConfigNotice();
@@ -263,6 +264,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 		$out = ' <a href="'.$media_upload_iframe_src.'&tab=tantan-flickr-photo-stream&TB_iframe=true&height=500&width=640" class="thickbox" title="'.$image_title.'"><img src="'.$image_btn.'" alt="'.$image_title.'" /></a>';
 		return $context.$out;
 	}
+	function media_upload_content_interesting() { return $this->media_upload_content('interesting');}
 	function media_upload_content_everyone() { return $this->media_upload_content('everyone');}
 	
 	// list out albums
@@ -287,6 +289,9 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 		} elseif ($mode == 'everyone') {
 		    $_REQUEST['everyone'] = true;
 		    wp_iframe(array(&$this, 'photosTab'), 40);
+		} elseif ($mode == 'interesting') {
+		    $_REQUEST['interesting'] = true;
+		    wp_iframe(array(&$this, 'photosTab'), 40);
 		} else {
 			wp_iframe(array(&$this, 'photosTab'), 40);
 		}
@@ -296,6 +301,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 			'tantan-flickr-photo-stream' => __('Photo Stream'), // handler action suffix => tab text
 			'tantan-flickr-photo-albums' => __('Albums'),
 			'tantan-flickr-photo-everyone' => __('Everyone'),
+			'tantan-flickr-photo-interesting' => __('Interesting'),
 		);
 	}
     function addPhotosTab() {
@@ -335,7 +341,11 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         $offsetpage = (int) $_GET['paged'];
 		$offsetpage = $offsetpage ? $offsetpage : 1;
         $everyone = isset($_REQUEST['everyone']) && $_REQUEST['everyone'];
-        $photos = $this->getRecentPhotos($tags, $offsetpage, $perpage, $everyone, false);
+        if (isset($_REQUEST['interesting']) && $_REQUEST['interesting']) {
+            $photos = $this->getInterestingPhotos($day);
+        } else {
+            $photos = $this->getRecentPhotos($tags, $offsetpage, $perpage, $everyone, false);
+        }
 		
 		//
 		// TODO: this is WP2.5 specific code, should abstract out
