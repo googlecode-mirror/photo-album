@@ -266,10 +266,15 @@ class TanTanFlickr extends tantan_phpFlickr {
         $group = $this->groups_getInfo($group_id);
         $return = array();
         if (is_array($group)) {
+            $groups = $this->groups_pools_getGroups();
+            
+            foreach ($groups['group'] as $g) if ($g['id'] == $group_id) break;
+            
             $return['id'] = $group['id'];
             $return['name'] = $group['name'];
             $return['description'] = $group['description'];
             $return['members'] = $group['members'];
+            $return['photos'] = $g['photos'];
             $return['privacy'] = $group['privacy'];
             $return['pagename2'] = $this->_sanitizeTitle($group['name']);
             $return['pagename'] = $return['pagename2'] . '.html';

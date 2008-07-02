@@ -373,14 +373,14 @@ class TanTanFlickrPlugin {
 	                $group = $flickr->getGroup($request['group']);
 	                if (isset($request['tags'])) {
 	                    if ($request['tags']) {
-	                        $photos = $flickr->getPhotosByGroup($request['group'], $request['tags']);
+	                        $photos = $flickr->getPhotosByGroup($request['group'], $request['tags'], NULL, NULL, $per_page, $page);
 	                        $photoTemplate = 'photoalbum-tags-group.html';
 	                    } else { // return popular tags for a group
 	                        $message = "Sorry, this feature is not supported";
 	                        $photoTemplate = 'error.html';
 	                    }
 	                } else {
-	                    $photos = $flickr->getPhotosByGroup($request['group']);
+	                    $photos = $flickr->getPhotosByGroup($request['group'], NULL, NULL, NULL, $per_page, $page);
 	                    $photoTemplate = 'photoalbum-group.html';
 	                }
 				}
