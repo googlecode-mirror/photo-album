@@ -73,8 +73,6 @@ class TanTanFlickrPlugin {
 	    else $date = date('Y-m-d');
 	    
 	    $auth_token = get_option('silas_flickr_token');
-        $baseurl = get_option('silas_flickr_baseurl');
-        $linkoptions = get_option('silas_flickr_linkoptions');
         
 	    if ($auth_token) {
             require_once(dirname(__FILE__).'/lib.flickr.php');
@@ -89,12 +87,12 @@ class TanTanFlickrPlugin {
 			    $flickr->clearCacheStale('search'); // should probably not blanket clear out everything in 'search'
 			    $flickr->clearCacheStale('getInteresting');
 			}
-            $photos = $flickr->getInteresting();
-
-            if (!$baseurl || $linkoptions) {
-                foreach ($photos as $k => $photo) {
-                    $photos[$k]['info'] = $flickr->getPhoto($photo['id']);
-                }
+            $photos = $flickr->getInteresting(NULL, NULL, $max, $offsetpage);
+            foreach ($photos as $k => $photo) {
+                $photos[$k]['info'] = $flickr->getPhoto($photo['id']);
+				foreach (array('Medium', 'Large', 'Original') as $size) {
+					unset($photos[$k]['sizes'][$size]);
+				}
             }
             return $photos;
         } else {
@@ -115,15 +113,17 @@ class TanTanFlickrPlugin {
             ));
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
-			if (!$usecache) $flickr->clearCacheStale('search'); // should probably not blanket clear out everything in 'search'
+			if (!$usecache) {
+				$flickr->clearCacheStale('search'); // should probably not blanket clear out everything in 'search'
+				$flickr->clearCacheStale('getRecent');
+			}
             if (!$tags && $everyone) {
-				if (!$usecache) $flickr->clearCacheStale('getRecent');
                 $photos = $flickr->getRecent(NULL, $max, $offsetpage);
             } else {
                 $photos = $flickr->search(array(
                     'tags' => ($tags ? $tags : ''),
                     'user_id' => ($everyone ? '' : $nsid),
-										'license' => ($everyone ? TANTAN_FLICKR_PUBLIC_LICENSE : ''),
+					'license' => ($everyone ? TANTAN_FLICKR_PUBLIC_LICENSE : ''),
                     'per_page' => $max,
                     'page' => $offsetpage,
                 ));

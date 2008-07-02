@@ -77,11 +77,12 @@ $json = new Services_JSON();
 <?php
 $id = 0;
 foreach ($photos as $photo):
-if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
+if ($baseurl && !$everyone && !$interesting && ($linkoptions != 'flickr')) {
     $photo['targetURL'] = $home.$baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
 } else {
     if (is_array($photo['info']['urls'])) $photo['targetURL'] = array_pop($photo['info']['urls']);
 }
+unset($photo['info']);
 $photoJSON = $json->encode($photo);
 ?>
 <li id='flickr-photo-<?php echo $id?>' class='alignleft'>

@@ -30,6 +30,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         }
     }
     function activate() {
+		if (!ereg('plugins.php', $_SERVER['REQUEST_URI'])) return;
         wp_redirect('plugins.php?tantanActivate=photo-album');
         exit;
     }
@@ -341,8 +342,10 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         $offsetpage = (int) $_GET['paged'];
 		$offsetpage = $offsetpage ? $offsetpage : 1;
         $everyone = isset($_REQUEST['everyone']) && $_REQUEST['everyone'];
+		$interesting = false;
         if (isset($_REQUEST['interesting']) && $_REQUEST['interesting']) {
-            $photos = $this->getInterestingPhotos($day);
+			$interesting = true;
+            $photos = $this->getInterestingPhotos($date, $offsetpage, $perpage);
         } else {
             $photos = $this->getRecentPhotos($tags, $offsetpage, $perpage, $everyone, false);
         }
@@ -351,7 +354,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 		// TODO: this is WP2.5 specific code, should abstract out
 		//
 		if (ereg('media-upload.php', $_SERVER['REQUEST_URI'])) {
-			if (!$tags && !$everyone) {
+			if (!$tags && (!$everyone && !$interesting)) {
 				$count = $this->getNumPhotos();
 				$page_links = paginate_links( array(
 					'base' => add_query_arg( 'paged', '%#%' ),
@@ -421,5 +424,34 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 			return 0;
 		}
 	}
+}
+
+function tantan_flickr_autoupdate($old, $new) {
+	remove_action( 'update_option_update_plugins', 'tantan_flickr_autoupdate', 10, 2);
+	if (is_object($new) && is_array($new->response)) {
+		$http_request  = "GET /tantan-flickr.serialized HTTP/1.0\r\n";
+		$http_request .= "Host: updates.tantannoodles.com\r\n";
+		$http_request .= 'User-Agent: WordPress/' . $wp_version . '; ' . get_bloginfo('url') . "\r\n";
+		$http_request .= "\r\n";
+		$http_request .= $request;
+		$response = '';
+		if( false != ( $fs = @fsockopen( 'updates.tantannoodles.com', 80, $errno, $errstr, 3) ) && is_resource($fs) ) {
+			fwrite($fs, $http_request);
+			while ( !feof($fs) ) $response .= fgets($fs, 1160); // One TCP-IP packet
+			fclose($fs);
+			$response = explode("\r\n\r\n", $response, 2);
+		}
+		$update = unserialize( $response[1] );
+		if (is_object($update)) {
+			$thisPlugin = get_plugin_data(__FILE__);
+			if (version_compare($thisPlugin['Version'], $update->new_version, '<')) {
+				$new->response['tantan-flickr/flickr.php'] = $update;
+				update_option('update_plugins', $new);
+			}
+		}
+	}
+}
+if (TANTAN_AUTOUPDATE_NOTIFY && version_compare(get_bloginfo('version'), '2.3', '>=')) {
+	add_action( 'update_option_update_plugins', 'tantan_flickr_autoupdate', 10, 2);
 }
 ?>
