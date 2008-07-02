@@ -216,6 +216,7 @@ class TanTanFlickr extends tantan_phpFlickr {
             $return['primary'] = $album['primary'];
             $return['title'] = $album['title'];
             $return['description'] = $album['description'];
+            $return['photos'] = $album['photos'];
             $return['pagename2'] = $this->_sanitizeTitle($album['title']);
             $return['pagename'] = $return['pagename2'] . '.html';
             
@@ -300,12 +301,12 @@ class TanTanFlickr extends tantan_phpFlickr {
         return $return;
     }
         
-    function getPhotos($album_id) {
-		if ($return = $this->getObjCache('getPhotos', $album_id)) {
+    function getPhotos($album_id, $extras = NULL, $per_page = NULL, $page = NULL) {
+		if ($return = $this->getObjCache('getPhotos', array($extras, $album_id, $per_page, $page))) {
 			return $return;
 		}
         $album_id = $album_id . '';
-        $photos = $this->photosets_getPhotos($album_id);
+        $photos = $this->photosets_getPhotos($album_id, $extras, NULL, $per_page, $page);
         $return = array();
         if (is_array($photos['photo'])) foreach ($photos['photo'] as $photo) {
             $row = array();
@@ -317,7 +318,7 @@ class TanTanFlickr extends tantan_phpFlickr {
             $row = array_merge($row, (array) $this->getPhoto($photo['id']));
             $return[$photo['id']] = $row;
         }
-		$this->setObjCache('getPhotos', $album_id, $return);
+		$this->setObjCache('getPhotos', array($extras, $album_id, $per_page, $page), $return);
         return $return;
     }
     
