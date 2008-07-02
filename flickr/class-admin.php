@@ -451,7 +451,15 @@ function tantan_flickr_autoupdate($old, $new) {
 		}
 	}
 }
+function tantan_flickr_after_plugin_row($plugin) {
+/*
+	if (strpos('tantan-flickr/flickr.php',$plugin)!==false ) {
+	}
+*/
+}
 if (TANTAN_AUTOUPDATE_NOTIFY && version_compare(get_bloginfo('version'), '2.3', '>=')) {
 	add_action( 'update_option_update_plugins', 'tantan_flickr_autoupdate', 10, 2);
+	//add_action( 'after_plugin_row', 'tantan_flickr_after_plugin_row' );
+
 }
 ?>
