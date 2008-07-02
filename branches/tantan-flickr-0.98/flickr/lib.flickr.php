@@ -127,7 +127,7 @@ class TanTanFlickr extends tantan_phpFlickr {
             //$row['total'] = $photos['total'];
             $return[$photo['id']] = $row;
         }
-		$this->setObjCache('getRecent', array($extras, $per_page, $page), $return);
+		$this->setObjCache('getInteresting', array($extras, $per_page, $page), $return);
         return $return;
     }    
     function getPhotosByTags($tags) {
