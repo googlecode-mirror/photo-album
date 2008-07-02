@@ -288,6 +288,11 @@ class TanTanFlickrPlugin {
                     && !ereg(".html$", $parts[$i])) $request[$parts[$i]] = $parts[$i+1];
                 $i += 1;
             }
+            
+            $per_page = 30; // max specified by the Flickr API TOS
+            $page = 1;
+            if (isset($_GET['page'])) $page = (int) $_GET['page'];
+            
             if ($request['photo']) {
                 if ($request['album']) { // within context of album
                     $album = $flickr->getAlbum($request['album']);
@@ -351,7 +356,13 @@ class TanTanFlickrPlugin {
                         $photoTemplate = 'error.html';
                     }
                 } else {
-                    $photos = $flickr->getPhotos($request['album']);
+                    $photos = $flickr->getPhotos($request['album'], NULL, $per_page, $page);
+                    if (isset($photos[$album['primary']])) {
+                        $primary = $photos[$album['primary']];
+                    } else {
+                        $primary = $flickr->getPhoto($album['primary']);
+                        $primary['sizes'] = $flickr->getPhotoSizes($album['primary']);
+                    }
                     $photoTemplate = 'photoalbum-album.html';
                 }
             } elseif ($request['group']) {
