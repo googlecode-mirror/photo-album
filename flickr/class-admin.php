@@ -451,15 +451,20 @@ function tantan_flickr_autoupdate($old, $new) {
 		}
 	}
 }
-function tantan_flickr_after_plugin_row($plugin) {
-/*
-	if (strpos('tantan-flickr/flickr.php',$plugin)!==false ) {
+function tantan_flickr_after_plugin_row($file) {
+    if (strpos('tantan-flickr/flickr.php',$file)!==false ) {
+	    $current = get_option( 'update_plugins' );
+	    if ( !isset( $current->response[ $file ] ) ) return false;
+	    $r = $current->response[ $file ];
+	    echo "<tr><td colspan='5' style='text-align:center;'>";
+		echo "<a href='http://tantannoodles.com/category/toolkit/photo-album/'>View the latest updates for this plugin &gt;</a>";
+		echo "</td></tr>";
+		
 	}
-*/
 }
 if (TANTAN_AUTOUPDATE_NOTIFY && version_compare(get_bloginfo('version'), '2.3', '>=')) {
 	add_action( 'update_option_update_plugins', 'tantan_flickr_autoupdate', 10, 2);
-	//add_action( 'after_plugin_row', 'tantan_flickr_after_plugin_row' );
+	add_action( 'after_plugin_row', 'tantan_flickr_after_plugin_row' );
 
 }
 ?>
