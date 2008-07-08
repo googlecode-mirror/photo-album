@@ -14,7 +14,7 @@
 == Photo Album Customization ==
 
  # All the templates are located inside a "templates" folder inside the tantan-flickr directory.
- # If you just want to customize a particular template, just copy that template into your current theme directory
+ # If you just want to customize a particular template, just copy that template into your current theme directory. This ensures that when the plugin get's updated, your changes will not be lost.
  # To completely customize the look and feel, copy all these template files (they all start with photoalbum-) into your current theme directory and modify as necessary.
  # Modify the HTML and CSS in the template files to fit your own site. All the CSS is referenced from the template file photoalbum-header.html
  # That's it!
