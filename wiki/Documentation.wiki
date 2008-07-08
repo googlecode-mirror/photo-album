@@ -21,7 +21,9 @@
 
 == Popup Overlay Support ==
 
-The plugin comes bundled with 4 different display libraries, hosted on TanTanNoodles: Lightbox, Facebox, FancyZoom, and Fancybox. [http://tantannoodles.com/flickr-demo/ Here's a quick demo of these display libraries]. These libraries are hosted for your convenience, you are *strongly encouraged* to download these libraries and install them on your own server.
+The plugin comes bundled with 4 different display libraries, hosted on TanTanNoodles: Lightbox, Facebox, FancyZoom, and Fancybox. [http://tantannoodles.com/flickr-demo/ Here's a quick demo of these display libraries]. These libraries are hosted for your convenience, you are *encouraged* to download these libraries and install them on your own server.
+
+If you already have a display library installed on your site and would like to use that instead of a bundled library, then you will need to modify [http://code.google.com/p/photo-album/source/browse/trunk/tantan-flickr/templates/photoalbum-resources.php this resource file] (found in the templates directory). You'll need to tweak that PHP file a bit. 
 
 To use one of the hosted bundled display libraries, add the following to the TOP of your wp-config.php file:
 
