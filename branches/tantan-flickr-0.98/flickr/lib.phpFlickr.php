@@ -91,14 +91,22 @@ class tantan_phpFlickr {
         $this->php_version = explode(".", $this->php_version[0]);
 
         //All calls to the API are done via the POST method using the PEAR::HTTP_Request package.
-        require_once (dirname(__FILE__).'/../lib/curl.php');
-        $this->req =& new SilasCurl();
-        $this->req->setMethod(HTTP_REQUEST_METHOD_POST);
+
+		if (function_exists('curl_init')) {
+			if (!class_exists('TanTanHTTPRequestCurl')) require_once (dirname(__FILE__).'/../lib/curl.php');
+	        $this->req =& new TanTanHTTPRequestCurl();
+		} elseif (file_exists(ABSPATH . 'wp-includes/class-snoopy.php')) {
+			if (!class_exists('Snoopy')) require_once( ABSPATH . 'wp-includes/class-snoopy.php' );
+	        if (!class_exists('TanTanHTTPRequestSnoopy')) require_once (dirname(__FILE__).'/../lib/snoopy.php');
+	        $this->req =& new TanTanHTTPRequestSnoopy();
+		} else { // last chance!
+			require_once 'HTTP/Request.php';
+	        $this->req =& new HTTP_Request();
+		}
         
-        
-        //require_once 'HTTP/Request.php';
-        //$this->req =& new HTTP_Request();
-        //$this->req->setMethod(HTTP_REQUEST_METHOD_POST);
+
+
+        $this->req->setMethod('POST');
     }
 
     function enableCache($type, $connection, $cache_expire = 600, $table = 'flickr_cache')
