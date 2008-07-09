@@ -4,7 +4,7 @@ Plugin Name: Flickr Photo Gallery
 Plugin URI: http://www.tantannoodles.com/toolkit/photo-album/
 Description: This plugin will retrieve your Flickr photos and allow you to easily add your photos to your posts. <a href="options-general.php?page=tantan-flickr/flickr/class-admin.php">Configure...</a>
 Author: Joe Tan
-Version: 0.97
+Version: 0.98
 Author URI: http://www.tantannoodles.com/
 
 Copyright (C) 2008 Joe Tan
@@ -46,6 +46,10 @@ if (!defined("TANTAN_FLICKR_SEARCH_LICENSE")) define("TANTAN_FLICKR_PUBLIC_LICEN
 if (!defined("TANTAN_FLICKR_BASEURL"))        define("TANTAN_FLICKR_BASEURL", get_option('silas_flickr_baseurl'));
 //define('TANTAN_FLICKR_APIKEY', '');
 //define('TANTAN_FLICKR_SHAREDSECRET', '');
+
+// auto update notification
+if (!defined('TANTAN_AUTOUPDATE_NOTIFY')) define('TANTAN_AUTOUPDATE_NOTIFY', true);
+
 
 if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
     require_once(dirname(__FILE__).'/flickr/class-admin.php');

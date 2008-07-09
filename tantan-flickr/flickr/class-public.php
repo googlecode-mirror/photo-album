@@ -68,6 +68,38 @@ class TanTanFlickrPlugin {
 		}
 	}
 
+	function getInterestingPhotos($date=false, $offsetpage=0, $max=15, $usecache=true) {
+	    if ($date) $time_t = strtotime($date);
+	    else $date = date('Y-m-d');
+	    
+	    $auth_token = get_option('silas_flickr_token');
+        
+	    if ($auth_token) {
+            require_once(dirname(__FILE__).'/lib.flickr.php');
+            $flickr = new TanTanFlickr();
+            $flickr->setToken($auth_token);
+            $flickr->setOption(array(
+                'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
+            ));
+            $user = $flickr->auth_checkToken();
+            $nsid = $user['user']['nsid'];
+			if (!$usecache) {
+			    $flickr->clearCacheStale('search'); // should probably not blanket clear out everything in 'search'
+			    $flickr->clearCacheStale('getInteresting');
+			}
+            $photos = $flickr->getInteresting(NULL, NULL, $max, $offsetpage);
+            foreach ($photos as $k => $photo) {
+                $photos[$k]['info'] = $flickr->getPhoto($photo['id']);
+				foreach (array('Medium', 'Large', 'Original') as $size) {
+					unset($photos[$k]['sizes'][$size]);
+				}
+            }
+            return $photos;
+        } else {
+            return array();
+        }
+	}
+	
     function getRecentPhotos($tags='', $offsetpage=0, $max=15, $everyone=false, $usecache=true) {
         $auth_token = get_option('silas_flickr_token');
         $baseurl = get_option('silas_flickr_baseurl');
@@ -81,15 +113,17 @@ class TanTanFlickrPlugin {
             ));
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
-			if (!$usecache) $flickr->clearCacheStale('search'); // should probably not blanket clear out everything in 'search'
+			if (!$usecache) {
+				$flickr->clearCacheStale('search'); // should probably not blanket clear out everything in 'search'
+				$flickr->clearCacheStale('getRecent');
+			}
             if (!$tags && $everyone) {
-				if (!$usecache) $flickr->clearCacheStale('getRecent');
                 $photos = $flickr->getRecent(NULL, $max, $offsetpage);
             } else {
                 $photos = $flickr->search(array(
                     'tags' => ($tags ? $tags : ''),
                     'user_id' => ($everyone ? '' : $nsid),
-										'license' => ($everyone ? TANTAN_FLICKR_PUBLIC_LICENSE : ''),
+					'license' => ($everyone ? TANTAN_FLICKR_PUBLIC_LICENSE : ''),
                     'per_page' => $max,
                     'page' => $offsetpage,
                 ));
@@ -254,6 +288,11 @@ class TanTanFlickrPlugin {
                     && !ereg(".html$", $parts[$i])) $request[$parts[$i]] = $parts[$i+1];
                 $i += 1;
             }
+            
+            $per_page = 30; // max specified by the Flickr API TOS
+            $page = 1;
+            if (isset($_GET['page'])) $page = (int) $_GET['page'];
+            
             if ($request['photo']) {
                 if ($request['album']) { // within context of album
                     $album = $flickr->getAlbum($request['album']);
@@ -317,7 +356,13 @@ class TanTanFlickrPlugin {
                         $photoTemplate = 'error.html';
                     }
                 } else {
-                    $photos = $flickr->getPhotos($request['album']);
+                    $photos = $flickr->getPhotos($request['album'], NULL, $per_page, $page);
+                    if (isset($photos[$album['primary']])) {
+                        $primary = $photos[$album['primary']];
+                    } else {
+                        $primary = $flickr->getPhoto($album['primary']);
+                        $primary['sizes'] = $flickr->getPhotoSizes($album['primary']);
+                    }
                     $photoTemplate = 'photoalbum-album.html';
                 }
             } elseif ($request['group']) {
@@ -328,14 +373,14 @@ class TanTanFlickrPlugin {
 	                $group = $flickr->getGroup($request['group']);
 	                if (isset($request['tags'])) {
 	                    if ($request['tags']) {
-	                        $photos = $flickr->getPhotosByGroup($request['group'], $request['tags']);
+	                        $photos = $flickr->getPhotosByGroup($request['group'], $request['tags'], NULL, NULL, $per_page, $page);
 	                        $photoTemplate = 'photoalbum-tags-group.html';
 	                    } else { // return popular tags for a group
 	                        $message = "Sorry, this feature is not supported";
 	                        $photoTemplate = 'error.html';
 	                    }
 	                } else {
-	                    $photos = $flickr->getPhotosByGroup($request['group']);
+	                    $photos = $flickr->getPhotosByGroup($request['group'], NULL, NULL, NULL, $per_page, $page);
 	                    $photoTemplate = 'photoalbum-group.html';
 	                }
 				}
