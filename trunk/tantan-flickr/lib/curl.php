@@ -10,7 +10,7 @@ $Date$
 $URL$
 */
 
-class SilasCurl {
+class TanTanHTTPRequestCurl {
     var $curl;
     var $postData;
     var $cookies;
@@ -19,7 +19,7 @@ class SilasCurl {
     var $headers;
     var $url;
     
-    function SilasCurl($url = '', $params = array()) {
+    function TanTanHTTPRequestCurl($url = '', $params = array()) {
         $this->curl = curl_init();
         $this->postData = array();
         $this->cookies = array();
