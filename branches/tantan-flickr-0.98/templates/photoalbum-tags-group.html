@@ -32,14 +32,8 @@ echo TanTanFlickrDisplay::photo($photo, array(
 Sorry, no photos found!
 <?php endif;?>
 </div>
-<div class="navigation">
-<?php if ($hasPrev):?>
-<div class="alignleft"><a href="?page=<?php echo ($page-1);?>">&lt; Previous</a></div>
-<?php endif;?>
-<?php if ($hasNext):?>
-<div class="alignright"><a href="?page=<?php echo ($page+1);?>">Next &gt;</a></div>
-<?php endif;?>
-</div>
+
+<?php include($TanTanFlickrPlugin->getDisplayTemplate('/photoalbum-paging.html'));?>
 
 <div class="flickr-meta-links">
 <a href="http://www.flickr.com/photos/tags/<?php echo urlencode($request['tags']);?>/" target="_blank">View this tag on Flickr</a>
