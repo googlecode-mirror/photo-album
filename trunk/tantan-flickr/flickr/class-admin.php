@@ -428,7 +428,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 
 function tantan_flickr_autoupdate($old, $new) {
 	remove_action( 'update_option_update_plugins', 'tantan_flickr_autoupdate', 10, 2);
-	if (is_object($new) && is_array($new->response)) {
+	if (is_object($new)) {
 		$http_request  = "GET /tantan-flickr.serialized HTTP/1.0\r\n";
 		$http_request .= "Host: updates.tantannoodles.com\r\n";
 		$http_request .= 'User-Agent: WordPress/' . $wp_version . '; ' . get_bloginfo('url') . "\r\n";
