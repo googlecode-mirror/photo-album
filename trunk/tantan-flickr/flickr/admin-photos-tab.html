@@ -9,6 +9,7 @@
 <input type="hidden" name="_wpnonce" value="<?php echo $_GET['_wpnonce'];?>" />
 <input type="hidden" name="ID" value="<?php echo $_GET['ID'];?>" />
 
+<?php if (!$interesting):?>
 Tags: <input type="text" name="tags" value="<?php echo $tags?>" size="15" />
 <?php if (!ereg('media-upload.php', $_SERVER['REQUEST_URI'])):?>
 <input type="radio" name="everyone" value="" <?php echo (!$everyone ? 'checked="checked"' : '')?> id="showmine" /><label for="showmine"> My Photos </label> &nbsp;
@@ -17,6 +18,8 @@ Tags: <input type="text" name="tags" value="<?php echo $tags?>" size="15" />
 
 &nbsp; &nbsp; 
 <input type="submit" name="refresh" value="search" />
+<?php endif;?>
+
 <?php if (ereg('media-upload.php', $_SERVER['REQUEST_URI'])):?>
 <label for="closewindowcheck" id="closewin"><input type="checkbox" id="closewindowcheck" name="closewindowcheck" value="1" checked="checked" /> Close after inserting photo</label> 
 <?php endif;?>
@@ -55,8 +58,12 @@ default:
 <?php if ($name):?>
 All photos are licensed as <a href="<?php echo $url;?>">Creative Commons <?php echo $name;?></a>
 <?php else:?>
-Photos are not necessarily licensed for reuse. Please make sure you have the proper permissions before using any photos.
+Make sure you have proper permissions before using any photos.
 <?php endif; /* licensed */ ?>
+</div>
+<?php elseif ($interesting):?>
+<div class="license">
+Make sure you have proper permissions before using any photos.
 </div>
 <?php endif; /* everyone */ ?>
 
