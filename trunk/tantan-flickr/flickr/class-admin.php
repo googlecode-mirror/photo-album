@@ -427,27 +427,29 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 }
 
 function tantan_flickr_autoupdate($old, $new) {
+	remove_action( 'add_option_update_plugins', 'tantan_flickr_autoupdate', 10, 2);
 	remove_action( 'update_option_update_plugins', 'tantan_flickr_autoupdate', 10, 2);
-	if (is_object($new)) {
-		$http_request  = "GET /tantan-flickr.serialized HTTP/1.0\r\n";
-		$http_request .= "Host: updates.tantannoodles.com\r\n";
-		$http_request .= 'User-Agent: WordPress/' . $wp_version . '; ' . get_bloginfo('url') . "\r\n";
-		$http_request .= "\r\n";
-		$http_request .= $request;
-		$response = '';
-		if( false != ( $fs = @fsockopen( 'updates.tantannoodles.com', 80, $errno, $errstr, 3) ) && is_resource($fs) ) {
-			fwrite($fs, $http_request);
-			while ( !feof($fs) ) $response .= fgets($fs, 1160); // One TCP-IP packet
-			fclose($fs);
-			$response = explode("\r\n\r\n", $response, 2);
-		}
-		$update = unserialize( $response[1] );
-		if (is_object($update)) {
-			$thisPlugin = get_plugin_data(__FILE__);
-			if (version_compare($thisPlugin['Version'], $update->new_version, '<')) {
-				$new->response['tantan-flickr/flickr.php'] = $update;
-				update_option('update_plugins', $new);
-			}
+	if (is_string($new)) $new = @unserialize($new);
+	if (!is_object($new))$new = new stdClass();
+	
+	$http_request  = "GET /tantan-flickr.serialized HTTP/1.0\r\n";
+	$http_request .= "Host: updates.tantannoodles.com\r\n";
+	$http_request .= 'User-Agent: WordPress/' . $wp_version . '; ' . get_bloginfo('url') . "\r\n";
+	$http_request .= "\r\n";
+	$http_request .= $request;
+	$response = '';
+	if( false != ( $fs = @fsockopen( 'updates.tantannoodles.com', 80, $errno, $errstr, 3) ) && is_resource($fs) ) {
+		fwrite($fs, $http_request);
+		while ( !feof($fs) ) $response .= fgets($fs, 1160); // One TCP-IP packet
+		fclose($fs);
+		$response = explode("\r\n\r\n", $response, 2);
+	}
+	$update = unserialize( $response[1] );
+	if (is_object($update)) {
+		$thisPlugin = get_plugin_data(__FILE__);
+		if (version_compare($thisPlugin['Version'], $update->new_version, '<')) {
+			$new->response['tantan-flickr/flickr.php'] = $update;
+			update_option('update_plugins', $new);
 		}
 	}
 }
@@ -463,6 +465,7 @@ function tantan_flickr_after_plugin_row($file) {
 	}
 }
 if (TANTAN_AUTOUPDATE_NOTIFY && version_compare(get_bloginfo('version'), '2.3', '>=')) {
+	add_action( 'add_option_update_plugins', 'tantan_flickr_autoupdate', 10, 2);
 	add_action( 'update_option_update_plugins', 'tantan_flickr_autoupdate', 10, 2);
 	add_action( 'after_plugin_row', 'tantan_flickr_after_plugin_row' );
 
