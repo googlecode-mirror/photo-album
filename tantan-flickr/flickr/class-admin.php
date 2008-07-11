@@ -446,7 +446,7 @@ function tantan_flickr_autoupdate($old, $new) {
 	}
 	$update = unserialize( $response[1] );
 	if (is_object($update)) {
-		$thisPlugin = get_plugin_data(__FILE__);
+		$thisPlugin = get_plugin_data(dirname(__FILE__).'/../flickr.php');
 		if (version_compare($thisPlugin['Version'], $update->new_version, '<')) {
 			$new->response['tantan-flickr/flickr.php'] = $update;
 			update_option('update_plugins', $new);
