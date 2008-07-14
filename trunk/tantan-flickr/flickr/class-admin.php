@@ -283,7 +283,9 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         */
 		add_filter('media_upload_tabs', array(&$this, 'media_upload_tabs'));
         add_action('admin_print_scripts', array(&$this, 'upload_tabs_scripts'));
-		add_action('admin_print_scripts', 'media_admin_css');
+		if (function_exists('media_admin_css')) add_action('admin_print_scripts', 'media_admin_css');
+		else wp_enqueue_style( 'media' );
+		
 		add_action('tantan_media_upload_header', 'media_upload_header');
 		if ($mode == 'albums') {
 			wp_iframe(array(&$this, 'albumsTab'));
