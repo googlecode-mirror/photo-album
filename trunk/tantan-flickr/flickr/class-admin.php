@@ -40,7 +40,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 
     function admin() {
     
-        if (!is_writable(dirname(__FILE__).'/flickr-cache/')) {
+        if ((TANTAN_FLICKR_CACHEMODE == "fs") && !is_writable(dirname(__FILE__).'/flickr-cache/')) {
             echo "<div class='wrap'>
             <h2>Permissions Error</h2>
             <p>This plugin requires that the directory <strong>".dirname(__FILE__)."/flickr-cache/</strong> be writable by the web server.</p> 
@@ -50,8 +50,10 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
             return;
         } elseif (!get_settings('permalink_structure')) {
             $error = "In order to view your photo album, your <a href='options-permalink.php'>WordPress permalinks</a> need to be set to something other than <em>Default</em>.";
+/*
         } elseif (!function_exists('curl_init')) {
             $error = "You do not have the required libraries to use this plugin. The PHP library <a href='http://us2.php.net/curl'>libcurl</a> needs to be installed on your server.";
+*/
         } elseif (@constant('DB_CHARSET') === null) {
 			$error = "Your database character encoding does not seem to be set. It is <strong>strongly</strong> recommended that you set it to <em>utf8</em> for maximum compatibility. <a href=\"http://codex.wordpress.org/Editing_wp-config.php#Database_character_set\">Instructions are available here.</a> ".
 				"Once you have set your database encoding, please deactivate and reactivate this plugin.";
