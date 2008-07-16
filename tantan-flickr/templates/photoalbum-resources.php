@@ -49,6 +49,7 @@ class TanTanFlickrDisplayBase {
 			$href = TanTanFlickrDisplay::href($photo, $album, $prefix);
 		}
 		$html = '<a class="tt-flickr tt-flickr-'.$size.'" href="'.$href.'" '.
+            ($album ? ('rel="album-'.$album['id'].'" ') : '').
 			'id="photo-'.$photo['id'].'" '.
 			'title="'.htmlentities($photo['title'], ENT_COMPAT, 'UTF-8') . strip_tags($photo['description'] ? ' - '.$photo['description'] : '').'">'.
 			TanTanFlickrDisplay::image($photo, $size, $scale).
@@ -182,11 +183,31 @@ class TanTanFlickrDisplayFancyZoom extends TanTanFlickrPopUpOverlay {
 		echo '<script type="text/javascript">setupZoom();</script>';
 	}
 }
-// comment out the line below, and replace it with one of these...
+class TanTanFlickrDisplayThickBox extends TanTanFlickrPopUpOverlay {
+	function headTags() {
+		wp_enqueue_script('thickbox');
+		wp_print_scripts();
+		$siteurl = get_option('siteurl');
+        echo "<style type='text/css' media='all'>
+        	@import '{$siteurl}/wp-includes/js/thickbox/thickbox.css?1';
+        	div#TB_title {
+        		background-color: #222222;
+        		color: #cfcfcf;
+        	}
+        	div#TB_title a, div#TB_title a:visited {
+        		color: #cfcfcf;
+        	}
+        </style>\n";
+		echo '<script type="text/javascript">var tb_pathToImage = "'.$siteurl.'/wp-includes/js/thickbox/loadingAnimation.gif";var tb_closeImage = "'.$siteurl.'/wp-includes/js/thickbox/tb-close.png";jQuery(document).ready(function($) { tb_init("a.tt-flickr[href$=.jpg]"); });</script>';
+	}
+}
+
+
 $fancybox  = "class TanTanFlickrDisplay extends TanTanFlickrDisplayFancyBox {};";
 $facebox   = "class TanTanFlickrDisplay extends TanTanFlickrDisplayFaceBox {};";
 $lightbox  = "class TanTanFlickrDisplay extends TanTanFlickrDisplayJQueryLightboxBox {};";
 $fancyzoom = "class TanTanFlickrDisplay extends TanTanFlickrDisplayFancyZoom {};";
+$thickbox  = "class TanTanFlickrDisplay extends TanTanFlickrDisplayThickBox {};";
 
 $default   = "class TanTanFlickrDisplay extends TanTanFlickrDisplayBase {}; ";
 switch (TANTAN_DISPLAY_LIBRARY) {
@@ -194,6 +215,7 @@ switch (TANTAN_DISPLAY_LIBRARY) {
 	case 'facebox':   eval($facebox); break;
 	case 'lightbox':  eval($lightbox); break;
 	case 'fancyzoom': eval($fancyzoom); break;
+	case 'thickbox':  eval($thickbox); break;
 	default: eval($default);
 }
 
