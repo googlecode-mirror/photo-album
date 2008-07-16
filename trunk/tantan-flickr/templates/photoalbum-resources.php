@@ -140,7 +140,7 @@ class TanTanFlickrDisplayFancyBox extends TanTanFlickrPopUpOverlay {
 		wp_print_scripts();
 		echo '<link href="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancybox-1.0.0/fancy.css" media="screen" rel="stylesheet" type="text/css"/>';
 		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/fancybox-1.0.0/jquery.fancybox-1.0.0.js" type="text/javascript"></script>';
-		echo '<script type="text/javascript">jQuery(document).ready(function($) { $("a.tt-flickr").fancybox(); });</script>';
+		echo '<script type="text/javascript">jQuery(document).ready(function($) { $("a.tt-flickr[href$=.jpg]").fancybox(); });</script>';
 	}
 }
 
@@ -153,7 +153,7 @@ class TanTanFlickrDisplayFaceBox extends TanTanFlickrPopUpOverlay {
 		wp_print_scripts();
 		echo '<link href="'.TANTAN_DISPLAY_LIBRARY_PATH.'/facebox-1.1/facebox.css" media="screen" rel="stylesheet" type="text/css"/>';
 		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/facebox-1.1/facebox.js" type="text/javascript"></script>';
-		echo '<script type="text/javascript">jQuery(document).ready(function($) { $("a.tt-flickr").facebox(); });</script>';
+		echo '<script type="text/javascript">jQuery(document).ready(function($) { $("a.tt-flickr[href$=.jpg]").facebox(); });</script>';
 	}
 }
 
@@ -166,7 +166,7 @@ class TanTanFlickrDisplayJQueryLightboxBox extends TanTanFlickrPopUpOverlay {
 		wp_print_scripts();
 		echo '<link href="'.TANTAN_DISPLAY_LIBRARY_PATH.'/jquery-lightbox-0.5/css/jquery.lightbox.css" media="screen" rel="stylesheet" type="text/css"/>';
 		echo '<script src="'.TANTAN_DISPLAY_LIBRARY_PATH.'/jquery-lightbox-0.5/js/jquery.lightbox.js" type="text/javascript"></script>';
-		echo '<script type="text/javascript">jQuery(document).ready(function($) { $("a.tt-flickr").lightBox(); });</script>';
+		echo '<script type="text/javascript">jQuery(document).ready(function($) { $("a.tt-flickr[href$=.jpg]").lightBox(); });</script>';
 	}
 }
 
