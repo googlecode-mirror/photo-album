@@ -13,21 +13,13 @@
 
 You need to have the CURL PHP library installed. [http://us3.php.net/manual/en/curl.setup.php See here for setup] instructions.
 
+----
+
 == Oops! Flickr can't find a valid callback URL. ==
 
-This probably means your server can't communicate with the outside world. Try installing this simple PHP script on your server, and visit it in your browser. If it works, then you should see the Flickr.com homepage. Otherwise, you'll see nothing (meaning the plugin's not going to work).
+This probably means your server can't communicate with the outside world, and more importantly, the Flickr.com servers. To verify that your server is able to make calls to Flickr.com, install [http://photo-album.googlecode.com/svn/branches/tests/network.php this PHP script] in the webroot on your server, and open it in your browser. If it works, then you should see an "OK" message. Otherwise, you'll see an error, which means your server can't communicate with the Flickr.com servers.
 
-{{{
-<?php
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "http://www.flickr.com/");
-curl_setopt($ch, CURLOPT_HEADER, 0);
-curl_exec($ch);
-
-curl_close($ch);
-echo 'done';
-?>
-}}}
+----
 
 == Infinite Redirects ==
 
