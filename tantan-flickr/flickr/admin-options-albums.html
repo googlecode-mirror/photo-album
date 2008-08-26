@@ -25,7 +25,7 @@ if (is_array($albums)) foreach ($albums as $id => $album) {
     <tr valign="top">
     <td><a href="<?php echo $baseurl?>album/<?php echo $album['id']?>/<?php echo $album['pagename']?>"><img src="<?php echo $primaryPhoto['Square']['source'];?>" border="0" /></a></td>
     <td width="100%">
-    <strong><a href="<?php echo $baseurl?>album/<?php echo $album['id']?>/<?php echo $album['pagename']?>"><?php echo $album['title']?></a></strong> <br />
+    <strong><a href="<?php echo $baseurl?>album/<?php echo $album['id']?>/<?php echo $album['pagename']?>"><?php echo $album['title']?></a></strong>
     <?php echo $album['photos'];?> photos<br>
     <input type="checkbox" name="hideAlbum[]" <?php echo (in_array($album['id'], $hideAlbums) ? 'checked="checked"' : '') ?> value="<?php echo $album['id']?>" id="album-hide-<?php echo $album['id']?>" /><label for="album-hide-<?php echo $album['id']?>">hide album</label><br>
     <input type="checkbox" name="clearAlbum[]" value="<?php echo $album['id']?>" id="album-cache-<?php echo $album['id']?>" /><label for="album-cache-<?php echo $album['id']?>">clear cache</label><br>
