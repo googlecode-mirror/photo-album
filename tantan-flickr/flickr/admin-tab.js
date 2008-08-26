@@ -20,6 +20,9 @@ function tantan_hideOptions(id) {
 }
 // photo contains a json'd data array
 function tantan_addPhoto(photo, size) {
+	if (!isNaN(parseInt(photo))) {
+		photo = photos[photo];
+	}
 	var h = tantan_makePhotoHTML(photo, size);
 	if (typeof top.send_to_editor == 'function') {
 		top.send_to_editor(h);
