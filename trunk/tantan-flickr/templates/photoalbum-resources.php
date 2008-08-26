@@ -51,7 +51,7 @@ class TanTanFlickrDisplayBase {
 		$html = '<a class="tt-flickr tt-flickr-'.$size.'" href="'.$href.'" '.
             ($album ? ('rel="album-'.$album['id'].'" ') : '').
 			'id="photo-'.$photo['id'].'" '.
-			'title="'.htmlentities($photo['title'], ENT_COMPAT, 'UTF-8') . strip_tags($photo['description'] ? ' - '.$photo['description'] : '').'">'.
+			'title="'.htmlentities($photo['title'], ENT_QUOTES, 'UTF-8') . strip_tags($photo['description'] ? ' - '.$photo['description'] : '').'">'.
 			TanTanFlickrDisplay::image($photo, $size, $scale).
 			'</a> ';
 		return $html;
@@ -66,7 +66,7 @@ class TanTanFlickrDisplayBase {
 	function image($photo, $size, $scale=1) {
 		return '<img src="'.$photo['sizes'][$size]['source'].'" width="'.($photo['sizes'][$size]['width']*$scale).'" '.
 			'height="'.($photo['sizes'][$size]['height']*$scale).'" '. 
-			'alt="'.htmlentities($photo['title'], ENT_COMPAT, 'UTF-8').'" />';
+			'alt="'.htmlentities($photo['title'], ENT_QUOTES, 'UTF-8').'" />';
 	}
 	
 	// draw the video code

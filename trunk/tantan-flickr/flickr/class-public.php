@@ -21,7 +21,7 @@ class TanTanFlickrPlugin {
 	/*
 	 * Get a selection of random photos
 	 */
-	function getrandomPhotos($tags='', $num=15, $everyone=false, $usecache=true) {
+	function getRandomPhotos($tags='', $num=15, $everyone=false, $usecache=true) {
 		$auth_token = get_option('silas_flickr_token');
 		$baseurl = get_option('silas_flickr_baseurl');
 		$linkoptions = get_option('silas_flickr_linkoptions');
