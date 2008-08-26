@@ -1,17 +1,15 @@
 <?php
-$tmpPath = '/../../../..';
-if (!file_exists(dirname(__FILE__).$tmpPath.'/wp-config.php')) {
-$tmpPath = '/../../../../..';
-    if (!file_exists(dirname(__FILE__).$tmpPath.'/wp-config.php')) {
-        echo "Error: wp-config.php not found";
-        exit;
-    }
+$root = realpath(dirname(dirname(dirname(dirname(dirname(__FILE__))))));
+if (file_exists($root.'/wp-load.php')) {
+	// WP 2.6
+	require_once($root.'/wp-load.php');
+} else {
+	// Before 2.6
+	require_once($root.'/wp-config.php');
 }
 if (!isset($_GET['view']) ) {
     exit;
 }
-require_once(dirname(__FILE__).$tmpPath.'/wp-config.php');
-
 require_once(dirname(__FILE__).'/lib.flickr.php');
 $flickr = new TanTanFlickr();
 $auth_token  = get_option('silas_flickr_token');
