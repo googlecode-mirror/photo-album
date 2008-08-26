@@ -498,6 +498,9 @@ class TanTanFlickr extends tantan_phpFlickr {
        return false;
     }
     function _sanitizeTitle($title) {
+		if (function_exists('sanitize_title_with_dashes')) {
+			return sanitize_title_with_dashes($title);
+		}
         // try this WP function sanitize_title_with_dashes()
 
         // comment out these two lines, and use the next two if you like underscores instead
