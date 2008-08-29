@@ -9,9 +9,9 @@
 
 = Common Issues =
 
-== API Key ==
+== API Key Issues ==
 
-First, make sure your API key authentication type is set to *Desktop Application*. This is important.
+Make sure your API key authentication type is set to *Desktop Application*. This is important.
 
 --
 
