@@ -9,6 +9,10 @@
 
 = Common Issues =
 
+== API Key ==
+
+First, make sure your API key authentication type is set to *Desktop Application*. This is important.
+
 == Fatal error: Call to undefined function: curl_init()  ==
 
 You need to have the CURL PHP library installed. [http://us3.php.net/manual/en/curl.setup.php See here for setup] instructions.
