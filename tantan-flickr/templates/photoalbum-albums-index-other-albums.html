@@ -30,8 +30,8 @@ foreach (array_slice($albums, $TanTanFlickrPlugin->config['numAlbumPreviews']) a
     <?php  $primaryPhoto = $flickr->getPhotoSizes($album['primary']); ?>
     <div class="album">
     <a href="album/<?php echo $album['id']?>/<?php echo $album['pagename']?>"><img class="highlight" 
-        src="<?php echo $primaryPhoto['Square']['source']?>" width="<?php echo $primaryPhoto['Square']['width']?>" height="<?php echo $primaryPhoto['Square']['height']?>" alt="" /></a><br>
-    <strong><?=$album['title'];?></strong>
+        src="<?php echo $primaryPhoto['Square']['source']?>" width="<?php echo $primaryPhoto['Square']['width']?>" height="<?php echo $primaryPhoto['Square']['height']?>" alt="" /></a><br />
+    <strong><?php echo $album['title'];?></strong>
     </div>
 <?php endforeach; ?>
 </div>
