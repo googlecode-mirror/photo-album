@@ -45,6 +45,12 @@ If you already have a display library installed on your site and would like to u
 
 To use one of the hosted bundled display libraries, add the following to the TOP of your wp-config.php file:
 
+For _[http://jquery.com/demo/thickbox/ Thickbox]_, add this code: (included by default with WP 2.5+)
+
+{{{
+define('TANTAN_DISPLAY_LIBRARY', 'thickbox');
+}}}
+
 For _[http://leandrovieira.com/projects/jquery/lightbox/ Light Box]_, add this code:
 
 {{{
@@ -67,7 +73,6 @@ For _[http://www.cabel.name/2008/02/fancyzoom-10.html Fancy Zoom]_, add this cod
 
 {{{
 define('TANTAN_DISPLAY_LIBRARY', 'fancyzoom');
-
 }}}
 
 
