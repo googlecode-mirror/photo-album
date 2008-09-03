@@ -34,7 +34,7 @@ define('TANTAN_FLICKR_COMMENTS', 'disqus');
 define('DISQUS_SHORT_NAME', 'XXXX'); 
 }}}
 
-Note: if you already are using the Disqus commenting system for your normal blog posts, then you don't need the second `DISQUS_SHORT_NAME` line. Otherwise, replace `XXXX` with the short name of your site.
+Note: if you already are using the Disqus commenting system for your normal blog posts, then you don't need the second `DISQUS_SHORT_NAME` line. Otherwise, replace `XXXX` with the short name of your site. The short name is [http://disqus.com/home/ listed on this admin screen].
 
 
 == Popup Overlay Support ==
