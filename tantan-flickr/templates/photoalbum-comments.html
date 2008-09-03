@@ -4,8 +4,21 @@ Copy this file into your current active theme's directory to customize this temp
 
 This template displays the comments for a photo
 */
-
+if (defined('TANTAN_FLICKR_COMMENTS')) {
+	$mode = TANTAN_FLICKR_COMMENTS;
+} else {
+	$mode = 'flickr';
+}
 ?>
+
+<?php if ($mode == 'js-kit'):?>
+<h4 id="comments">Comments</h4>
+
+<div class="js-kit-comments" permalink="<?php echo $photourl;?>" label="Leave a comment" path=""></div><br style="clear:both;" />
+<script src="http://js-kit.com/comments.js"></script>
+
+<?php else:?>
+
 <h4 id="comments"><span class="num"><?php echo count($comments);?></span> comments</h4>
 
 <?php if (is_array($comments) && count($comments)): foreach($comments as $comment):?>
@@ -21,8 +34,11 @@ This template displays the comments for a photo
 </div>
 <?php endforeach;?>
 <br style="clear:both;" />
-<p><a href="http://www.flickr.com/photos/<?php echo $photo['owner']['nsid'];?>/<?php echo $photo['id'];?>/#reply">Add a comment &gt;</a></p>
+<p><a href="<?php echo $photourl;?>#reply">Add a comment &gt;</a></p>
 <?php else:?>
 <p>No comments for this photo. 
-<a href="http://www.flickr.com/photos/<?php echo $photo['owner']['nsid'];?>/<?php echo $photo['id'];?>/#reply">Add a comment &gt;</a></p>
+<a href="<?php echo $photourl;?>#reply">Add a comment &gt;</a></p>
 <?php endif;?>
+
+
+<?php endif; //flickr ?>
