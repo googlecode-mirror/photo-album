@@ -11,13 +11,31 @@
  # Once your photo album is linked to your Flickr account, enter a URL where you want your photo album to appear.
  # You're done! To view your photo album, just go to the URL you entered in the previous step. To insert a photo, just click on the Flickr icon  in your "Add media" bar when editing posts. Click on a photo, select a size, and a HTML snippet for that photo will appear in the post's textarea. *Cool!* If you're using WordPress 2.3 or older, then you should a new "Photos" tab next to your uploading tabs.
 
-== Photo Album Customization ==
 
- # All the templates are located inside a "templates" folder inside the tantan-flickr directory.
- # If you just want to customize a particular template, just copy that template into your current theme directory. This ensures that when the plugin get's updated, your changes will not be lost.
- # To completely customize the look and feel, copy all these template files (they all start with photoalbum-) into your current theme directory and modify as necessary.
- # Modify the HTML and CSS in the template files to fit your own site. All the CSS is referenced from the template file photoalbum-header.html
- # That's it!
+== Custom Photo Comments ==
+
+The plugin supports a couple third party commenting systems, replacing the comments left by Flickr users. These are free web services that allow your visitors to leave comments on your photos, _without_ them having to login and register at Flickr. 
+
+To use a third party commenting system, instead of default Flickr comments, add the following to the TOP of your `wp-config.php`:
+
+
+For _[http://www.js-kit.com JS-Kit]_, add this code: (see the [http://js-kit.com/comments/custom.html JS-Kit documentation] for more options)
+
+{{{
+define('TANTAN_FLICKR_COMMENTS', 'js-kit');
+}}}
+
+
+
+For _[http://www.disqus.com Disqus]_, add this code:
+
+{{{
+define('TANTAN_FLICKR_COMMENTS', 'disqus');
+define('DISQUS_SHORT_NAME', 'XXXX'); 
+}}}
+
+Note: if you already are using the Disqus commenting system for your normal blog posts, then you don't need the second `DISQUS_SHORT_NAME` line. Otherwise, replace `XXXX` with the short name of your site.
+
 
 == Popup Overlay Support ==
 
@@ -49,6 +67,7 @@ For _[http://www.cabel.name/2008/02/fancyzoom-10.html Fancy Zoom]_, add this cod
 
 {{{
 define('TANTAN_DISPLAY_LIBRARY', 'fancyzoom');
+
 }}}
 
 
@@ -64,6 +83,15 @@ define('DB_NAME', '...');
 }}}
 
 *Notes:*
- # Depending on your blogs theme, there may need to be a little bit of JavaScript / CSS mojo.
+ # Depending on your blogs theme, you may need to use a little bit of JavaScript / CSS mojo and hack some code in your theme.
  # Here's a page with [http://planetozh.com/projects/lightbox-clones/ a list of all the various libraries] you might want to use if you want to use your own.
  # Take a peek inside the file photoalbum-resources.php to see how to hook up the plugin with a custom display library. 
+
+
+== Photo Album Customization ==
+
+ # All the templates are located inside a "templates" folder inside the tantan-flickr directory.
+ # If you just want to customize a particular template, just copy that template into your current theme directory. This ensures that when the plugin get's updated, your changes will not be lost.
+ # To completely customize the look and feel, copy all these template files (they all start with photoalbum-) into your current theme directory and modify as necessary.
+ # Modify the HTML and CSS in the template files to fit your own site. All the CSS is referenced from the template file photoalbum-header.html
+ # That's it!
