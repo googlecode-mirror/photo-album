@@ -105,8 +105,24 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
 }elseif (!$flickrAuth) { // authenticate
     include(dirname(__FILE__).'/admin-options-auth.html');
 } else { // general flickr settings
-    include(dirname(__FILE__).'/admin-options-flickrsettings.html');
-    ?>
+?>
+
+<?php include(dirname(__FILE__).'/admin-options-flickrsettings.html'); ?>
+    
+	<fieldset class="options">
+    <legend>Customization</legend>
+    <p>Tweaks and customizations you can add</p>
+    <p>
+    	<strong>Pop up overlay support.</strong> Add Lightbox style displays to your photos
+	</p>
+	<p>
+		<strong>Custom Comments</strong>
+	</p>
+    
+    </fieldset>
+    
+
+    
     <fieldset class="options">
     <legend>Photo Albums</legend>
     
@@ -168,6 +184,7 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
     </form>
     
     </fieldset>
+    
     
     <script type="text/javascript" src="../wp-includes/js/tw-sack.js"></script>
     <script>
