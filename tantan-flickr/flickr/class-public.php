@@ -477,7 +477,7 @@ class TanTanFlickrPlugin {
     function rss_feed() {
         $user = get_option('silas_flickr_user');
         if ($this->request['album']) {
-            echo '<link rel="alternate" type="application/atom+xml" title="Flickr Album Feed" href="http://api.flickr.com/services/feeds/photoset.gne?set='.$this->request['album'].'&nsid='.$user['user']['nsid'].'" />';
+            echo '<link rel="alternate" type="application/atom+xml" title="Flickr Album Feed" href="http://api.flickr.com/services/feeds/photoset.gne?set='.$this->request['album'].'&amp;nsid='.$user['user']['nsid'].'" />';
         }
         if ($this->request['group']) {
             echo '<link rel="alternate" type="application/atom+xml" title="Flickr Group Feed" href="http://api.flickr.com/services/feeds/groups_discuss.gne?id='.$this->request['group'].'" />';
