@@ -317,6 +317,11 @@ class TanTanFlickrPlugin {
                 
                 $user = $flickr->auth_checkToken();
                 $nsid = $user['user']['nsid'];
+				if (count($photo['urls'])) {
+					$photourl = array_pop($photo['urls']);
+				} else {
+					$photourl = 'http://www.flickr.com/photos/'. $photo['owner']['nsid'].'/'.$photo['id'].'/';
+				}
 				if ($request['group'] && !TANTAN_FLICKR_DISPLAYGROUPS) {
 					$message = "Sorry, this feature is not enabled.";
                     $photoTemplate = 'error.html';
