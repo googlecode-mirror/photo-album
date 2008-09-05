@@ -33,6 +33,6 @@ You'll need to set your WordPress permalinks to something other than the "Defaul
 
 ----
 
-== Broken theme / Photo page doesn't match my site ==
+== The look and feel of the photo page doesn't match my site ==
 
-You'll need to tweak the plugin template files to match your theme. [http://code.google.com/p/photo-album/wiki/Documentation#Look_and_Feel_Customization See here for more details].
+If the photo pages looks slightly off (eg missing sidebars, footers are in weird places), then you'll need to tweak the plugin template files to match your theme. [http://code.google.com/p/photo-album/wiki/Documentation#Look_and_Feel_Customization See here for more details].
