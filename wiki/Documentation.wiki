@@ -14,7 +14,7 @@
 
 == Custom Photo Comments ==
 
-The plugin supports a couple third party commenting systems, replacing the comments left by Flickr users. These are free web services that allow your visitors to leave comments on your photos, _without_ them having to login and register at Flickr. 
+The plugin supports a couple third party commenting systems, replacing the comments left by Flickr users. These are free web services that allow your visitors to leave comments on your photos, _without_ them having to login and register at Flickr. If you want to add your own commenting system, you can add it inside the `photoalbum-comments.html` template file.
 
 To use a third party commenting system, instead of default Flickr comments, add the following to the TOP of your `wp-config.php`:
 
