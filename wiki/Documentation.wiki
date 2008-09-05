@@ -1,20 +1,20 @@
 #summary How to use and integrate the Flickr Photo Album plugin into your WordPress blog.
 #labels Featured
 
-== Installation ==
+== Installation / Upgrades ==
 
- # Unpack / unzip the archive
- # Copy the entire "tantan-flickr" directory to your Wordpress plugins directory. Your wordpress plugins directory should be something like [WORDPRESS DIR]/wp-content/plugins. Upgrading Note: Just overwrite all the files inside the tantan-flickr directory. If you made edits, then make sure you make a backup just in case something goes wrong!
+ # [http://tantannoodles.com/toolkit/photo-album/ Download] and unpack / unzip the archive
+ # Copy the entire "tantan-flickr" directory to your Wordpress plugins directory. 
  # Go into your Wordpress admin, click on the "Plugins" tab, and then activate "Flickr Photo Gallery".
  # Click on the "Options" (or "Settings") tab, and click the "Photo Album" subtab to bring up the options screen.
- # Just follow the onscreen prompts to link your photo album to your Flickr account.
+ # Follow the onscreen prompts to link your photo album to your Flickr account.
  # Once your photo album is linked to your Flickr account, enter a URL where you want your photo album to appear.
  # You're done! To view your photo album, just go to the URL you entered in the previous step. To insert a photo, just click on the Flickr icon  in your "Add media" bar when editing posts. Click on a photo, select a size, and a HTML snippet for that photo will appear in the post's textarea. *Cool!* If you're using WordPress 2.3 or older, then you should a new "Photos" tab next to your uploading tabs.
 
 
 == Custom Photo Comments ==
 
-The plugin supports a couple third party commenting systems, replacing the comments left by Flickr users. These are free web services that allow your visitors to leave comments on your photos, _without_ them having to login and register at Flickr. If you want to add your own commenting system, you can add it inside the `photoalbum-comments.html` template file.
+The plugin supports a couple third party commenting systems, replacing the comments left by Flickr users. These are free web services that allow your visitors to leave comments on your photos, _without_ them having to login and register at Flickr. If you want to add your own commenting system, look inside the `photoalbum-comments.html` template file.
 
 To use a third party commenting system, instead of default Flickr comments, add the following to the TOP of your `wp-config.php`:
 
