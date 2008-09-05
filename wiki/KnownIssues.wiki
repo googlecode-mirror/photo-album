@@ -30,3 +30,9 @@ This probably means your server can't communicate with the outside world, and mo
 == Infinite Redirects ==
 
 You'll need to set your WordPress permalinks to something other than the "Default" settings. [http://codex.wordpress.org/Using_Permalinks See here for more information]
+
+----
+
+== Broken theme / Photo page doesn't match my site ==
+
+You'll need to tweak the plugin template files to match your theme. [http://code.google.com/p/photo-album/wiki/Documentation#Look_and_Feel_Customization See here for more details].
