@@ -93,7 +93,7 @@ define('DB_NAME', '...');
  # Take a peek inside the file photoalbum-resources.php to see how to hook up the plugin with a custom display library. 
 
 
-== Photo Album Customization ==
+== Look and Feel Customization ==
 
  # All the templates are located inside a "templates" folder inside the tantan-flickr directory.
  # If you just want to customize a particular template, just copy that template into your current theme directory. This ensures that when the plugin get's updated, your changes will not be lost.
