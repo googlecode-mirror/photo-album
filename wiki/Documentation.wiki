@@ -41,7 +41,7 @@ In the end, your wp-config.php should look something like this:
 
 {{{
 <?php
-define('TANTAN_DISPLAY_LIBRARY', 'facebox');
+define('TANTAN_FLICKR_COMMENTS', 'disqus');
 
 // ** MySQL settings ** //
 define('DB_NAME', '...');
