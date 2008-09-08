@@ -15,10 +15,11 @@ jQuery(document).ready(function($) {
     });
 });
 function tantan_toggleOptions(i, photo) {
+    console.log(photo)
+    
     jQuery('#photo-title').val(photo['title'])
     jQuery('#photo-caption').val(photo['description'])
     jQuery('#photo-url').val(jQuery('#file-link-'+i).attr('href'))
-    console.log(jQuery('#file-link-'+i).attr('href'))
     jQuery('#photo-options').toggle();
 }
 
