@@ -13,16 +13,23 @@ jQuery(document).ready(function($) {
         $('#upload-files li').show();
         $('#photo-options').hide();
     });
+    $('input.send').click(function() {
+        //
+        // TODO: take user input and send to editor
+        //
+        tantan_insertPhoto(); // ?
+    });
 });
 function tantan_toggleOptions(i, photo) {
-    console.log(photo)
     
     jQuery('#photo-title').val(photo['title'])
     jQuery('#photo-caption').val(photo['description'])
     jQuery('#photo-url').val(jQuery('#file-link-'+i).attr('href'))
     jQuery('#photo-options').toggle();
+    //console.log(photo)
 }
-
+function tantan_insertPhoto() {
+}
 
 ///
 /// OLD CODE
