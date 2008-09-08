@@ -15,6 +15,11 @@
     height:75px !important;
 	float:left;
 }
+#photo-options {
+    clear:both;
+    display:none;
+}
+
 .photo-options {
     position:absolute;
     top:0px;

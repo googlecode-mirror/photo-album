@@ -1,3 +1,31 @@
+jQuery(document).ready(function($) {
+	$(photos) // json'd object containing info for all photos
+	   .each(function(i) { 
+	       //console.log(i, this)
+	       $('#file-link-'+i).click(function() {
+	               
+	               $('#flickr-photo-'+i).siblings().toggle();
+	               tantan_toggleOptions(i, photos[i])
+	               return false;
+	       });
+	   });
+    $('input.cancel').click(function() {
+        $('#upload-files li').show();
+        $('#photo-options').hide();
+    });
+});
+function tantan_toggleOptions(i, photo) {
+    jQuery('#photo-title').val(photo['title'])
+    jQuery('#photo-caption').val(photo['description'])
+    jQuery('#photo-url').val(jQuery('#file-link-'+i).attr('href'))
+    console.log(jQuery('#file-link-'+i).attr('href'))
+    jQuery('#photo-options').toggle();
+}
+
+
+///
+/// OLD CODE
+///
 var lastPhoto = false;
 function tantan_showOptions(id) {
     if (lastPhoto) tantan_hideOptions(lastPhoto)
