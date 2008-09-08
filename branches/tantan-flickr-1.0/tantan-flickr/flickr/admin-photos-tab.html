@@ -129,6 +129,7 @@ endforeach;
 <strong>Tags:</strong> <a href="#">abc</a> <a href="#">abc</a> <a href="#">abc</a> <a href="#">abc</a><br />
 -->
 </div>
+<form>
 <table class="describe">
 <tbody>
 <tr class="post_title form-required">
@@ -173,7 +174,7 @@ endforeach;
 <tr class="submit">
     <td>&nbsp;</td>
     <td class="savesend">
-        <input type="submit" value="Insert into Post" name="send" class="button"/> 
+        <input type="button" value="Insert into Post" name="send" class="button send"/> 
         <input type="button" value="Cancel" name="cancel" class="button cancel"/> 
         &nbsp; &nbsp;
         <label for="image-close-check" id="image-close"><input type="checkbox" id="image-close-check" name="image-close-check" value="1" checked="checked" /> close after inserting photo</label> 
@@ -181,7 +182,7 @@ endforeach;
 
 </tbody>
 </table>
-
+</form>
 </div>
 <script type="text/javascript">
 var photos = [<?php echo implode(',', $photoJSONs);?>];
