@@ -9,7 +9,7 @@ Retrieve recent photos. Could be used as a photo stream or just display your mos
 {{{
 <?php
 require_once(dirname(__FILE__).'/../../plugins/tantan-flickr/flickr/class-public.php');
-$TanTanFlickrPlugin =& new SilasFlickrPlugin();
+$TanTanFlickrPlugin =& new TanTanFlickrPlugin();
 $photos = $TanTanFlickrPlugin->getRecentPhotos($tags='', $offsetpage=0, $max=15, $everyone=false);
 ?>
 }}}
