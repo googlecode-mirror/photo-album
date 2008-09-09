@@ -15,34 +15,10 @@
     height:75px !important;
 	float:left;
 }
-#photo-options {
+.photo-options {
     display:none;
 }
 
-.photo-options {
-    position:absolute;
-    top:0px;
-    left:0px;
-    width:125px;
-    padding:5px;
-    
-    background:white;
-    opacity:0.9;
-    border:1px solid #ccc;
-    font-size:10px;
-	line-height:12px;
-    z-index:10;
-    
-    display:none;
-}
-.photo-options a {
-	white-space:nowrap;
-}
-.photo-options div.close {
-    position:absolute;
-    top:2px;
-    right:2px;
-}
 .alignleft {
     position:relative;
 }

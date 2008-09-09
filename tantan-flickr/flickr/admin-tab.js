@@ -8,10 +8,12 @@ jQuery(document).ready(function($) {
 	               return false;
 	       });
 	   });
-	$('button.photo-url-dest').click(function(){jQuery(this).siblings('input').val(this.value);});
+	$('button.photo-url-dest').click(function(){
+	    jQuery(this).siblings('input').val(this.url);
+	});
     $('input.cancel').click(function() {
         $('#upload-files li').show();
-        $('#photo-options').hide();
+        $('.photo-options').hide();
     });
     $('input.send').click(function() {
         //
@@ -38,9 +40,12 @@ function tantan_toggleOptions(i) {
     $('#photo-title').val(photo['title']);
     $('#photo-caption').val(photo['description']);
     $('#photo-url').val(jQuery('#file-link-'+i).attr('href'));
-    $('#photo-options').toggle();
-	$('#photo-url-flickr').val(photo['flickrURL']);
-	$('#photo-url-blog').val(photo['blogURL']);
+    $('.photo-options').toggle();
+    
+    
+	$('#photo-url-none').attr('url', '');
+	$('#photo-url-flickr').attr('url', photo['flickrURL']);
+	$('#photo-url-blog').attr('url', photo['blogURL']);
 	$('.image-size .field *').hide();
 	jQuery.each(photo['sizes'], function(key, value) {
 		jQuery('input[name=image-size][value='+key+']').show().next().show();
