@@ -18,7 +18,24 @@
 .photo-options {
     display:none;
 }
-
+#album-tabs {
+    clear:both;
+    background:#CFEBF7;
+    padding: 0.75em 1em;
+}
+#album-tabs a {
+    margin-right:1em;
+    padding:4px;
+    text-decoration:none;
+    background:#fff;
+    border:1px solid #CCCCCC;
+    color:#2E7CA0;
+}
+#album-tabs a.selected {
+    border-color:#2E7CA0;
+    background:#2E7CA0;
+    color:white;
+}
 .alignleft {
     position:relative;
 }
@@ -28,11 +45,8 @@
 .tablenav form {
 	margin:0;
 }
-#closewin {
-	position:absolute;
-	left:10px;
-	bottom:5px;
-}
+
+
 .license {
     clear:both;
     text-align:center;

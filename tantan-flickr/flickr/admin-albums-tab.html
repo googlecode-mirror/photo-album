@@ -70,33 +70,66 @@ $id++;
 endforeach;?>
 </ul>
 <div class="photo-options" id="photo-meta">
-<strong>Photo Name</strong><br />
 <!--
+<strong>Photo Name</strong><br />
 <strong>Taken: </strong> Sept 9, 2008<br />
 <strong>Tags:</strong> <a href="#">abc</a> <a href="#">abc</a> <a href="#">abc</a> <a href="#">abc</a><br />
 -->
 </div>
-<div class="photo-options">
+<?php /*  // TODO: Browse photos in album
+<div class="photo-options" id="album-tabs">
+<a href="#" id="tab-album-insert" class="selected">Insert Album</a>
+<a href="#" id="tab-album-photos">Browse Album Photos</a>
+</div>
+*/ ?>
+<div class="photo-options" id="album-insert">
 <form>
-<input type="hidden" name="album-id" id="album-id" value="" />
-<table class="describe">
+<input type="hidden" name="photo-id" id="photo-id" value="" />
+<table class="describe album">
 <tbody>
-<tbody>
-<tr class="">
-    <th class="label" valign="top" scope="row"><label>Insert Photos</label></th>
-    <td class="field"></td>
+<tr class="image-size album-insert-photos">
+    <th class="label" valign="top" scope="row"><label>Photos</label></th>
+    <td class="field">
+    <input type="radio" name="album-insert-photos" id="album-insert-cover"  value="cover" checked="checked"><label for="album-insert-cover"> Album cover</label>
+    
+	<input type="radio" name="album-insert-photos" id="album-insert-5"  value="5"><label for="album-insert-5"> 5 photos</label>
+	<input type="radio" name="album-insert-photos" id="album-insert-10" value="10"><label for="album-insert-10"> 10 photos</label>
+	<input type="radio" name="album-insert-photos" id="album-insert-20" value="20"><label for="album-insert-20"> 20 photos</label>
+	<input type="radio" name="album-insert-photos" id="album-insert-30" value="30"><label for="album-insert-30"> 30 photos</label>
+    </td>
 </tr>
+<tr class="image-size">
+    <th class="label" valign="top" scope="row"><label>Size</label></th>
+    <td class="field">
+		<input name="album-image-size" id="album-image-size-square" value="Square" type="radio">
+		<label for="album-image-size-square">Square</label>
+		<input name="album-image-size" id="album-image-size-thumb" value="Thumbnail" type="radio" checked="checked">
+		<label for="album-image-size-thumb">Thumbnail</label>
+		<input name="album-image-size" id="album-image-size-medium" value="Medium" type="radio">
+		<label for="album-image-size-medium">Medium</label>
+		<input name="album-image-size" id="album-image-size-large" value="Large" type="radio">
+		<label for="album-image-size-large">Large</label>
+		<input name="album-image-size" id="album-image-size-original" value="Original" type="radio">
+		<label for="album-image-size-original">Original</label>    
+    </td></tr>
+<tr class="submit">
+    <td>&nbsp;</td>
+    <td class="savesend">
+        <input type="button" value="Insert into Post" name="send" class="button send"/> 
+        <input type="button" value="Cancel" name="cancel" class="button cancel"/> 
+        &nbsp; &nbsp;
+        <label for="image-close-check" id="image-close"><input type="checkbox" id="image-close-check" name="image-close-check" value="1" checked="checked" /> close after inserting photo</label> 
+        </td></tr>
+        
 </tbody>
+
 </table>
 </form>
 </div>
-
-<?php 
-$isAlbum = true;
-include(dirname(__FILE__).'/admin-tab-options.html');?>
-
-
-
+<?php /*
+<div class="photo-options" id="album-photos">
+</div>
+*/ ?>
 
 
 <script type="text/javascript">
