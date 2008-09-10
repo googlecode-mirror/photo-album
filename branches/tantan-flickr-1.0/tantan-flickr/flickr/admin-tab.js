@@ -15,21 +15,36 @@ jQuery(document).ready(function($) {
         $('#upload-files li').show();
         $('.photo-options').hide();
     });
-    $('input.send').click(function() {
-        //
-        // TODO: take user input and send to editor
-        //
-        
-        var photo = $(photos).get($('#photo-id').val())
+    
+    // photo insert
+    $('.photo input.send').click(function() {
+        var photo = $(photos).get($('#photo-id').val());
         photo['title'] = $('#photo-title').val();
         photo['targetURL'] = $('#photo-url').val();
         //console.log(photo)
         
-        tantan_addPhoto(photo, $('input[name=image-size]:checked').val(), {
-        	"align": $('input[name=image-align]:checked').val()
+        tantan_addPhoto(photo, $('.photo input[name=image-size]:checked').val(), {
+        	"align": $('.photo input[name=image-align]:checked').val()
         });
+        return false;
     });
+    
+    // album insert
+    $('.album input.send').click(function() {
+        var photo = $(photos).get($('#photo-id').val());
+        var num = $('.album input[name=album-insert-photos]:checked').val();
+        var size = $('.album input[name=album-image-size]:checked').val();
+        if (num == 'cover') {
+            tantan_addPhoto(photo, size, {});
+        } else {
+            tantan_addShortCode('album='+photo['id']+' num='+num+' size='+size);
+        }
+        return false;
+    });
+    
 });
+
+// setup insert options
 function tantan_toggleOptions(i) {
 	if (isNaN(i)) return;
 	$ = jQuery;
@@ -46,38 +61,15 @@ function tantan_toggleOptions(i) {
 	$('#photo-url-none').attr('url', '');
 	$('#photo-url-flickr').attr('url', photo['flickrURL']);
 	$('#photo-url-blog').attr('url', photo['blogURL']);
-	$('.image-size .field *').hide();
+	$('.photo. image-size .field *').hide();
 	jQuery.each(photo['sizes'], function(key, value) {
-		jQuery('input[name=image-size][value='+key+']').show().next().show();
+		jQuery('.photo input[name=image-size][value='+key+']').show().next().show();
 	})
 	$('input[name=image-size][value=Medium]:visible').attr('checked', 'checked');
 	$('input[name=image-size][value=Video Player]:visible').attr('checked', 'checked');
 	//console.log(photo)
 }
 
-///
-/// OLD CODE
-///
-var lastPhoto = false;
-function tantan_showOptions(id) {
-    if (lastPhoto) tantan_hideOptions(lastPhoto)
-    lastPhoto = id
-
-    var div = document.getElementById('options-'+id)
-    if (div) div.style.display='block';
-    return false;
-}
-function tantan_hideOptions(id) {
-    var div = document.getElementById('options-'+id)
-    if (div) div.style.display='none';
-    
-    var e = window.event;
-	if (e) {
-        e.cancelBubble = true;
-    	if (e.stopPropagation) e.stopPropagation();
-    }
-    return false;
-}
 // photo contains a json'd data array
 function tantan_addPhoto(photo, size, opts) {
 	if (!isNaN(parseInt(photo))) {
@@ -97,14 +89,13 @@ function tantan_addPhoto(photo, size, opts) {
 		} else if (win.edInsertContent) win.edInsertContent(win.edCanvas, h);
 	}
 	if (typeof top.tb_remove == 'function') {
-		if (!jQuery('image-close-check').val()) 
+		if (jQuery('#image-close-check:checked').val()) 
 			top.tb_remove();
 	}
 
 	return false;
 }
 function tantan_makePhotoHTML(photo, size, opts) { 
-//console.log(photo, size, opts)
 	if (size == 'Video Player') {
 		return '[flickr video='+photo['id']+']'
 	} else {
@@ -116,7 +107,11 @@ function tantan_makePhotoHTML(photo, size, opts) {
 	}
 }
 function tantan_addShortCode(attribs) {
-	top.send_to_editor('[flickr'+(attribs ? (' '+attribs) : '')+']');
-	if (typeof top.tb_remove == 'function') 
-		top.tb_remove();
+    top.send_to_editor('[flickr'+(attribs ? (' '+attribs) : '')+']');
+    if (typeof top.tb_remove == 'function') 
+        if (jQuery('#image-close-check:checked').val()) 
+            top.tb_remove();
 }
+
+function tantan_showOptions(id) {}
+function tantan_hideOptions(id) {}
