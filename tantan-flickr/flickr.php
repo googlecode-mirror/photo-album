@@ -88,5 +88,6 @@ if (ereg('/wp-admin/', $_SERVER['REQUEST_URI'])) { // just load in admin
 if (get_option('silas_flickr_showbadge')) { // load sidebar widget
     add_action('plugins_loaded', create_function('', 'require_once(dirname(__FILE__)."/flickr/widget.php"); $GLOBALS[TanTanFlickrWidget] =& new TanTanFlickrWidget();'));
 }
-
+// clear flickr cache
+add_action('tantan_flickr_clear_cache_event', create_function('', 'require_once(dirname(__FILE__)."/flickr/lib.flickr.php");$flickr = new TanTanFlickr();@$flickr->clearCacheStale();'));
 ?>
