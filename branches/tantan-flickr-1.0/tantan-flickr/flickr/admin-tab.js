@@ -9,7 +9,9 @@ jQuery(document).ready(function($) {
 	       });
 	   });
 	$('button.photo-url-dest').click(function(){
-	    jQuery(this).siblings('input').val(this.url);
+		var url = jQuery(this).attr('url');
+		if (url == 'none') url = '';
+	    jQuery('#photo-url').val(url);
 	});
     $('input.cancel').click(function() {
         $('#upload-files li').show();
@@ -21,7 +23,6 @@ jQuery(document).ready(function($) {
         var photo = $(photos).get($('#photo-id').val());
         photo['title'] = $('#photo-title').val();
         photo['targetURL'] = $('#photo-url').val();
-        //console.log(photo)
         
         tantan_addPhoto(photo, $('.photo input[name=image-size]:checked').val(), {
         	"align": $('.photo input[name=image-align]:checked').val()
@@ -50,7 +51,7 @@ function tantan_toggleOptions(i) {
 	$ = jQuery;
 	
     photo = photos[i];
-	$('#photo-meta').html('<strong>'+photo['title']+'</strong>');
+	$('#photo-meta').html('<strong>'+photo['title']+'</strong><br />'+(photo['photos'] ? (photo['photos']+' photos'): ''));
 	$('#photo-id').val(i);
     $('#photo-title').val(photo['title']);
     $('#photo-caption').val(photo['description']);
@@ -58,16 +59,16 @@ function tantan_toggleOptions(i) {
     $('.photo-options').toggle();
     
     
-	$('#photo-url-none').attr('url', '');
+	$('#photo-url-none').attr('url', 'none');
 	$('#photo-url-flickr').attr('url', photo['flickrURL']);
 	$('#photo-url-blog').attr('url', photo['blogURL']);
-	$('.photo. image-size .field *').hide();
+	$('.photo .image-size .field *').hide();
 	jQuery.each(photo['sizes'], function(key, value) {
 		jQuery('.photo input[name=image-size][value='+key+']').show().next().show();
 	})
+	$('input[name=image-size][value=Square]:visible').attr('checked', 'checked');
 	$('input[name=image-size][value=Medium]:visible').attr('checked', 'checked');
 	$('input[name=image-size][value=Video Player]:visible').attr('checked', 'checked');
-	//console.log(photo)
 }
 
 // photo contains a json'd data array
@@ -89,8 +90,11 @@ function tantan_addPhoto(photo, size, opts) {
 		} else if (win.edInsertContent) win.edInsertContent(win.edCanvas, h);
 	}
 	if (typeof top.tb_remove == 'function') {
-		if (jQuery('#image-close-check:checked').val()) 
+		if (jQuery('#image-close-check:checked').val())  {
 			top.tb_remove();
+		} else {
+			jQuery('input.cancel').click();
+		}
 	}
 
 	return false;
@@ -108,9 +112,13 @@ function tantan_makePhotoHTML(photo, size, opts) {
 }
 function tantan_addShortCode(attribs) {
     top.send_to_editor('[flickr'+(attribs ? (' '+attribs) : '')+']');
-    if (typeof top.tb_remove == 'function') 
-        if (jQuery('#image-close-check:checked').val()) 
-            top.tb_remove();
+	if (typeof top.tb_remove == 'function') {
+		if (jQuery('#image-close-check:checked').val())  {
+			top.tb_remove();
+		} else {
+			jQuery('input.cancel').click();
+		}
+	}
 }
 
 function tantan_showOptions(id) {}
