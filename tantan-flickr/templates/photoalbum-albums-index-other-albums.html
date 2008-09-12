@@ -6,12 +6,14 @@ This template lists out your older albums
 */
 
 $numAlbumPreviews = 3; // how many expanded album previews to show. all other albums will be reduced to a thumbnail
+$maxAlbums = 50; // max number of album thumbnails to show on the photo album's homepage
 
 if (count($albums)): ?>
 <div class="tt-older-posts albums">
 <h4>Other Albums</h4>
 <?php for ($i=0;$i<$numAlbumPreviews;$i++):?>
 <?php  
+	if (!$albums) break;
     $album = array_shift($albums); 
     $primaryPhoto = $flickr->getPhotoSizes($album['primary']); 
 ?>
@@ -30,6 +32,7 @@ if (count($albums)): ?>
 <?php if (count($albums)): ?>
 <div class="tt-older-posts albums albums-small">
 <?php
+$i = 0;
 foreach ($albums as $album):?>
     <?php  $primaryPhoto = $flickr->getPhotoSizes($album['primary']); ?>
     <div class="album">
@@ -37,8 +40,12 @@ foreach ($albums as $album):?>
         src="<?php echo $primaryPhoto['Square']['source']?>" width="<?php echo $primaryPhoto['Square']['width']?>" height="<?php echo $primaryPhoto['Square']['height']?>" alt="" /></a><br />
     <strong><?php echo $album['title'];?></strong>
     </div>
-<?php endforeach; ?>
+<?php 
+if ($i++ > $maxAlbums) break;
+endforeach; ?>
 </div>
 <?php endif; /*albums*/ ?>
 
-
+<?php if (count($albums) > $maxAlbums): ?>
+	<a href="./?view=all" class="all-albums">View all <?php echo $numAlbums;?> albums ></a>
+<?php endif ;?>
