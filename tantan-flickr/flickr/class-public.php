@@ -130,11 +130,9 @@ class TanTanFlickrPlugin {
             }
             //if (!$usecache) $flickr->doneClearCache();
             //$this->_silas_cacheExpire = -1;
-            if ($everyone || !$baseurl || $linkoptions) {
-                foreach ($photos as $k => $photo) {
-                    $photos[$k]['info'] = $flickr->getPhoto($photo['id']);
-                }
-            }
+			foreach ($photos as $k => $photo) {
+				$photos[$k]['info'] = $flickr->getPhoto($photo['id']);
+			}
             return $photos;
         } else {
             return array();

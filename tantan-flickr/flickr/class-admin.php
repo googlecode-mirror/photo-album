@@ -31,6 +31,11 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
     }
     function activate() {
 		if (!ereg('plugins.php', $_SERVER['REQUEST_URI'])) return;
+		if (function_exists('wp_schedule_event')) {
+		    wp_clear_scheduled_hook('tantan_flickr_clear_cache_event');
+		    wp_schedule_event(time(), 'daily', 'tantan_flickr_clear_cache_event');
+		}
+		
         wp_redirect('plugins.php?tantanActivate=photo-album');
         exit;
     }
@@ -100,7 +105,11 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
                 ) $charset_collate");//
 			$wpdb->query("CREATE INDEX commandCreated on $flickr->cache_table(command, created)");
 			$wpdb->show_errors();
-			
+			if (function_exists('wp_schedule_event')) {
+                wp_clear_scheduled_hook('tantan_flickr_clear_cache_event');
+                wp_schedule_event(time(), 'daily', 'tantan_flickr_clear_cache_event');
+			}
+
         }
         
         if ($_POST['action'] == 'save') {
@@ -475,4 +484,4 @@ if (TANTAN_AUTOUPDATE_NOTIFY && version_compare(get_bloginfo('version'), '2.3', 
 	add_action( 'after_plugin_row', 'tantan_flickr_after_plugin_row' );
 
 }
-?>
+?>>>>>>>> .merge-right.r256
