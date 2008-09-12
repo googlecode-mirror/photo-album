@@ -43,6 +43,15 @@ jQuery(document).ready(function($) {
         return false;
     });
     
+    $('#image-close-check').click(function() {
+		var today = new Date();
+		today.setTime( today.getTime() );
+	    var expires = new Date( today.getTime() + (30*86400000) );
+		document.cookie='tantanclosewin='+(this.checked ? '1' : '0')+';expires='+expires.toGMTString();
+    })
+    if (document.cookie.indexOf('tantanclosewin=0') >= 0) {
+    	$('#image-close-check').attr('checked', '');
+    }
 });
 
 // setup insert options
