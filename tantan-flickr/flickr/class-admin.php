@@ -484,4 +484,4 @@ if (TANTAN_AUTOUPDATE_NOTIFY && version_compare(get_bloginfo('version'), '2.3', 
 	add_action( 'after_plugin_row', 'tantan_flickr_after_plugin_row' );
 
 }
-?>>>>>>>> .merge-right.r256
+?>
