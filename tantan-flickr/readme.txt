@@ -22,8 +22,11 @@ On the backend, this plugin will add a new Flickr icon to your WordPress edit sc
 1. Upload `tantan-flickr` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Configure the plugin in the 'Options' (or 'Settings') screen by following the onscreen prompts.
-1. If you want to customize the templates, see here for more information: http://code.google.com/p/photo-album/wiki/Documentation
+
+## Documentation
+If you need more help installing and customizing templates, [see here for more information](http://code.google.com/p/photo-album/wiki/Documentation). Feel free to [post your question into the support group](www.flickr.com/groups/tantannoodles/) if you get stuck.
 
 == Screenshots ==
 
 1. The Flickr media bar, which allows you to easily blog your Flickr photos
+2. Options available when inserting a photo into a blog post
