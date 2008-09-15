@@ -428,10 +428,13 @@ class TanTanFlickr extends tantan_phpFlickr {
         $this->_tantan_useCache = true;
     }
     function clearCache() {
+        global $wpdb;
         if (TANTAN_FLICKR_CACHEMODE == 'db') {
+            $result = $this->cache_db->query("DELETE FROM " . $wpdb->prefix . "postmeta WHERE meta_key LIKE 'flickr-%';");
             $result = $this->cache_db->query("DELETE FROM " . $this->cache_table . ";");
             return true;
         } elseif ($this->_clearCache($this->cache_dir)) {
+            $result = $this->cache_db->query("DELETE FROM " . $wpdb->prefix . "postmeta WHERE meta_key LIKE 'flickr-%';");
             return @mkdir($this->cache_dir, 0770);
         } else {
             return false;
