@@ -1,5 +1,6 @@
 <?php
 $groups = $flickr->manualSort($flickr->getGroupsActual(), $groupOrder);
+$baseurl = get_option('silas_flickr_baseurl');
 
 foreach ($groups as $group):
 ?>
