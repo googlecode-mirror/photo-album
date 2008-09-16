@@ -249,8 +249,10 @@ class TanTanFlickr extends tantan_phpFlickr {
             $row['pagename'] = $row['pagename2'] . '.html';
             $row['iconurl'] = ($group['iconserver'] > 0) ? 'http://static.flickr.com/'.$group['iconserver'].'/buddyicons/'.$group['id'].'.jpg'
                 : 'http://www.flickr.com/images/buddyicon.jpg';
-            
+
+			$this->doneClearCache();
             $info = $this->getGroup($group['id']);
+			$this->startClearCache();
             $row['description'] = $info['description'];
             $row['privacy'] = $info['privacy'];
             $row['members'] = $info['members'];
