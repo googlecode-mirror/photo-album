@@ -87,20 +87,25 @@ function tantan_addPhoto(photo, size, opts) {
 	}
 	var h = tantan_makePhotoHTML(photo, size, opts);
 
-	if (typeof top.send_to_editor == 'function') {
-		top.send_to_editor(h);
-	} else {
-	    var win = window.opener ? window.opener : window.dialogArguments;
-		if ( !win ) win = top;
-		tinyMCE = win.tinyMCE;
-		if ( typeof tinyMCE != 'undefined' && tinyMCE.getInstanceById('content') ) {
-			tinyMCE.selectedInstance.getWin().focus();
-			tinyMCE.execCommand('mceInsertContent', false, h);
-		} else if (win.edInsertContent) win.edInsertContent(win.edCanvas, h);
-	}
-	if (typeof top.tb_remove == 'function') {
+	var win = window.dialogArguments || opener || parent || top;
+	var tinyMCE = win.tinyMCE;
+	var tinymce = win.tinymce;
+	if ( typeof tinyMCE != 'undefined' && ( ed = win.tinyMCE.activeEditor ) && !ed.isHidden() ) {
+		ed.focus();
+		if (tinymce.isIE)
+			ed.selection.moveToBookmark(tinymce.EditorManager.activeEditor.windowManager.bookmark);
+
+//		if ( h.indexOf('[caption') != -1 )
+//			h = ed.plugins.wpeditimage._do_shcode(h);
+		
+		ed.execCommand('mceInsertContent', false, h);
+	} else if (typeof win.edInsertContent != 'function') edInsertContent(edCanvas, h);
+
+		
+		
+	if (typeof win.tb_remove == 'function') {
 		if (jQuery('#image-close-check:checked').val())  {
-			top.tb_remove();
+			win.tb_remove();
 		} else {
 			jQuery('input.cancel').click();
 		}
