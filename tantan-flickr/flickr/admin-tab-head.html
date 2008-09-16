@@ -17,9 +17,10 @@ addLoadEvent (function () {
 });
 </script>
 <?php endif;?>
-<script type="text/javascript">
-
-</script>
+<?php
+wp_enqueue_script('jquery');
+wp_print_scripts();
+?>
 <script type="text/javascript" src="<?php echo $pluginRootURL;?>/admin-tab.js"></script>
 <script type="text/javascript">
 <?php echo TanTanFlickrDisplay::js(); ?>
