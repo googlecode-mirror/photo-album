@@ -111,7 +111,7 @@ Different sizes for the popup image can be set by adding this to your `wp-config
 define('TANTAN_DISPLAY_POPUP_SIZE', '--SIZE--');
 }}}
 
-Replace `--SIZE--` with either: Square, Thumbnail, Medium, Large, Original.
+Replace `--SIZE--` with either: Square, Thumbnail, Small, Medium, Large, Original.
 
 
 ----
