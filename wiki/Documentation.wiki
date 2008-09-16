@@ -105,6 +105,15 @@ define('DB_NAME', '...');
  # Here's a page with [http://planetozh.com/projects/lightbox-clones/ a list of all the various libraries] you might want to use if you want to use your own.
  # Take a peek inside the file photoalbum-resources.php to see how to hook up the plugin with a custom display library. 
 
+Different sizes for the popup image can be set by adding this to your `wp-config.php`.
+
+{{{
+define('TANTAN_DISPLAY_POPUP_SIZE', '--SIZE--');
+}}}
+
+Replace `--SIZE--` with either: Square, Thumbnail, Medium, Large, Original.
+
+
 ----
 
 == Look and Feel Customization ==
