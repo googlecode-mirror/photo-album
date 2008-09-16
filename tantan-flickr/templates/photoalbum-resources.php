@@ -88,14 +88,19 @@ class TanTanFlickrDisplayBase {
 	
 	// this prints out the JavaScript function used to insert a photo into blog posts
 	function js() {
-		return "function tantan_makePhotoHTML(photo, size) { \n".
-			"if (size == 'Video Player') {\n".
-				"return '[flickr video='+photo['id']+']'\n".
-			"}\n".
-				"return '<a href=\"'+photo['targetURL']+'\" class=\"tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'\">' + \n".
-				"	'<img src=\"'+photo['sizes'][size]['source']+'\" alt=\"'+photo['title']+'\" width=\"'+photo['sizes'][size]['width']+'\" height=\"'+photo['sizes'][size]['height']+'\" border=\"0\" />' + \n".
-				"	'</a> '; \n".
-			"} \n";
+		return <<<JSCODE
+			function tantan_makePhotoHTML(photo, size, opts) { 
+				if (size == 'Video Player') {
+					return '[flickr video='+photo['id']+']'
+				} else {
+					var h = '';
+					if (photo['targetURL']) h += '<a href="'+photo['targetURL']+'" class="tt-flickr'+(size ? (' tt-flickr-'+size) : '')+'">';
+					h += '<img class="'+(opts['align'] ? ('align'+opts['align']) : '')+'" src="'+photo['sizes'][size]['source']+'" alt="'+photo['title']+'" width="'+photo['sizes'][size]['width']+'" height="'+photo['sizes'][size]['height']+'" />';
+					if (photo['targetURL']) h += '</a> ';
+					return h;
+				}
+			}
+JSCODE;
 	}
 }
 
