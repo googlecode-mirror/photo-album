@@ -1,5 +1,9 @@
 <?php
 /*
+$Revision$
+$Date$
+$Author$
+
 Copy this file into your current active theme's directory to customize this template
 
 This template resource file defines the template tags used to create the HTML for your photos.

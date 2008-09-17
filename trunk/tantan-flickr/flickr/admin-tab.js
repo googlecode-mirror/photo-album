@@ -1,3 +1,8 @@
+/*
+$Revision$
+$Date$
+$Author$
+*/
 jQuery(document).ready(function($) {
 	$(photos) // json'd object containing info for all photos
 	   .each(function(i) { 

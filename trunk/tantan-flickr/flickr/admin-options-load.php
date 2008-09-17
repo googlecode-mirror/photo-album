@@ -1,4 +1,9 @@
 <?php
+/*
+$Revision$
+$Date$
+$Author$
+*/
 $root = realpath(dirname(dirname(dirname(dirname(dirname(__FILE__))))));
 if (file_exists($root.'/wp-load.php')) {
 	// WP 2.6
