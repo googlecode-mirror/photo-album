@@ -64,7 +64,7 @@ function tantan_toggleOptions(i) {
 	$ = jQuery;
 	
     photo = photos[i];
-	$('#photo-meta').html('<strong>'+photo['title']+'</strong><br />'+(photo['photos'] ? (photo['photos']+' photos'): ''));
+	$('#photo-meta').html('<strong>'+photo['title']+'</strong><br />'+(photo['photos'] ? (photo['photos']+' photos<br />'): '')+(photo['flickrURL'] ? ('<a href="'+photo['flickrURL']+'" target="_blank">View this on Flickr.com &gt;</a><br />') : ''));
 	$('#photo-id').val(i);
     $('#photo-title').val(photo['title']);
     $('#photo-caption').val(photo['description']);

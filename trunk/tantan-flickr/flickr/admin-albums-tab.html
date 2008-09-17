@@ -26,10 +26,13 @@ $photoJSONs = array();
 $id = 0;
 $hasShortCode = function_exists('add_shortcode');
 foreach ($albums as $album):
+$album['flickrURL'] = 'http://www.flickr.com/photos/'.$user['user']['nsid'].'/sets/'.$album['id'].'/';
+$album['blogURL'] = $home.$baseurl.'album/'.$album['id'].'/'.$album['pagename'];
+
 if ($baseurl && !$everyone && ($linkoptions != 'flickr')) {
-    $album['targetURL'] = $home.$baseurl.'album/'.$album['id'].'/'.$album['pagename'];
+    $album['targetURL'] = $album['blogURL'];
 } else {
-	$album['targetURL'] = 'http://www.flickr.com/photos/'.$user['user']['nsid'].'/sets/'.$album['id'].'/';
+	$album['targetURL'] = $album['flickrURL'];
 }
 $photoJSONs[] = $json->encode($album);
 ?>
