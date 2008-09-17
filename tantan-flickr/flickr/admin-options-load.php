@@ -22,7 +22,13 @@ $hideAlbums  = get_option('silas_flickr_hidealbums');
 $hideGroups  = get_option('silas_flickr_hidegroups');
 $groupOrder  = get_option('silas_flickr_grouporder');
 $albumOrder  = get_option('silas_flickr_albumorder');
-        
+$baseurl     = get_option('silas_flickr_baseurl');
+$linkoptions = get_option('silas_flickr_linkoptions');
+
+$linkToBlog = ($baseurl && ($linkoptions != 'flickr'));
+$parts = parse_url(get_bloginfo('home'));
+$home = 'http://'.$parts['host'];
+
 $flickr->setToken($auth_token);
 $flickr->setOption(array(
     'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
