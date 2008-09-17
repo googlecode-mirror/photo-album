@@ -81,6 +81,8 @@ $parts = parse_url(get_bloginfo('home'));
 $home = 'http://'.$parts['host'];
 $json = new Services_JSON();
 $photoJSONs = array();
+$linkToBlog = ($baseurl && !$everyone && !$interesting && ($linkoptions != 'flickr'));
+
 ?>
 <ul id='upload-files'>
 <?php
@@ -88,8 +90,7 @@ $id = 0;
 foreach ($photos as $photo):
 $photo['flickrURL'] = array_pop($photo['info']['urls']);
 $photo['blogURL'] = $home.$baseurl.'photo/'.$photo['id'].'/'.$photo['pagename'];
-
-if ($baseurl && !$everyone && !$interesting && ($linkoptions != 'flickr')) {
+if ($linkToBlog) {
     $photo['targetURL'] = $photo['blogURL'];
 } else {
     $photo['targetURL'] = $photo['flickrURL'];
