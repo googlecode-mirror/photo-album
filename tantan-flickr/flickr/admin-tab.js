@@ -4,15 +4,14 @@ $Date$
 $Author$
 */
 jQuery(document).ready(function($) {
-	$(photos) // json'd object containing info for all photos
-	   .each(function(i) { 
-	       //console.log(i, this)
-	       $('#file-link-'+i).click(function() {    
-	               $('#flickr-photo-'+i).siblings().toggle();
-	               tantan_toggleOptions(i)
-	               return false;
-	       });
-	   });
+    // json'd object containing info for all photos
+	$(photos).each(function(i) { 
+       $('#file-link-'+i).click(function() {    
+               $('#flickr-photo-'+i).siblings().toggle();
+               tantan_toggleOptions(i)
+               return false;
+       });
+   });
 	$('button.photo-url-dest').click(function(){
 		var url = jQuery(this).attr('url');
 		if (url == 'none') url = '';
