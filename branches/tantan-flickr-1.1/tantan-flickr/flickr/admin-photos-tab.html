@@ -12,8 +12,8 @@
 <?php if (!$interesting):?>
 <?php _e('Tags:', 'tantan-flickr');?> <input type="text" name="tags" value="<?php echo $tags?>" size="15" />
 <?php if (!ereg('media-upload.php', $_SERVER['REQUEST_URI'])):?>
-<input type="radio" name="everyone" value="" <?php echo (!$everyone ? 'checked="checked"' : '')?> id="showmine" /><label for="showmine"> My Photos </label> &nbsp;
-<input type="radio" name="everyone" value="1" <?php echo ($everyone ? 'checked="checked"' : '')?> id="showeveryone" /><label for="showeveryone"> Everyone </label>
+<input type="radio" name="everyone" value="" <?php echo (!$everyone ? 'checked="checked"' : '')?> id="showmine" /><label for="showmine"> <?php _e('My Photos', 'tantan-flickr');?> </label> &nbsp;
+<input type="radio" name="everyone" value="1" <?php echo ($everyone ? 'checked="checked"' : '')?> id="showeveryone" /><label for="showeveryone"> <?php _e('Everyone', 'tantan-flickr');?> </label>
 <?php endif;?>
 
 &nbsp; &nbsp; 

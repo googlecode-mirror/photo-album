@@ -11,7 +11,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
     var $config = array();
     
     function TanTanFlickrPluginAdmin() {
-        //parent::TanTanFlickrPlugin();
+        parent::TanTanFlickrPlugin();
         add_action('admin_menu', array(&$this, 'addhooks'));
         add_action('activate_tantan-flickr/flickr.php', array(&$this, 'activate'));
         add_action('deactivate_tantan-flickr/flickr.php', array(&$this, 'deactivate'));
