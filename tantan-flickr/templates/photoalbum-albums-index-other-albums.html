@@ -21,7 +21,7 @@ if (count($albums)): ?>
     <a href="album/<?php echo $album['id']?>/<?php echo $album['pagename']?>"><img class="highlight" src="<?php echo $primaryPhoto['Square']['source']?>" width="<?php echo $primaryPhoto['Square']['width']?>" height="<?php echo $primaryPhoto['Square']['height']?>" alt="" /></a>
     <h2><a href="album/<?php echo $album['id']?>/<?php echo $album['pagename']?>"><?php echo $album['title']?></a></h2>
     <p><?php echo html_entity_decode($album['description'])?></p>
-    <p class="meta"><?php echo $album['photos']?> Photos | <a href="album/<?php echo $album['id']?>/<?php echo $album['pagename']?>" onclick="return openSlideShow('<?php echo $album['id']?>')"><?php _e('View as slideshow &gt;', 'tantan-flickr');?></a>
+    <p class="meta"><?php printf(__('%d Photos', 'tantan-flickr'), $album['photos']);?> | <a href="album/<?php echo $album['id']?>/<?php echo $album['pagename']?>" onclick="return openSlideShow('<?php echo $album['id']?>')"><?php _e('View as slideshow &gt;', 'tantan-flickr');?></a>
     </p>
     </div>
 

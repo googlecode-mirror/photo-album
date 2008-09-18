@@ -10,6 +10,7 @@ class TanTanFlickrPlugin {
     var $request = array();
     
     function TanTanFlickrPlugin() {
+	    $this->load_plugin_textdomain();
     }
 
 	function getUser() {
@@ -512,6 +513,15 @@ class TanTanFlickrPlugin {
         $query_vars['error'] = false;
         return $query_vars;
     }
+	function load_plugin_textdomain() { // l10n
+        global $wp_version;
+        if (version_compare($wp_version, '2.6', '<')) {
+			load_plugin_textdomain('tantan-flickr', 'wp-content/plugins/tantan-flickr/languages');
+        } else {
+			load_plugin_textdomain('tantan-flickr', 'wp-content/plugins/tantan-flickr/languages', 'tantan-flickr/languages');
+        }
+	}
+
 }
 class SilasFlickrPlugin extends TanTanFlickrPlugin {}; // backwards compatibility
 ?>
