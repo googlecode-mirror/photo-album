@@ -94,16 +94,20 @@ function tantan_addPhoto(photo, size, opts) {
 	var win = window.dialogArguments || opener || parent || top;
 	var tinyMCE = win.tinyMCE;
 	var tinymce = win.tinymce;
+	var edCanvas = win.edCanvas;
+	var ed;
 	if ( typeof tinyMCE != 'undefined' && ( ed = win.tinyMCE.activeEditor ) && !ed.isHidden() ) {
 		ed.focus();
 		if (tinymce.isIE)
 			ed.selection.moveToBookmark(tinymce.EditorManager.activeEditor.windowManager.bookmark);
 
+		ed.selection.collapse(true);
+		
 //		if ( h.indexOf('[caption') != -1 )
 //			h = ed.plugins.wpeditimage._do_shcode(h);
 		
 		ed.execCommand('mceInsertContent', false, h);
-	} else if (typeof win.edInsertContent != 'function') edInsertContent(edCanvas, h);
+	} else if (typeof win.edInsertContent == 'function') win.edInsertContent(edCanvas, h);
 
 		
 		
@@ -112,6 +116,9 @@ function tantan_addPhoto(photo, size, opts) {
 			win.tb_remove();
 		} else {
 			jQuery('input.cancel').click();
+			if (ed) {
+			    //ed.execCommand('Unselect', false, false);
+			}
 		}
 	}
 
