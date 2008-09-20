@@ -100,6 +100,7 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
 ?>
 	<fieldset class="options">
     <legend>Customizations</legend>
+<form>
     <p>
     	<strong>Popup Overlays:</strong> Add Lightbox style popup overlays to displays to your photos. <a href="http://tantannoodles.com/flickr-demo/">Demo</a> - <a href="http://code.google.com/p/photo-album/wiki/Documentation#Popup_Overlay_Support">Instructions</a>
 	</p>
@@ -109,6 +110,11 @@ if (!$flickr_apikey || !$flickr_sharedsecret) { // no api key
     <p>
     	<strong>Look and Feel:</strong> Not all WordPress themes are created equal, and you may need to tweak a couple templates to match the look and feel of our own blog. Look inside the <code>wp-content/plugins/tantan-flickr/templates</code> directory for the template files. <a href="http://code.google.com/p/photo-album/wiki/Documentation#Look_and_Feel_Customization">Instructions</a>
     </p>
+    <?php
+    if (function_exists('wp_super_cache_enable')):?>
+	<p><strong>SuperCache</strong>: Looks like you have the SuperCache plugin enabled. <a href='http://code.google.com/p/photo-album/wiki/Documentation#Super_Cache_Compatibility'>Please see here for compatibility notes with SuperCache</a></p>
+	<?php endif?>
+</form>
     </fieldset>
     
 
