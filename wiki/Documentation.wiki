@@ -6,7 +6,7 @@
  * [#Installation Installation]
  * [#Custom_Photo_Comments Custom Photo Comments]
  * [#Popup_Overlay_Support Popup Overlay Support]
- * [#Look_and Feel_Customization Look and Feel Customization]
+ * [#Look_and_Feel_Customization Look and Feel Customization]
 
 == Installation / Upgrades ==
 
