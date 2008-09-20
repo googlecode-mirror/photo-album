@@ -3,12 +3,12 @@
 
 = Table of Contents =
 
- * [#Installation_/_Upgrades Installation]
+ * [#Installation Installation]
  * [#Custom_Photo_Comments Custom Photo Comments]
  * [#Popup_Overlay_Support Popup Overlay Support]
  * [#Look_and_Feel_Customization Look and Feel Customization]
 
-== Installation / Upgrades ==
+== Installation ==
 
  # [http://tantannoodles.com/toolkit/photo-album/ Download] and unpack / unzip the archive
  # Copy the entire "tantan-flickr" directory to your Wordpress plugins directory. 
