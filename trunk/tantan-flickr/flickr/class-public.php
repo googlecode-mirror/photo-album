@@ -271,7 +271,7 @@ class TanTanFlickrPlugin {
                 'hidePrivatePhotos' => get_option('silas_flickr_hideprivate'),
             ));
             
-            $parts = explode('/', substr($_SERVER['_TANTAN_FLICKR_REQUEST_URI'], strlen($_SERVER['REQUEST_URI'])));
+            $parts = explode('/', substr($_SERVER['_TANTAN_FLICKR_REQUEST_URI'], strlen(TANTAN_FLICKR_BASEURL)));
             $request = array();
             $title = '';
             $i = 0;
