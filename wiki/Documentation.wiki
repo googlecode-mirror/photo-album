@@ -3,7 +3,7 @@
 
 = Table of Contents =
 
- * [#Installation Installation]
+ * [#Installation_/_Upgrades Installation]
  * [#Custom_Photo_Comments Custom Photo Comments]
  * [#Popup_Overlay_Support Popup Overlay Support]
  * [#Look_and_Feel_Customization Look and Feel Customization]
