@@ -1,6 +1,13 @@
 #summary How to use and integrate the Flickr Photo Album plugin into your WordPress blog.
 #labels Featured
 
+= Table of Contents =
+
+ * [#Installation Installation]
+ * [#Custom_Photo_Comments Custom Photo Comments]
+ * [#Popup_Overlay_Support Popup Overlay Support]
+ * [#Look_and Feel_Customization Look and Feel Customization]
+
 == Installation / Upgrades ==
 
  # [http://tantannoodles.com/toolkit/photo-album/ Download] and unpack / unzip the archive
@@ -11,9 +18,8 @@
  # Once your photo album is linked to your Flickr account, enter a URL where you want your photo album to appear.
  # You're done! To view your photo album, just go to the URL you entered in the previous step. To insert a photo, just click on the Flickr icon  in your "Add media" bar when editing posts. Click on a photo, select a size, and a HTML snippet for that photo will appear in the post's textarea. *Cool!* If you're using WordPress 2.3 or older, then you should a new "Photos" tab next to your uploading tabs.
 
-----
 
-== Super Cache Compatibility ==
+=== Super Cache Compatibility ===
 
 If you have the Super Cache plugin enabled, add the following code to your `.htaccess`, directly after the `WPSuperCache` section, but before the `WordPress` section. Replace `/photos/` on the first line with the path to your photo album.
 
