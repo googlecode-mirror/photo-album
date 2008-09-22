@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tantan-flickr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-22 11:58-0500\n"
+"POT-Creation-Date: 2008-09-22 14:51-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Joe Tan <joetan54@gmail.com>\n"
 "Language-Team: \n"
@@ -229,6 +229,10 @@ msgstr ""
 
 #: templates/photoalbum-photometa.html:25
 msgid "Uploaded:"
+msgstr ""
+
+#: templates/photoalbum-photometa.html:25
+msgid "F j, Y"
 msgstr ""
 
 #: templates/photoalbum-tagcloud.html:16

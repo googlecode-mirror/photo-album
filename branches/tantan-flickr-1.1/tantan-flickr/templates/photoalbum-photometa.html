@@ -22,7 +22,7 @@ This template displays meta information for a photo
     <br />
 <?php endif;?>
 
-<strong><?php _e('Uploaded:', 'tantan-flickr');?></strong> <?php echo date('F j, Y', (int) $photo['dates']['posted'])?><br />
+<strong><?php _e('Uploaded:', 'tantan-flickr');?></strong> <?php echo date(__('F j, Y', 'tantan-flickr'), (int) $photo['dates']['posted'])?><br />
 <a href="http://www.flickr.com/photos/<?php echo $photo['owner']['nsid'];?>/<?php echo $photo['id'];?>/" target="_blank"><?php _e('View this photo on Flickr', 'tantan-flickr');?></a>
 
 
