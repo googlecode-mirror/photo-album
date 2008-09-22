@@ -1,12 +1,14 @@
 #summary How to localization this plugin into your own language.
 
-= Download the language file =
+Here's the information you'll need to localize the plugin into another language. These instructions are roughly based on the [http://codex.wordpress.org/Translating_WordPress WordPress documentation available here]. Once you are done with a localization, please email the translated .po file to joetan54@gmail.com.
+
+== Download the language file ==
 
 http://photo-album.googlecode.com/svn/branches/tantan-flickr-1.1/tantan-flickr/languages/tantan-flickr.po
 
 This is a text file and contains all the text (in plain English) used by the plugin. 
 
-= Translate into (your language) =
+== Translate into (your language) ==
 
 When you open this file in Notepad (or other text editor), you see a bunch of entries similar to this:
 
@@ -25,15 +27,15 @@ msgstr "Foto Stream"
 }}}
 
 
-= Special cases =
+== Special cases ==
 
-=== A single variable ===
+*A single variable code*
 
 `msgid "View all %d albums &gt;"`
 
 What this means is that the plugin will substitute the code `%d` with a number. The `&gt;` (note the semicolon at the end) is an HTML character, and will get translated into `>` by the browser. You should make sure your translated strings use these `%` and `&` codes appropriately and also any HTML tags. 
 
-=== Multiple variables ===
+*Multiple variable codes*
 
 `msgid "%1$d - %2$d of %3$d Photos"`
 
@@ -41,7 +43,7 @@ Sometimes text will contain more than one variable. In this case, the plugin wil
 
 `msgid "%3$d total photos. %1$d - %2$d"`
 
-=== Dates ===
+*Dates*
 
 `msgid "F j, Y"`
 
@@ -51,7 +53,7 @@ And more info here:
 
 http://codex.wordpress.org/Translating_WordPress#Date_Formatting_Strings
 
-= Tools =
+== Helpful Tools ==
 
 While you can edit the text file in Notepad, you may want to consider using poEdit to help you translate faster. This utility is available here: http://www.poedit.net/
 
