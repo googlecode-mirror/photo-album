@@ -59,3 +59,11 @@ While you can edit the text file in Notepad, you may want to consider using poEd
 
 Information about using poEdit is here:
 http://codex.wordpress.org/Translating_WordPress#Translating_With_poEdit
+
+== Examples ==
+
+Here are some example translations provided for the main WordPress application. 
+
+ * [http://svn.automattic.com/wordpress-i18n/bn_BD/trunk/messages/bn.po Bangla - Bengali (bn_BD)]
+ * [http://svn.automattic.com/wordpress-i18n/zh_HK/trunk/messages/zh_HK.po Hong Kong (香港) (zh_HK)]
+ * [http://svn.automattic.com/wordpress-i18n/el/trunk/messages/el.po Greek]
