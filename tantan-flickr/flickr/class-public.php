@@ -113,13 +113,18 @@ class TanTanFlickrPlugin {
             ));
             $user = $flickr->auth_checkToken();
             $nsid = $user['user']['nsid'];
-			if (!$usecache) {
-				$flickr->clearCacheStale('search'); // should probably not blanket clear out everything in 'search'
-				$flickr->clearCacheStale('getRecent');
-			}
+				
             if (!$tags && $everyone) {
+                if (!$usecache) {
+                    $flickr->clearCacheStale('getRecent', true);
+    				$flickr->clearCacheStale('flickr.photos.getRecent', true);
+    			}
                 $photos = $flickr->getRecent(NULL, $max, $offsetpage);
             } else {
+    			if (!$usecache) {
+    				$flickr->clearCacheStale('search', true);
+    				$flickr->clearCacheStale('flickr.photos.search', true);
+    			}
                 $photos = $flickr->search(array(
                     'tags' => ($tags ? $tags : ''),
                     'user_id' => ($everyone ? '' : $nsid),
@@ -128,9 +133,8 @@ class TanTanFlickrPlugin {
                     'page' => $offsetpage,
                 ));
             }
-            //if (!$usecache) $flickr->doneClearCache();
-            //$this->_silas_cacheExpire = -1;
-			foreach ($photos as $k => $photo) {
+
+            foreach ($photos as $k => $photo) {
 				$photos[$k]['info'] = $flickr->getPhoto($photo['id']);
 			}
             return $photos;
