@@ -19,7 +19,7 @@ if (count($groups) > 0):?>
     <h2><a href="group/<?php echo $group['id']?>/<?php echo $group['pagename']?>"><?php echo $group['name']?></a></h2>
     <p><?php echo html_entity_decode($group['description'])?></p>
     <p class="meta"><?php printf(__('%d Photos', 'tantan-flickr'), $group['photos']);?>
-    | <a href="group/<?php echo $group['id']?>/<?php echo $group['pagename']?>" onclick="return openSlideShow('', '<?php echo $group['id']?>')"><?php _e('View as slideshow &gt;', 'tantan-flickr');?></a>
+    | <a href="group/<?php echo $group['id']?>/<?php echo $group['pagename']?>" onclick="return openSlideShow('', '<?php echo $group['id']?>')"><?php _e('View slideshow &gt;', 'tantan-flickr');?></a>
     </p>
     </div>
 <?php endforeach; ?>

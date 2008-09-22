@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tantan-flickr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-19 16:30-0500\n"
+"POT-Creation-Date: 2008-09-22 11:58-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Joe Tan <joetan54@gmail.com>\n"
 "Language-Team: \n"
@@ -84,15 +84,13 @@ msgid "%d Photos"
 msgstr ""
 
 #: templates/photoalbum-albums-index-groups.html:22
-msgid "View as slideshow &gt;"
-msgstr ""
-
-#: templates/photoalbum-paging.html:16
-msgid "&lt; Previous"
+#: templates/photoalbum-nav.html:17
+#: templates/photoalbum-nav.html:42
+msgid "View slideshow &gt;"
 msgstr ""
 
 #: templates/photoalbum-paging.html:19
-msgid "Next Page &gt;"
+msgid "Next Page &raquo;"
 msgstr ""
 
 #: templates/photoalbum-video.html:28
@@ -108,11 +106,6 @@ msgstr ""
 #: templates/photoalbum-nav.html:38
 #: templates/photoalbum-nav.html:41
 msgid "Back to Photo Album"
-msgstr ""
-
-#: templates/photoalbum-nav.html:17
-#: templates/photoalbum-nav.html:42
-msgid "View slideshow &gt;"
 msgstr ""
 
 #: templates/photoalbum-nav.html:23
@@ -544,10 +537,6 @@ msgstr ""
 
 #: flickr/admin-options-apikey.html:24
 msgid "Shared Secret:"
-msgstr ""
-
-#: flickr/admin-options-apikey.html:29
-msgid "next &gt;"
 msgstr ""
 
 #: flickr/admin-options-albums.html:5

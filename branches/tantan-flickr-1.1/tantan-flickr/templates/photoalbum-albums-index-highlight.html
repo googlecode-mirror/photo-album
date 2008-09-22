@@ -17,7 +17,7 @@ $photos = $flickr->getPhotos($album['id']);
 <p><?php echo html_entity_decode($album['description'])?></p>
 <p class="meta">
     <?php printf(__('%d Photos', 'tantan-flickr'), $album['photos']);?> | 
-    <a href="album/<?php echo $album['id']?>/<?php echo $album['pagename']?>" onclick="return openSlideShow('<?php echo $album['id']?>')"><?php _e('View as slideshow &gt;', 'tantan-flickr');?></a>
+    <a href="album/<?php echo $album['id']?>/<?php echo $album['pagename']?>" onclick="return openSlideShow('<?php echo $album['id']?>')"><?php _e('View slideshow &gt;', 'tantan-flickr');?></a>
 </p>
 
 <div id="photos" class="photos">
