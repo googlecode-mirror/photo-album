@@ -1,0 +1,59 @@
+#summary How to localization this plugin into your own language.
+
+= Download the language file =
+
+http://photo-album.googlecode.com/svn/branches/tantan-flickr-1.1/tantan-flickr/languages/tantan-flickr.po
+
+This is a text file and contains all the text (in plain English) used by the plugin. 
+
+= Translate into (your language) =
+
+When you open this file in Notepad (or other text editor), you see a bunch of entries similar to this:
+
+{{{
+#: flickr/class-admin.php:316
+msgid "Photo Stream"
+msgstr ""
+}}}
+
+The first line (`#:`) tells you where in the code the text appears. The second line (msgid) is the English text used. The third line (`msgstr`) is where your translation of the second line would go. So for example, if you were translating into Spanish, you might edit the third (`msgstr`) line such that this entry will look something like this:
+
+{{{
+#: flickr/class-admin.php:316
+msgid "Photo Stream"
+msgstr "Foto Stream"
+}}}
+
+
+= Special cases =
+
+=== A single variable ===
+
+`msgid "View all %d albums &gt;"`
+
+What this means is that the plugin will substitute the code `%d` with a number. The `&gt;` (note the semicolon at the end) is an HTML character, and will get translated into `>` by the browser. You should make sure your translated strings use these `%` and `&` codes appropriately and also any HTML tags. 
+
+=== Multiple variables ===
+
+`msgid "%1$d - %2$d of %3$d Photos"`
+
+Sometimes text will contain more than one variable. In this case, the plugin will pass in 3 parameters in this order: a start position (number), a stop position (number), and a total (number). The `%1$d`, `%2$d`, and `%3$d` refer to these parameters and the order they were passed in. In technical terms, %1$d will always refer to the first parameter (`%1`), and always contain a number (`$d`). You are free to reverse and/or change the order of the parameters used as necessary. Eg, you can do this: 
+
+`msgid "%3$d total photos. %1$d - %2$d"`
+
+=== Dates ===
+
+`msgid "F j, Y"`
+
+The plugin uses PHP's date() function to format dates. The above characters will get translated into something like "September 19, 2008". A full list of date codes is available here: http://us3.php.net/date
+
+And more info here:
+
+http://codex.wordpress.org/Translating_WordPress#Date_Formatting_Strings
+
+= Tools =
+
+While you can edit the text file in Notepad, you may want to consider using poEdit to help you translate faster. This utility is available here: http://www.poedit.net/
+
+Information about using poEdit is here:
+http://codex.wordpress.org/Translating_WordPress#Translating_With_poEdit
