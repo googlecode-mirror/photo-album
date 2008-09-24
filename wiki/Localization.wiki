@@ -1,6 +1,6 @@
 #summary How to localization this plugin into your own language.
 
-Here's the information you'll need to localize the plugin into another language. These instructions are roughly based on the [http://codex.wordpress.org/Translating_WordPress WordPress documentation available here]. Once you are done with a localization, please email the translated .po file to joetan54@gmail.com.
+Here's the information you'll need to localize the plugin into another language. 
 
 == Using Launchpad ==
 
@@ -50,7 +50,7 @@ http://codex.wordpress.org/Translating_WordPress#Date_Formatting_Strings
 
 = Manual translation =
 
-If you _don't_ want to setup a Launchpad account, please download following the language file
+If you _don't_ want to setup a Launchpad account, please download following the language file. These instructions are roughly based on the [http://codex.wordpress.org/Translating_WordPress WordPress documentation available here]. Once you are done with a localization, please email the translated .po file to joetan54@gmail.com.
 
 http://photo-album.googlecode.com/svn/branches/tantan-flickr-1.1/tantan-flickr/languages/tantan-flickr.po
 
