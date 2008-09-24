@@ -10,8 +10,8 @@ A Launchpad translation project has been setup: [https://translations.launchpad.
 
  # Setup a [https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr/de/+login Launchpad.net account].
  # Select your [https://translations.launchpad.net/+editmylanguages preferred languages]. This will be the language you want to translate.
- # You should see your language [https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr show up in this list]. Click the name to get started with the translations.
- # Your translations are saved as you proceed. When it comes time to package a release, your translation will be automatically included in the release for everyone to use. Thanks!
+ # You should see your language [https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr show up in this list]. Simply click the name to get started with the translations. The system will try to offer suggests where available (retrieved from other open source projects).
+ # Your translations are saved as you proceed. When it comes time to package a release, your translation will be automatically included in the release for everyone to use. Thanks for your help!
 
 
 ----
