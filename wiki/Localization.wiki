@@ -16,32 +16,10 @@ A Launchpad translation project has been setup here. [https://translations.launc
 
 ----
 
-== Download the language file ==
-
-http://photo-album.googlecode.com/svn/branches/tantan-flickr-1.1/tantan-flickr/languages/tantan-flickr.po
-
-This is a text file and contains all the text (in plain English) used by the plugin. 
-
-== Translate into (your language) ==
-
-When you open this file in Notepad (or other text editor), you see a bunch of entries similar to this:
-
-{{{
-#: flickr/class-admin.php:316
-msgid "Photo Stream"
-msgstr ""
-}}}
-
-The first line (`#:`) tells you where in the code the text appears. The second line (msgid) is the English text used. The third line (`msgstr`) is where your translation of the second line would go. So for example, if you were translating into Spanish, you might edit the third (`msgstr`) line such that this entry will look something like this:
-
-{{{
-#: flickr/class-admin.php:316
-msgid "Photo Stream"
-msgstr "Foto Stream"
-}}}
-
 
 == Special cases ==
+
+There are certain special cases where variable codes are used in the text. Here's a brief explanation of the codes used by the plugin.
 
 *A single variable code*
 
@@ -66,6 +44,36 @@ The plugin uses PHP's date() function to format dates. The above characters will
 And more info here:
 
 http://codex.wordpress.org/Translating_WordPress#Date_Formatting_Strings
+
+
+----
+
+= Manual translation =
+
+If you _don't_ want to setup a Launchpad account, please download following the language file
+
+http://photo-album.googlecode.com/svn/branches/tantan-flickr-1.1/tantan-flickr/languages/tantan-flickr.po
+
+This is a text file and contains all the text (in plain English) used by the plugin. 
+
+== Translate into (your language) ==
+
+When you open this file in Notepad (or other text editor), you see a bunch of entries similar to this:
+
+{{{
+#: flickr/class-admin.php:316
+msgid "Photo Stream"
+msgstr ""
+}}}
+
+The first line (`#:`) tells you where in the code the text appears. The second line (msgid) is the English text used. The third line (`msgstr`) is where your translation of the second line would go. So for example, if you were translating into Spanish, you might edit the third (`msgstr`) line such that this entry will look something like this:
+
+{{{
+#: flickr/class-admin.php:316
+msgid "Photo Stream"
+msgstr "Foto Stream"
+}}}
+
 
 == Helpful Tools ==
 
