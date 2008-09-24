@@ -2,6 +2,20 @@
 
 Here's the information you'll need to localize the plugin into another language. These instructions are roughly based on the [http://codex.wordpress.org/Translating_WordPress WordPress documentation available here]. Once you are done with a localization, please email the translated .po file to joetan54@gmail.com.
 
+== Using Launchpad ==
+
+A Launchpad translation project has been setup here. [https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr Click here to view a list of all currently available translations]. Very briefly, Launchpad will enable a community of translators translate the plugin into whatever language is needed.
+
+== How to translate with Launchpad ==
+
+ # Setup a [https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr/de/+login Launchpad.net account].
+ # Select your [https://translations.launchpad.net/+editmylanguages preferred languages]. This will be the language you want to translate.
+ # You should see your language [https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr show up in this list]. Click the name to get started with the translations.
+ # Your translations are saved as you proceed. When it comes time to package a release, your translation will be automatically included in the release for everyone to use. Thanks!
+
+
+----
+
 == Download the language file ==
 
 http://photo-album.googlecode.com/svn/branches/tantan-flickr-1.1/tantan-flickr/languages/tantan-flickr.po
