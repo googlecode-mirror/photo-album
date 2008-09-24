@@ -4,7 +4,7 @@ Here's the information you'll need to localize the plugin into another language.
 
 == Using Launchpad ==
 
-A Launchpad translation project has been setup here. [https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr Click here to view a list of all currently available translations]. Very briefly, Launchpad will enable a community of translators translate the plugin into whatever language is needed.
+A Launchpad translation project has been setup: [https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr Click here to view a list of all currently available translations]. Very briefly, Launchpad will enable a community of translators translate the plugin into whatever language is needed.
 
 == How to translate with Launchpad ==
 
