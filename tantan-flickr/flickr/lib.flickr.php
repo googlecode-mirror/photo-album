@@ -442,7 +442,7 @@ class TanTanFlickr extends tantan_phpFlickr {
             return false;
         }
     }
-	function clearCacheStale($what=false) {
+	function clearCacheStale($what=false, $force=false) {
 		if (TANTAN_FLICKR_CACHEMODE == 'db') {
 			$commands = array(
 			    //'flickr.groups.getInfo' => 4320000,
@@ -468,11 +468,19 @@ class TanTanFlickr extends tantan_phpFlickr {
 				'getRandom'=> 600,
 				);
 			if($what && $commands[$what]){
-					$time = time() - $commands[$what];
-					$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$what.($time ? "' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time) : '')."' ;");
+			    if ($force) {
+				    $time = time() - 120;
+			    } else {
+			        $time = time() - $commands[$what];
+			    }
+				$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$what.($time ? "' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time) : '')."' ;");
 			}else {
 				foreach ($commands as $command => $timeout) {
-					$time = time() - $timeout;
+				    if ($force) {
+    				    $time = time() - 120;
+    			    } else {
+                        $time = time() - $timeout;
+    			    }
 					$result = $this->cache_db->query("DELETE FROM " . $this->cache_table . " WHERE command = '".$command.($time ? "' AND created < '".strftime("%Y-%m-%d %H:%M:%S", $time) : '')."' ;");
 				}
 			}
