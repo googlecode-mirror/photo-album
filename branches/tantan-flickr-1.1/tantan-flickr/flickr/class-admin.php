@@ -63,7 +63,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
         } elseif (@constant('DB_CHARSET') === null) {
 			$error = "Your database character encoding does not seem to be set. It is <strong>strongly</strong> recommended that you set it to <em>utf8</em> for maximum compatibility. <a href=\"http://codex.wordpress.org/Editing_wp-config.php#Database_character_set\">Instructions are available here.</a> ".
 				"Once you have set your database encoding, please deactivate and reactivate this plugin.";
-		}
+		} 
 
         if ($_POST['action'] == 'savekey') {
             update_option('silas_flickr_apikey', $_POST['flickr_apikey']);
