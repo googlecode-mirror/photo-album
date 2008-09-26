@@ -72,6 +72,9 @@ class TanTanHTTPRequestCurl {
             case 'GET':
                 curl_setopt($this->curl, CURLOPT_HTTPGET, true);
             break;
+            case 'HEAD':
+                curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, 'HEAD');
+            break;
         }
     }
     function setURL($url) {
