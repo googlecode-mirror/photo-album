@@ -11,7 +11,7 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
     var $config = array();
     
     function TanTanFlickrPluginAdmin() {
-        //parent::TanTanFlickrPlugin();
+        parent::TanTanFlickrPlugin();
         add_action('admin_menu', array(&$this, 'addhooks'));
         add_action('activate_tantan-flickr/flickr.php', array(&$this, 'activate'));
         add_action('deactivate_tantan-flickr/flickr.php', array(&$this, 'deactivate'));
@@ -313,10 +313,10 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 	}
 	function media_upload_tabs($tabs) {
 		return array(
-			'tantan-flickr-photo-stream' => __('Photo Stream'), // handler action suffix => tab text
-			'tantan-flickr-photo-albums' => __('Albums'),
-			'tantan-flickr-photo-everyone' => __('Everyone'),
-			'tantan-flickr-photo-interesting' => __('Interesting'),
+			'tantan-flickr-photo-stream' => __('Photo Stream', 'tantan-flickr'), // handler action suffix => tab text
+			'tantan-flickr-photo-albums' => __('Albums', 'tantan-flickr'),
+			'tantan-flickr-photo-everyone' => __('Everyone', 'tantan-flickr'),
+			'tantan-flickr-photo-interesting' => __('Interesting', 'tantan-flickr'),
 		);
 	}
     function addPhotosTab() {
@@ -381,11 +381,11 @@ class TanTanFlickrPluginAdmin extends TanTanFlickrPlugin {
 				$page_links = '';
 				if ($offsetpage > 1) {
 					$link = add_query_arg( 'paged', $offsetpage - 1 );
-					$page_links = "<a class='prev page-numbers' href='" . clean_url($link) . "'>".__('&laquo; Previous')."</a>";
+					$page_links = "<a class='prev page-numbers' href='" . clean_url($link) . "'>".__('&laquo; Previous', 'tantan-flickr')."</a>";
 				}
 				if (count($photos) >= $perpage) {
 				$link = add_query_arg( 'paged', $offsetpage + 1 );
-				$page_links .= "<a class='next page-numbers' href='" . clean_url($link) . "'>".__('Next &raquo;')."</a>";
+				$page_links .= "<a class='next page-numbers' href='" . clean_url($link) . "'>".__('Next &raquo;', 'tantan-flickr')."</a>";
 				$count = -1;
 				}
 			}
