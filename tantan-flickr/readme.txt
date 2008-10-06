@@ -30,9 +30,9 @@ Here's a couple sample installs from around the web.
 
 [Tan Tan Noodles](http://tantannoodles.com/photos/), [Felicia Day](http://feliciaday.com/photos/), [Making it Lovely](http://makingitlovely.com/photos/), [Slip Stream Sports](http://www.slipstreamsports.com/photos/), [Life of Justin](http://www.lifeofjustin.com/photos/), [72 Quadrat](http://72quadrat.de/blog/photos/), [Cake Journal](http://www.cakejournal.com/flickr/), [DCS Pride](http://www.dcspride.com/photos/).
 
-Special thanks to the wonderful volunteers from around the Internet who helped translate this plugin:
+Special thanks to the awesome volunteers from around the Internet who helped translate this plugin:
 
-Søren Siim Nielsen, Thomas Sturm, Adrianus F. Tumewu, Marco Balzerani, Lindsey Yoo, Hamid Reza, Jonathan Lumb, Guillermo Lopez, and [many others](https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr).
+[Søren Siim Nielsen](http://www.bagkameraet.dk/), [Wilco Verdoold](http://www.linkedin.com/in/wilco), Thomas Sturm, Adrianus F. Tumewu, [Marco Balzerani](http://www.marcobalzerani.it/), Lindsey Yoo, [Hamid Reza](http://www.gozir.com/), Jonathan Lumb, Guillermo Lopez, and [many others](https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr).
 
 == Screenshots ==
 
