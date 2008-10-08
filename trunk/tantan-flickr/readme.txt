@@ -32,7 +32,7 @@ Here's a couple sample installs from around the web.
 
 Special thanks to the awesome volunteers from around the Internet who helped translate this plugin:
 
-[Søren Siim Nielsen](http://www.bagkameraet.dk/), [Wilco Verdoold](http://www.linkedin.com/in/wilco), Thomas Sturm, Adrianus F. Tumewu, [Marco Balzerani](http://www.marcobalzerani.it/), Lindsey Yoo, [Hamid Reza](http://www.gozir.com/), Jonathan Lumb, Guillermo Lopez, and [many others](https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr).
+[Søren Siim Nielsen](http://www.bagkameraet.dk/), [Wilco Verdoold](http://www.linkedin.com/in/wilco), Thomas Sturm, Adrianus F. Tumewu, [Marco Balzerani](http://www.marcobalzerani.it/), Lindsey Yoo, [Hamid Reza](http://www.gozir.com/), [Jonathan Lumb](http://inchina.co.uk/), Guillermo Lopez, and [many others](https://translations.launchpad.net/tantan-flickr/trunk/+pots/tantan-flickr).
 
 == Screenshots ==
 
