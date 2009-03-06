@@ -28,7 +28,7 @@ If you need more help installing and customizing templates, [see here for more i
 
 Here's a couple sample installs from around the web.
 
-[Tan Tan Noodles](http://tantannoodles.com/photos/), [Felicia Day](http://feliciaday.com/photos/), [Making it Lovely](http://makingitlovely.com/photos/), [Slip Stream Sports](http://www.slipstreamsports.com/photos/), [Life of Justin](http://www.lifeofjustin.com/photos/), [72 Quadrat](http://72quadrat.de/blog/photos/), [Cake Journal](http://www.cakejournal.com/flickr/), [DCS Pride](http://www.dcspride.com/photos/).
+[Tan Tan Noodles](http://tantannoodles.com/photos/), [Making it Lovely](http://makingitlovely.com/photos/), [Slip Stream Sports](http://www.slipstreamsports.com/photos/), [Life of Justin](http://www.lifeofjustin.com/photos/), [72 Quadrat](http://72quadrat.de/blog/photos/), [Cake Journal](http://www.cakejournal.com/flickr/), [DCS Pride](http://www.dcspride.com/photos/).
 
 Special thanks to the wonderful volunteers from around the Internet who helped translate this plugin:
 
